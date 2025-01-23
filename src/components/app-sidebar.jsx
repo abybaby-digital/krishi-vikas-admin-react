@@ -94,19 +94,19 @@ const data = {
       items: [
         {
           title: "Brands",
-          url: "#",
+          url: "/goods vehicle/brands",
         },
         {
           title: "Models",
-          url: "#",
+          url: "/goods vehicle/models",
         },
         {
           title: "Specifications",
-          url: "#",
+          url: "/goods vehicle/spec",
         },
         {
           title: "Posts",
-          url: "#",
+          url: "/goods vehicle/posts",
         },
       ],
     },
@@ -118,19 +118,19 @@ const data = {
       items: [
         {
           title: "Brands",
-          url: "#",
+          url: "/harvester/brands",
         },
         {
           title: "Models",
-          url: "#",
+          url: "/harvester/models",
         },
         {
           title: "Specifications",
-          url: "#",
+          url: "/harvester/spec",
         },
         {
           title: "Posts",
-          url: "#",
+          url: "/harvester/posts",
         },
       ],
     },
@@ -142,19 +142,19 @@ const data = {
       items: [
         {
           title: "Brands",
-          url: "#",
+          url: "/implements/brands",
         },
         {
           title: "Models",
-          url: "#",
+          url: "/implements/models",
         },
         {
           title: "Specifications",
-          url: "#",
+          url: "/implements/spec",
         },
         {
           title: "Posts",
-          url: "#",
+          url: "/implements/posts",
         },
       ],
     },
@@ -166,19 +166,19 @@ const data = {
       items: [
         {
           title: "Brands",
-          url: "#",
+          url: "/tyres/brands",
         },
         {
           title: "Models",
-          url: "#",
+          url: "/tyres/models",
         },
         {
           title: "Specifications",
-          url: "#",
+          url: "/tyres/spec",
         },
         {
           title: "Posts",
-          url: "#",
+          url: "/tyres/posts",
         },
       ],
     },

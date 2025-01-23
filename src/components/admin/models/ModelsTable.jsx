@@ -35,7 +35,7 @@ import { RxCross2 } from "react-icons/rx";
 import { Link, useParams } from 'react-router-dom'
 import { DialogClose } from '@radix-ui/react-dialog';
 
-const BrandsTable = () => {
+const ModelsTable = () => {
 
     const { category } = useParams();
 
@@ -80,13 +80,14 @@ const BrandsTable = () => {
     return (
         <div className="latest-post-table bg-white rounded-2xl shadow p-5">
             <header className='flex justify-between mt-2 mb-5'>
-                <p className='text-xl uppercase font-semibold text-darkGreen'>{category}{" "}Brands</p>
+                <p className='text-xl uppercase font-semibold text-darkGreen'>{category}{" "}Models</p>
             </header>
             <Table className="border">
                 <TableHeader className="bg-[#e6e5e5] pb-2">
                     <TableRow>
                         <TableHead>Sl No</TableHead>
-                        <TableHead>Brand Icon</TableHead>
+                        <TableHead>Model Icon</TableHead>
+                        <TableHead>Model Name</TableHead>
                         <TableHead>Brand Name</TableHead>
                         <TableHead>Action</TableHead>
                     </TableRow>
@@ -98,6 +99,7 @@ const BrandsTable = () => {
                             <TableCell>
                                 <img src={item.brand_icon} alt="brand-icon" className='w-[60px] aspect-square p-2 bg-white rounded-2xl object-contain shadow' />
                             </TableCell>
+                            <TableCell>{item.brand_name}</TableCell>
                             <TableCell>{item.brand_name}</TableCell>
                             <TableCell>
                                 {/* EDIT */}
@@ -191,4 +193,4 @@ const BrandsTable = () => {
     )
 }
 
-export default BrandsTable
+export default ModelsTable
