@@ -16,6 +16,86 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
   box-shadow: 0 0 5px #8cbf44;
 }
 
+.sidebar_menu:hover {
+  transform: scale(1.02);
+}
+
+.sidebar_menu a::before {
+  content: "";
+  width: 15px;
+  height: 100%;
+  background: linear-gradient(33deg, #13693a, #8cbf44);
+  position: absolute;
+  top: 0;
+  left: -100%;
+  border-radius: 0 0.8rem 0.8rem 0;
+  transition: all 0.2s ease;
+}
+
+.sidebar_menu a:hover,
+.sidebar_menu a.active {
+  color: #13693a;
+  border-color: #13693a69;
+
+}
+
+.sidebar_menu a.active::before {
+  left: 0;
+}
+
+.sidebar_menu:has(.submenu a.active){
+  background-color: #f8f8f8;
+}
+.sidebar_menu:has(a.active){
+  background-color: #f8f8f8;
+  scale: 0.95;
+}
+
+.sidebar_menu:has(.submenu a.active)>a {
+  color: #13693a;
+  border-color: #13693a69;
+}
+
+.sidebar_menu:has(.submenu a.active)>a::before{
+  left: 0;
+}
+
+.sidebar_menu:has(.submenu a.active) > .submenu{
+  display: block;
+}
+
+.sidebar_menu a:hover::before {
+  left: 0;
+}
+
+.sidebar_menu.has_submenu:hover .arrow_down {
+  rotate: 180deg;
+}
+
+
+/* .submenu a:hover::before {
+  display: none;
+} */
+
+.submenu {
+  display: none;
+}
+
+.sidebar_menu.has_submenu:hover .submenu {
+  display: block;
+}
+
+.submenu a {
+  border: 1px dashed #e5e5e5;
+  display: block;
+  border-radius: 10px;
+  margin: 5px 0;
+  text-align: center;
+}
+
+.submenu a:hover {
+  scale: 0.95;
+}
 
 .loader {
   width: 60px;

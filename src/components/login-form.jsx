@@ -27,7 +27,7 @@ export function LoginForm({
             <img src={kvLogo} alt="this is brand logo" className="w-1/2 mx-auto" />
             <p className="mt-5">Login</p>
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-center">
             Enter  username and password below to login to your account
           </CardDescription>
         </CardHeader>

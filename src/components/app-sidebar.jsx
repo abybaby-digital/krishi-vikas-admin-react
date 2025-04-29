@@ -21,6 +21,7 @@ import { GiPlantSeed } from "react-icons/gi";
 import { MdPestControl } from "react-icons/md";
 import { GiFertilizerBag } from "react-icons/gi";
 import { CgCreditCard } from "react-icons/cg";
+import { TbLayoutDashboardFilled } from "react-icons/tb";
 
 
 import { NavMain } from "@/components/nav-main"
@@ -63,10 +64,16 @@ const data = {
   // ],
   navMain: [
     {
+      title: "Dashboard",
+      hasSubMenu: false,
+      url: "/",
+      icon: TbLayoutDashboardFilled,
+    },
+    {
       title: "Tractor",
+      hasSubMenu: true,
       url: "#",
       icon: PiTractorFill,
-      isActive: true,
       items: [
         {
           title: "Brands",
@@ -88,9 +95,9 @@ const data = {
     },
     {
       title: "Goods Vehicle",
+      hasSubMenu: true,
       url: "#",
       icon: FaTruck,
-      isActive: false,
       items: [
         {
           title: "Brands",
@@ -112,9 +119,9 @@ const data = {
     },
     {
       title: "Harvester",
+      hasSubMenu: true,
       url: "#",
       icon: GiFarmTractor,
-      isActive: false,
       items: [
         {
           title: "Brands",
@@ -136,9 +143,9 @@ const data = {
     },
     {
       title: "Implements",
+      hasSubMenu: true,
       url: "#",
       icon: GiFarmer,
-      isActive: false,
       items: [
         {
           title: "Brands",
@@ -160,9 +167,9 @@ const data = {
     },
     {
       title: "Tyres",
+      hasSubMenu: true,
       url: "#",
       icon: GiTyre,
-      isActive: false,
       items: [
         {
           title: "Brands",
@@ -184,79 +191,84 @@ const data = {
     },
     {
       title: "Seeds",
+      hasSubMenu: true,
       url: "#",
       icon: GiPlantSeed,
       items: [
         {
           title: "Posts",
-          url: "#",
+          url: "/seeds/posts",
         },
       ],
     },
     {
       title: "Pesticides",
+      hasSubMenu: true,
       url: "#",
       icon: MdPestControl,
       items: [
         {
           title: "Posts",
-          url: "#",
+          url: "/pesticides/posts",
         },
       ],
     },
     {
       title: "Fertilizer",
+      hasSubMenu: true,
       url: "#",
       icon: GiFertilizerBag,
       items: [
         {
           title: "Posts",
-          url: "#",
+          url: "/fertilizers/posts",
         },
       ],
     },
-    {
-      title: "Subscription Manager",
-      url: "#",
-      icon: CgCreditCard,
-      items: [
-        {
-          title: "Subscription Plan",
-          url: "#",
-        },
-        {
-          title: "Subscribed User",
-          url: "#",
-        },
-        {
-          title: "Subscribed Boots List",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
+    // {
+    //   title: "Subscription Manager",
+    //   hasSubMenu: true,
+    //   url: "#",
+    //   icon: CgCreditCard,
+    //   items: [
+    //     {
+    //       title: "Subscription Plan",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Subscribed User",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Subscribed Boosts List",
+    //       url: "#",
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "Settings",
+    //   hasSubMenu: true,
+    //   url: "#",
+    //   icon: Settings2,
+    //   items: [
+    //     {
+    //       title: "General",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Team",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Billing",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Limits",
+    //       url: "#",
+    //     },
+    //   ],
+    // },
   ],
   // projects: [
   //   {
