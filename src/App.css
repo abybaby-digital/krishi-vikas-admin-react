@@ -36,17 +36,18 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
 .sidebar_menu a.active {
   color: #13693a;
   border-color: #13693a69;
-
+  background: white;
 }
 
 .sidebar_menu a.active::before {
   left: 0;
 }
 
-.sidebar_menu:has(.submenu a.active){
+.sidebar_menu:has(.submenu a.active) {
   background-color: #f8f8f8;
 }
-.sidebar_menu:has(a.active){
+
+.sidebar_menu:has(a.active) {
   background-color: #f8f8f8;
   scale: 0.95;
 }
@@ -54,13 +55,14 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
 .sidebar_menu:has(.submenu a.active)>a {
   color: #13693a;
   border-color: #13693a69;
+  background: white;
 }
 
-.sidebar_menu:has(.submenu a.active)>a::before{
+.sidebar_menu:has(.submenu a.active)>a::before {
   left: 0;
 }
 
-.sidebar_menu:has(.submenu a.active) > .submenu{
+.sidebar_menu:has(.submenu a.active)>.submenu {
   display: block;
 }
 
@@ -71,7 +73,6 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
 .sidebar_menu.has_submenu:hover .arrow_down {
   rotate: 180deg;
 }
-
 
 /* .submenu a:hover::before {
   display: none;

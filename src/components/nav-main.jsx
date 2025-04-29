@@ -19,7 +19,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { NavLink } from "react-router-dom";
-import SidebarCustom from "./SidebarCustom";
+
 
 import { IoIosArrowDown } from "react-icons/io";
 import React from "react";
@@ -27,7 +27,7 @@ import React from "react";
 export function NavMain({
   items
 }) {
-  let hasSubmenu = true;
+
   return (
     (<SidebarGroup className="list-none p-2">
       {/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
