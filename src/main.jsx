@@ -22,9 +22,11 @@ import CryptoJS from "crypto-js";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
-    <Provider store={store}>
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
+    </QueryClientProvider>
   </Provider>
 );

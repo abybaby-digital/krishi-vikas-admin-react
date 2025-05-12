@@ -66,7 +66,11 @@ export default {
   			jost: [
   				'Jost',
   				'sans-serif'
-  			]
+  			],
+  			dmsans: [
+  				"DM Serif Text", "serif"
+  			],
+
   		},
   		container: {
   			center: true

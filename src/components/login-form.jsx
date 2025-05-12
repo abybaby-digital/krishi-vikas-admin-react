@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import kvLogo from "../../src/assets/images/kv-logo.png"
+import { FaRegEye } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 
 import {
@@ -13,12 +15,49 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom"
+import { useRef, useState } from "react"
+import { useMutation } from "@tanstack/react-query";
+import { adminLogin } from "../services/api";
+import { useForm } from "react-hook-form";
+import ButtonLoader from "./ButtonLoader";
+import toast from "react-hot-toast";
 
 export function LoginForm({
   className,
   ...props
 }) {
-  const navigate = useNavigate();
+  const ref = useRef();
+  // const navigate = useNavigate();
+  const [passwordShown, setPasswordShow] = useState(false);
+
+
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  console.log(errors);
+
+
+  // Login Api mutation
+
+  const loginMutation = useMutation({
+    mutationFn: async (data) => {
+      return await adminLogin(data.username, data.password);
+    },
+    onSuccess: (response) => {
+      console.log(response);
+      
+      if (response.success === 1) {
+        toast.success(response.message);
+      }
+      else {
+        toast.error(response.message);
+      }
+    }
+  })
+
+  const onSubmit = (data) => {
+    loginMutation.mutate(data);
+  };
+
+
   return (
     (<div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -32,20 +71,51 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
-            <div className="flex flex-col gap-6">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-3">
               <div className="grid gap-2">
-                <Label htmlFor="email">Username</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
+                <div>
+                  <Label htmlFor="email">Username</Label>
+                  <Input id="email" type="email" placeholder="Username"
+                    {...register("username", { required: "Enter username" })}
+                  />
+                  {
+                    errors.username &&
+                    <p className="text-red-500 mt-1">{errors.username.message}</p>
+                  }
+                </div>
+
               </div>
+
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                 </div>
-                <Input id="password" type="password" required />
+                <div className="password_input relative">
+
+                  <Input ref={ref} id="password" type={!passwordShown ? "password" : "text"} placeholder="Password"
+                    {...register("password", { required: "Enter password" })}
+                  />
+                  <div className="showpassword_btn absolute inline-block right-2 top-[10px] cursor-pointer text-gray-400" onClick={() => {
+                    setPasswordShow(!passwordShown);
+                  }} >
+
+                    {
+                      !passwordShown ? <FaRegEye /> : <FaRegEyeSlash />
+                    }
+                  </div>
+                  {
+                    errors.password &&
+                    <p className="text-red-500 mt-1">{errors.password.message}</p>
+                  }
+                </div>
+
               </div>
-              <Button type="submit" className="w-full bg-gradient-green" onClick={()=>{navigate("/krishi-vikas-admin/")}}>
-                Login
+              <Button type="submit" className="w-full bg-gradient-green mt-3 rounded-2xl">
+
+                {
+                  loginMutation.isPending ? <ButtonLoader /> : "Login"
+                }
               </Button>
               {/* <Button variant="outline" className="w-full">
                 Login with Google

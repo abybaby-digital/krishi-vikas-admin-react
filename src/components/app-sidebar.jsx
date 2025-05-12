@@ -225,68 +225,21 @@ const data = {
         },
       ],
     },
-    // {
-    //   title: "Subscription Manager",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: CgCreditCard,
-    //   items: [
-    //     {
-    //       title: "Subscription Plan",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Subscribed User",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Subscribed Boosts List",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Settings",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: Settings2,
-    //   items: [
-    //     {
-    //       title: "General",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Team",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Billing",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Limits",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
+    {
+      title: "Combo Plan",
+      hasSubMenu: true,
+      url: "#",
+      icon: GiFertilizerBag,
+      items: [
+        {
+          title: "Add Combo Plan",
+          url: "/combo-plan/add-combo-plan",
+        },
+      ],
+    },
+
   ],
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: Frame,
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: PieChart,
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: Map,
-  //   },
-  // ],
+
 }
 
 export function AppSidebar({
