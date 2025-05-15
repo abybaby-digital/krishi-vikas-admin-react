@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // const baseURL = "https://krishivikas.com/api/v2";
-// const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
+const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
 
-const baseURL = "http://192.168.0.204:8080/api/admin";
+// const baseURL = "http://192.168.0.204:8080/api/admin";
 
 const api = axios.create({
   baseURL: baseURL,
@@ -537,6 +537,31 @@ export const editNotificationContent = async (
     throw error;
   }
 };
+
+// ADD NOTIFICATION TYPE
+
+export const addNotificationType = async (token, notification_type_name) => { 
+  try {
+    const response = await api.post(
+      `${baseURL}/add-notification-type`,
+      {
+        notification_type_name: notification_type_name,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to add notification type:", error);
+    throw error;
+  }
+}
 
 // NOTIFICATION TYPE LIST
 export const notificationTypeList = async (token) => {

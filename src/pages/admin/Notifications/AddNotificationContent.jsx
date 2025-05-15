@@ -14,17 +14,21 @@ import { useForm, Controller } from "react-hook-form";
 import { TiWarning } from "react-icons/ti";
 import Select from "react-select";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { addNotificationContent, notificationTypeList } from "../../../services/api";
+import { addNotificationContent, addNotificationType, notificationTypeList } from "../../../services/api";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function AddNotificationContent() {
 
     const token = useSelector((state) => state.auth.token);
     const navigate = useNavigate();
+
+    const [newNotiType, setNewNotiType] = useState(false);
+    const [newNotiTypeName, setNewNotiTypeName] = useState("");
 
     const {
         register,
@@ -91,6 +95,24 @@ export default function AddNotificationContent() {
         addNotificationMutation.mutate(data);
     };
 
+    const newNotiTypeMutation = useMutation({
+        mutationFn: async (data) => {
+            return await addNotificationType(token, data);
+        },
+        onSuccess: (response) => {
+            if (response.success === 1) {
+                toast.success(response.message);
+                setNewNotiType(false);
+                setNewNotiTypeName("");
+            } else {
+                toast.error(response.message || "Something went wrong");
+            }
+        },
+        onError: (error) => {
+            toast.error("Failed to add notification type. Please try again.");
+        },
+    });
+
     return (
         <SidebarProvider>
             <AppSidebar />
@@ -101,9 +123,30 @@ export default function AddNotificationContent() {
                         onSubmit={handleSubmit(onSubmit)}
                         className="bg-white shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1"
                     >
+                        <div className="form-heading bg-whitesmoke rounded-2xl p-5 lg:col-span-2 col-span-1 flex justify-between items-center">
+                            <p>If Notification Type doesn't exist , </p> <button type="button" className="bg-gradient-green px-5 py-2 text-white" onClick={() => {
+                                setNewNotiType(true);
+                                setNewNotiTypeName("");
+                            }}>+ Add New Notification Type</button>
+                        </div>
+
+                        {
+                            newNotiType &&
+                            <div className="p-5 flex gap-3 justify-center new-notification-type lg:col-span-2 col-span-1 shadow rounded-2xl">
+                                <input type="text" value={newNotiTypeName} onChange={(e)=>{setNewNotiTypeName(e.target.value)}} name="new_not" className="w-full border px-3 py-2 rounded" placeholder="Enter  Notification Type Name" />
+                                <button className="bg-black text-white px-5 py-" type="button">Create</button>
+                                <button type="button" className="bg-red-500 text-white px-5 py-" onClick={() => {
+                                    setNewNotiType(false);
+                                    setNewNotiTypeName("");
+                                    useMutation.mutate(newNotiTypeName);
+                                }}>Cancel</button>
+                            </div>
+                        }
                         <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 lg:col-span-2 col-span-1">
                             <h2 className="text-2xl font-bold text-center font-dmsans">Add Notification Content</h2>
                         </div>
+
+
 
                         {/* Notification Type */}
                         <div className="notification-type lg:col-span-2 col-span-1">
@@ -165,41 +208,45 @@ export default function AddNotificationContent() {
                             { code: 'te', label: 'Telugu' },
                             { code: 'pa', label: 'Punjabi' },
                             { code: 'as', label: 'Assamese' }
-                        ].map((language) => (
-                            <div key={language.code} className="language-notification border border-dashed rounded-2xl p-5 relative overflow-hidden">
-                                <p className="bg-gradient-green inline-block text-white absolute right-3 top-3 px-3 py-1 text-sm rounded-2xl">{language.label}</p>
+                        ].map((language) => {
+                            const isRequired = ['en', 'bn', 'hi'].includes(language.code);
+                            return (
+                                <div key={language.code} className="language-notification border border-dashed rounded-2xl p-5 relative overflow-hidden">
+                                    <p className="bg-gradient-green inline-block text-white absolute right-3 top-3 px-3 py-1 text-sm rounded-2xl">{language.label}</p>
 
-                                {/* Title */}
-                                <div className="mb-3 mt-6">
-                                    <label htmlFor={`ln_${language.code}_title`} className="block font-bold text-sm mb-1">{`Notification ${language.label} Title`}</label>
-                                    <input
-                                        type="text"
-                                        id={`ln_${language.code}_title`}
-                                        placeholder={`Enter ${language.label} title`}
-                                        className="w-full border px-3 py-2 rounded"
-                                        {...register(`ln_${language.code}_title`, { required: `Enter ${language.label} Notification Title` })}
-                                    />
-                                    {errors[`ln_${language.code}_title`] && (
-                                        <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors[`ln_${language.code}_title`].message}</p>
-                                    )}
-                                </div>
+                                    {/* Title */}
+                                    <div className="mb-3 mt-6">
+                                        <label htmlFor={`ln_${language.code}_title`} className="block font-bold text-sm mb-1">{`Notification ${language.label} Title`}</label>
+                                        <input
+                                            type="text"
+                                            id={`ln_${language.code}_title`}
+                                            placeholder={`Enter ${language.label} title`}
+                                            className="w-full border px-3 py-2 rounded"
+                                            {...register(`ln_${language.code}_title`, isRequired ? { required: `Enter ${language.label} Notification Title` } : {})}
+                                        />
+                                        {errors[`ln_${language.code}_title`] && (
+                                            <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors[`ln_${language.code}_title`].message}</p>
+                                        )}
+                                    </div>
 
-                                {/* Description */}
-                                <div>
-                                    <label htmlFor={`ln_${language.code}_des`} className="block font-bold text-sm mb-1">{`Notification ${language.label} Description`}</label>
-                                    <input
-                                        type="text"
-                                        id={`ln_${language.code}_des`}
-                                        placeholder={`Enter ${language.label} description`}
-                                        className="w-full border px-3 py-2 rounded"
-                                        {...register(`ln_${language.code}_des`, { required: `Enter ${language.label} Notification Description` })}
-                                    />
-                                    {errors[`ln_${language.code}_des`] && (
-                                        <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors[`ln_${language.code}_des`].message}</p>
-                                    )}
+                                    {/* Description */}
+                                    <div>
+                                        <label htmlFor={`ln_${language.code}_des`} className="block font-bold text-sm mb-1">{`Notification ${language.label} Description`}</label>
+                                        <input
+                                            type="text"
+                                            id={`ln_${language.code}_des`}
+                                            placeholder={`Enter ${language.label} description`}
+                                            className="w-full border px-3 py-2 rounded"
+                                            {...register(`ln_${language.code}_des`, isRequired ? { required: `Enter ${language.label} Notification Description` } : {})}
+                                        />
+                                        {errors[`ln_${language.code}_des`] && (
+                                            <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors[`ln_${language.code}_des`].message}</p>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
+
 
                         {/* Submit Button */}
                         <div className="form-submit-btn mt-5 lg:col-span-2 col-span-1 rounded-2xl p-5 text-center bg-whitesmoke">

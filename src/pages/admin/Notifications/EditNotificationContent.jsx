@@ -44,7 +44,7 @@ export default function EditNotificationContent() {
                 noti_type_id: notificationTypes?.response?.find(item => item.value === notification?.noti_type_id)
             });
         }
-    }, []); // Add notificationTypes as a dependency
+    }, [notification, notificationTypes?.response]); // Add notificationTypes as a dependency
 
 
     const editNotificationContentMutation = useMutation({
@@ -143,30 +143,33 @@ export default function EditNotificationContent() {
                                 </div>
 
                                 {/* Notification Icon Upload */}
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    id="noti_icon"
-                                    className="w-full border px-3 py-2 rounded"
-                                    {...register("noti_icon", {
-                                        required: "Please upload a notification icon",
-                                        validate: (fileList) => {
-                                            if (fileList && fileList[0]) {
-                                                const file = fileList[0];
-                                                if (!file.type.startsWith("image/")) {
-                                                    return "Please upload a valid image file.";
+                                <div className="notification-icon lg:col-span-2 col-span-1">
+                                    <label htmlFor="noti_type_id" className="block font-bold text-sm mb-1">Notification Image</label>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        id="noti_icon"
+                                        className="w-full border px-3 py-2 rounded"
+                                        {...register("noti_icon", {
+                                            required: "Please upload a notification icon",
+                                            validate: (fileList) => {
+                                                if (fileList && fileList[0]) {
+                                                    const file = fileList[0];
+                                                    if (!file.type.startsWith("image/")) {
+                                                        return "Please upload a valid image file.";
+                                                    }
                                                 }
+                                                return true;
                                             }
-                                            return true;
-                                        }
-                                    })}
-                                />
-                                {errors.noti_icon && (
-                                    <p className="text-red-500 mt-1">
-                                        <TiWarning className="inline me-1" />
-                                        {errors.noti_icon.message}
-                                    </p>
-                                )}
+                                        })}
+                                    />
+                                    {errors.noti_icon && (
+                                        <p className="text-red-500 mt-1">
+                                            <TiWarning className="inline me-1" />
+                                            {errors.noti_icon.message}
+                                        </p>
+                                    )}
+                                </div>
 
                                 {/* Language Sections */}
                                 {[
