@@ -8,7 +8,7 @@ import ProtectedRoute from "./pages/admin/ProtectedRoute";
 import { setToken, setUsers } from "./redux/features/Auth/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CryptoJS from "crypto-js";
-import EditNotificationContent from "./pages/admin/Notifications/editNotificationContent";
+
 
 // Lazy-loaded components
 const Dashboard = React.lazy(() => import("./pages/admin/Dashboard"));
@@ -21,7 +21,7 @@ const ComboPlanPurchase = React.lazy(() => import("./pages/admin/Combo-Plan/Comb
 const ComboPlanPurchaseList = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPlanPurchaseList"));
 const AddNotificationContent = React.lazy(() => import("./pages/admin/Notifications/AddNotificationContent"));
 const NotificationContentList = React.lazy(() => import("./pages/admin/Notifications/NotificationContentList"));
-const Edit = React.lazy(() => import("./pages/admin/Notifications/NotificationContentList"));
+const EditNotificationContent = React.lazy(() => import("./pages/admin/Notifications/EditNotificationContent"));
 
 const ScrollToTop = () => {
   const location = useLocation();
