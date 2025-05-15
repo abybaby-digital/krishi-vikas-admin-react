@@ -21,18 +21,29 @@ import { adminLogin } from "../services/api";
 import { useForm } from "react-hook-form";
 import ButtonLoader from "./ButtonLoader";
 import toast from "react-hot-toast";
+import CryptoJS from "crypto-js";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess, setUsers } from "../redux/features/Auth/AuthSlice";
 
 export function LoginForm({
   className,
   ...props
 }) {
   const ref = useRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const SECRET_KEY = "login-secret-key"; // Replace with a secure key
   // const navigate = useNavigate();
   const [passwordShown, setPasswordShow] = useState(false);
 
 
   const { register, handleSubmit, formState: { errors } } = useForm();
   console.log(errors);
+
+  const user = useSelector((state) => state.auth.user);
+
+  console.log(user);
+
 
 
   // Login Api mutation
@@ -42,10 +53,28 @@ export function LoginForm({
       return await adminLogin(data.username, data.password);
     },
     onSuccess: (response) => {
-      console.log(response);
-      
+      console.log(response.response.access_token);
+
       if (response.success === 1) {
         toast.success(response.message);
+        dispatch(setUsers(response.response));
+        // Encrypt the access token using AES
+        const encryptedToken = CryptoJS.AES.encrypt(
+          response.response.access_token,
+          SECRET_KEY
+        ).toString();
+
+        // Store encrypted token and authentication state
+        sessionStorage.setItem('token', encryptedToken);
+        sessionStorage.setItem('isAuthenticated', true);
+        sessionStorage.setItem('user', JSON.stringify(response.response));
+
+        // Dispatch Redux action with user data and token
+        dispatch(loginSuccess());
+
+        // Navigate to the dashboard or last visited page
+        const lastVisitedPath = sessionStorage.getItem("lastPath") || "/";
+        navigate(lastVisitedPath, { replace: true });
       }
       else {
         toast.error(response.message);

@@ -1,18 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLoggedIn: false,
+    isAuthenticated: sessionStorage.getItem('isAuthenticated') === 'true', // Persist login state,
     token: null,
     user: {},
-    triggerLogin: false,
 }
 
 const authSlice = createSlice({
     name: "auth",
     initialState: initialState,
     reducers: {
-        setLogInState: (state, action) => {
-            state.isLoggedIn = action.payload;
+        loginSuccess: (state) => {
+            state.isAuthenticated = true;
         },
         setToken: (state, action) => {
             state.token = action.payload;
@@ -20,11 +19,13 @@ const authSlice = createSlice({
         setUsers: (state, action) => {
             state.user = action.payload;
         },
-        setTriggerLogin: (state,action) => {
-            state.triggerLogin = action.payload;
+        logout: (state) => {
+            state.isAuthenticated = false;
+            state.user = null;
+            sessionStorage.clear();
         },
     }
 })
 
-export const { setToken, setUsers, setLogInState , setTriggerLogin , resetTriggerLogin } = authSlice.actions;
+export const { setToken, setUsers, logout, loginSuccess, setTriggerLogin, resetTriggerLogin } = authSlice.actions;
 export default authSlice.reducer;

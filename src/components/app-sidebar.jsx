@@ -21,6 +21,7 @@ import { GiPlantSeed } from "react-icons/gi";
 import { MdPestControl } from "react-icons/md";
 import { GiFertilizerBag } from "react-icons/gi";
 import { CgCreditCard } from "react-icons/cg";
+import { MdNotificationsActive } from "react-icons/md";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 
 
@@ -235,6 +236,35 @@ const data = {
           title: "Add Combo Plan",
           url: "/combo-plan/add-combo-plan",
         },
+        {
+          title: "Combo Plan List",
+          url: "/combo-plan/combo-plan-list",
+        },
+        {
+          title: "Combo Plan Purchase",
+          url: "/combo-plan/combo-plan-purchase",
+        },
+        {
+          title: "Combo Plan Purchase List",
+          url: "/combo-plan/combo-plan-purchase-list",
+        },
+      ],
+    },
+    {
+      title: "Notification",
+      hasSubMenu: true,
+      url: "#",
+      icon: MdNotificationsActive,
+      items: [
+        {
+          title: "Add Notification Content",
+          url: "/notification/add-notification-content",
+        },
+        {
+          title: "Notification Type List",
+          url: "/notification/notification-type-list",
+        },
+
       ],
     },
 
@@ -255,9 +285,7 @@ export function AppSidebar({
         <NavMain items={data.navMain} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>)
   );

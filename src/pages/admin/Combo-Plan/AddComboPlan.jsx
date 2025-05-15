@@ -14,11 +14,19 @@ import { useForm, Controller } from "react-hook-form";
 import { TiWarning } from "react-icons/ti";
 import Select from "react-select";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { addComboPlan, fetchBannerFeatureList, fetchBoostFeatureList } from "../../../services/api";
+import { addComboPlan, fetchBannerFeatureList, fetchBoostFeatureList, fetchCategoryList, fetchPromotionTagList, fetchStateList } from "../../../services/api";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import Loader from "../../../components/Loader";
+import AdminHeader from "../../../components/admin/AdminHeader";
+import { useNavigate } from "react-router-dom";
 
 export default function AddComboPlan() {
-    const token = "39|hd8TaEg00toEaUp6MOjPjQJiPwgR6RuCnbZ5xHN5ab1184fc"; // Replace this with actual token (from context, cookie, etc.)
+
+    const token = useSelector((state) => state.auth.token);
+    const navigate = useNavigate();
+    // console.log(token);
+
     const {
         register,
         handleSubmit,
@@ -27,6 +35,7 @@ export default function AddComboPlan() {
         formState: { errors },
     } = useForm();
 
+    // BANNER FEATURE LIST
     const {
         data: bannerFeatures,
         isLoading: bannerLoading,
@@ -36,6 +45,7 @@ export default function AddComboPlan() {
         queryFn: () => fetchBannerFeatureList(token),
     });
 
+    // BOOST FEATURE LIST
     const {
         data: boostFeatures,
         isLoading: boostLoading,
@@ -44,6 +54,41 @@ export default function AddComboPlan() {
         queryKey: ["boostFeatures"],
         queryFn: () => fetchBoostFeatureList(token),
     });
+
+    // CATEGORY LIST
+    const {
+        data: categoryList,
+        isLoading: categoryLoading,
+        error: categoryError,
+    } = useQuery({
+        queryKey: ["categoryList"],
+        queryFn: () => fetchCategoryList(token),
+    });
+
+    // STATE LIST
+
+    const {
+        data: stateList,
+        isLoading: stateLoading,
+        error: stateError,
+    } = useQuery({
+        queryKey: ["stateList"],
+        queryFn: () => fetchStateList(token),
+    });
+
+    // PROMOTION TAG LIST
+
+    const {
+        data: promotionTagList,
+        isLoading: promotionTagLoading,
+        error: promotionTagError,
+    } = useQuery({
+        queryKey: ["promotionTagList"],
+        queryFn: () => fetchPromotionTagList(token),
+    });
+
+
+
 
     const addComboPlanMutation = useMutation({
         mutationFn: async (data) => {
@@ -66,6 +111,7 @@ export default function AddComboPlan() {
             if (response.success === 1) {
                 toast.success(response.message);
                 reset();
+                navigate("/combo-plan/combo-plan-list");
             } else {
                 toast.error(response.message || "Something went wrong");
             }
@@ -82,18 +128,7 @@ export default function AddComboPlan() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <header className="flex h-16 shadow-lg border-b items-center gap-2">
-                    <div className="flex items-center gap-2 px-4">
-                        <Separator orientation="vertical" className="mr-2 h-4" />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block text-xl">
-                                    <BreadcrumbLink href="#">Combo Plan</BreadcrumbLink>
-                                </BreadcrumbItem>
-                            </BreadcrumbList>
-                        </Breadcrumb>
-                    </div>
-                </header>
+                <AdminHeader head_text="Combo Plan"/>
 
                 <div className="form-wrapper bg-white p-5">
                     <form
@@ -232,11 +267,7 @@ export default function AddComboPlan() {
                                     <Select
                                         {...field}
                                         isMulti
-                                        options={[
-                                            { value: "1", label: "Category 1" },
-                                            { value: "3", label: "Category 3" },
-                                            { value: "4", label: "Category 4" }
-                                        ]}
+                                        options={categoryList?.response}
                                         placeholder="-- Select Category --"
                                         classNamePrefix="react-select"
                                     />
@@ -258,11 +289,7 @@ export default function AddComboPlan() {
                                     <Select
                                         {...field}
                                         isMulti
-                                        options={[
-                                            { value: "5", label: "State 5" },
-                                            { value: "8", label: "State 8" },
-                                            { value: "9", label: "State 9" }
-                                        ]}
+                                        options={stateList?.response}
                                         placeholder="-- Select State --"
                                         classNamePrefix="react-select"
                                     />
@@ -283,7 +310,7 @@ export default function AddComboPlan() {
                                 render={({ field }) => (
                                     <Select
                                         {...field}
-                                        options={[{ value: "3", label: "Tag 3" }]}
+                                        options={promotionTagList?.response}
                                         placeholder="-- Select Tag --"
                                         classNamePrefix="react-select"
                                     />
@@ -302,11 +329,9 @@ export default function AddComboPlan() {
                                 id="package_description"
                                 placeholder="Describe the package"
                                 className="w-full border px-3 py-2 rounded"
-                                {...register("package_description", { required: "Enter package description" })}
+                                {...register("package_description")}
                             />
-                            {errors.package_description && (
-                                <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.package_description.message}</p>
-                            )}
+                            
                         </div>
 
                         {/* Submit Button */}
@@ -318,8 +343,11 @@ export default function AddComboPlan() {
                                 {addComboPlanMutation.isPending ? "Submitting..." : "Submit Plan"}
                             </button>
                         </div>
+
+                
                     </form>
                 </div>
+                 {addComboPlanMutation.isPending ? <Loader task="Creating Combo Plan..." /> : null}
             </SidebarInset>
         </SidebarProvider>
     );

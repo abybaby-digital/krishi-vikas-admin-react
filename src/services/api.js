@@ -2,12 +2,17 @@ import axios from "axios";
 
 // const baseURL = "https://krishivikas.com/api/v2";
 // const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
+
 const baseURL = "http://192.168.0.204:8080/api/admin";
+
+const api = axios.create({
+  baseURL: baseURL,
+});
 
 // LOGIN API CALL
 export const adminLogin = async (admin_email, password) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `${baseURL}/admin-login`,
       {
         admin_email,
@@ -29,7 +34,7 @@ export const adminLogin = async (admin_email, password) => {
 
 // ADD COMBO PLAN
 
-export const addComboPlan = async ({
+export const addComboPlan = async (
   token,
   plan_name,
   plan_duration,
@@ -41,23 +46,23 @@ export const addComboPlan = async ({
   category_id,
   state_id,
   package_description,
-  promotion_tag_id,
-}) => {
+  promotion_tag_id
+) => {
   try {
-    const response = await axios.post(
-      `${baseURL}/add-combo-plan`,
+    const response = await api.post(
+      "/add-combo-plan",
       {
-        plan_name,
-        plan_duration,
-        plan_price,
-        banner_feature_id,
-        boosts_feature_id,
-        no_of_boost,
-        no_of_product,
-        category_id, 
-        state_id,
-        package_description,
-        promotion_tag_id,
+        plan_name: plan_name,
+        plan_duration: plan_duration,
+        plan_price: plan_price,
+        banner_feature_id: banner_feature_id,
+        boosts_feature_id: boosts_feature_id,
+        no_of_boost: no_of_boost,
+        no_of_product: no_of_product,
+        category_id: category_id,
+        state_id: state_id,
+        package_description: package_description,
+        promotion_tag_id: promotion_tag_id,
       },
       {
         headers: {
@@ -65,10 +70,161 @@ export const addComboPlan = async ({
         },
       }
     );
-
-    return response.data;
+    return response.data.result;
   } catch (error) {
-    console.error("Failed to add combo plan:", error);
+    console.error("Error in creating combo plan:", error);
+    throw error;
+  }
+};
+// COMBO PLAN PURCHASE
+
+export const makeComboPlanPurchase = async (
+  token,
+  user_id,
+  combo_plan_id,
+  purchase_price,
+  tax_category,
+  mode_of_transaction,
+  transaction_type
+) => {
+  try {
+    const response = await api.post(
+      "/combo-plan-purchase",
+      {
+        user_id: user_id,
+        combo_plan_id: combo_plan_id,
+        purchase_price: purchase_price,
+        tax_category: tax_category,
+        mode_of_transaction: mode_of_transaction,
+        transaction_type: transaction_type,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("Error in creating combo plan:", error);
+    throw error;
+  }
+};
+
+// EDIT COMBO PLAN
+
+export const editComboPlan = async (
+  token,
+  plan_id,
+  plan_name,
+  plan_duration,
+  plan_price,
+  banner_feature_id,
+  boosts_feature_id,
+  no_of_boost,
+  no_of_product,
+  category_id,
+  state_id,
+  package_description,
+  promotion_tag_id
+) => {
+  try {
+    const response = await api.post(
+      "/edit-combo-plan",
+      {
+        plan_id: plan_id,
+        plan_name: plan_name,
+        plan_duration: plan_duration,
+        plan_price: plan_price,
+        banner_feature_id: banner_feature_id,
+        boosts_feature_id: boosts_feature_id,
+        no_of_boost: no_of_boost,
+        no_of_product: no_of_product,
+        category_id: category_id,
+        state_id: state_id,
+        package_description: package_description,
+        promotion_tag_id: promotion_tag_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("Error in creating combo plan:", error);
+    throw error;
+  }
+};
+
+// COMBO PLAN LIST
+
+export const fetchComboPlanList = async (token) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/combo-plan-list`,
+      {}, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
+// COMBO PLAN PURCHASE LIST
+
+export const fetchComboPlanPurchaseList = async (token) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/combo-plan-purchase-list`,
+      {}, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
+// COMBO PLAN DETAILS BY ID
+
+export const fetchSingleComboPlanDetails = async (token, combo_plan_id) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/combo-plans-details-by-id`,
+      {
+        combo_plan_id: combo_plan_id,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
     throw error;
   }
 };
@@ -77,7 +233,7 @@ export const addComboPlan = async ({
 
 export const fetchBannerFeatureList = async (token) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `${baseURL}/banner-feature-list`,
       {}, // Empty object as the request body if not required
       {
@@ -99,7 +255,7 @@ export const fetchBannerFeatureList = async (token) => {
 // BOOST FEATURE LIST
 export const fetchBoostFeatureList = async (token) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `${baseURL}/boost-feature-list`,
       {}, // Empty object as the request body if not required
       {
@@ -114,6 +270,158 @@ export const fetchBoostFeatureList = async (token) => {
   } catch (error) {
     // Log and throw the error in case of failure
     console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
+// Category LIST
+export const fetchCategoryList = async (token) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/category-list`,
+      {}, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
+// STATE LIST
+export const fetchStateList = async (token) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/state-list`,
+      {}, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
+// PROMOTIONAL TAG LIST
+export const fetchPromotionTagList = async (token) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/promotional-tag-list`,
+      {}, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
+// SEARCH USER BY PHONE NO
+export const searchUserByPhoneNo = async (token, phone_no) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/check-user-phone-no`,
+      {
+        phone_no: phone_no,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
+// ADD NOTIFICATION CONTENT
+
+export const addNotificationContent = async (
+  token,
+  noti_type_id,
+  ln_en_title,
+  ln_en_des,
+  ln_bn_title,
+  ln_bn_des,
+  ln_hn_title,
+  ln_hn_des
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/add-notification-content`,
+      {
+        noti_type_id: noti_type_id,
+        ln_en_title: ln_en_title,
+        ln_en_des: ln_en_des,
+        ln_bn_title: ln_bn_title,
+        ln_bn_des: ln_bn_des,
+        ln_hn_title: ln_hn_title,
+        ln_hn_des: ln_hn_des,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
+// NOTIFICATION TYPE LIST
+export const notificationTypeList = async (token) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/notification-type-list`,
+      {}, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to notificaton type list:", error);
     throw error;
   }
 };

@@ -1,4 +1,10 @@
+main{
+  overflow-x: hidden;
+}
 
+.preloader{
+  z-index: 99;
+}
 /* PRELOADER CSS */
 .kv_loader {
   box-sizing: border-box;
@@ -96,9 +102,9 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
 
 .sidebar_menu a:hover,
 .sidebar_menu a.active {
-  color: #13693a;
+  color: #ffffff;
   border-color: #13693a69;
-  background: white;
+  background: linear-gradient(33deg, #13693a, #8cbf44);
 }
 
 .sidebar_menu a.active::before {
@@ -115,9 +121,9 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
 }
 
 .sidebar_menu:has(.submenu a.active)>a {
-  color: #13693a;
+  color: #ffffff;
   border-color: #13693a69;
-  background: white;
+  background: linear-gradient(33deg, #13693a, #8cbf44);
 }
 
 .sidebar_menu:has(.submenu a.active)>a::before {
@@ -196,4 +202,12 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.profile-dropdown{
+  display: none;
+}
+
+.profile:hover .profile-dropdown{
+  display: block;
 }
