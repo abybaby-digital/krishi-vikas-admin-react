@@ -261,8 +261,8 @@ const data = {
           url: "/notification/add-notification-content",
         },
         {
-          title: "Notification Type List",
-          url: "/notification/notification-type-list",
+          title: "Notification Content Info",
+          url: "/notification/notification-content-list",
         },
 
       ],

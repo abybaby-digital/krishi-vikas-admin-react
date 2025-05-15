@@ -374,20 +374,176 @@ export const addNotificationContent = async (
   ln_bn_title,
   ln_bn_des,
   ln_hn_title,
-  ln_hn_des
+  ln_hn_des,
+  ln_as_title, // Assamese
+  ln_as_des,
+  ln_gu_title, // Gujarati
+  ln_gu_des,
+  ln_kn_title, // Kannada
+  ln_kn_des,
+  ln_ml_title, // Malayalam
+  ln_ml_des,
+  ln_mr_title, // Marathi
+  ln_mr_des,
+  ln_or_title, // Odia
+  ln_or_des,
+  ln_ta_title, // Tamil
+  ln_ta_des,
+  ln_te_title, // Telugu
+  ln_te_des,
+  ln_pa_title, // Punjabi
+  ln_pa_des,
+  noti_icon
 ) => {
   try {
+    const formData = new FormData();
+
+    // Append text data (notification content)
+    formData.append("noti_type_id", noti_type_id);
+    formData.append("ln_en_title", ln_en_title);
+    formData.append("ln_en_des", ln_en_des);
+    formData.append("ln_bn_title", ln_bn_title);
+    formData.append("ln_bn_des", ln_bn_des);
+    formData.append("ln_hn_title", ln_hn_title);
+    formData.append("ln_hn_des", ln_hn_des);
+    formData.append("ln_as_title", ln_as_title); // Assamese title
+    formData.append("ln_as_des", ln_as_des); // Assamese description
+    formData.append("ln_gu_title", ln_gu_title); // Gujarati title
+    formData.append("ln_gu_des", ln_gu_des); // Gujarati description
+    formData.append("ln_kn_title", ln_kn_title); // Kannada title
+    formData.append("ln_kn_des", ln_kn_des); // Kannada description
+    formData.append("ln_ml_title", ln_ml_title); // Malayalam title
+    formData.append("ln_ml_des", ln_ml_des); // Malayalam description
+    formData.append("ln_mr_title", ln_mr_title); // Marathi title
+    formData.append("ln_mr_des", ln_mr_des); // Marathi description
+    formData.append("ln_or_title", ln_or_title); // Odia title
+    formData.append("ln_or_des", ln_or_des); // Odia description
+    formData.append("ln_ta_title", ln_ta_title); // Tamil title
+    formData.append("ln_ta_des", ln_ta_des); // Tamil description
+    formData.append("ln_te_title", ln_te_title); // Telugu title
+    formData.append("ln_te_des", ln_te_des); // Telugu description
+    formData.append("ln_pa_title", ln_pa_title); // Punjabi title
+    formData.append("ln_pa_des", ln_pa_des); // Punjabi description
+
+    // Append icon (image)
+    if (noti_icon && noti_icon[0]) {
+      formData.append("noti_icon", noti_icon[0]); // Assuming 'noti_icon' is a file (image)
+    }
+
+    // Make the request using FormData
     const response = await api.post(
       `${baseURL}/add-notification-content`,
+      formData,
       {
-        noti_type_id: noti_type_id,
-        ln_en_title: ln_en_title,
-        ln_en_des: ln_en_des,
-        ln_bn_title: ln_bn_title,
-        ln_bn_des: ln_bn_des,
-        ln_hn_title: ln_hn_title,
-        ln_hn_des: ln_hn_des,
-      }, // Empty object as the request body if not required
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+          "Content-Type": "multipart/form-data", // Ensures the API knows it's handling form data
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to add notification content:", error);
+    throw error;
+  }
+};
+
+// EDIT NOTIFICATION CONTENT API
+
+export const editNotificationContent = async (
+  token,
+  content_id, // The ID of the notification content to edit
+  ln_en_title,
+  ln_en_des,
+  ln_bn_title,
+  ln_bn_des,
+  ln_hn_title,
+  ln_hn_des,
+  ln_as_title, // Assamese
+  ln_as_des,
+  ln_gu_title, // Gujarati
+  ln_gu_des,
+  ln_kn_title, // Kannada
+  ln_kn_des,
+  ln_ml_title, // Malayalam
+  ln_ml_des,
+  ln_mr_title, // Marathi
+  ln_mr_des,
+  ln_or_title, // Odia
+  ln_or_des,
+  ln_ta_title, // Tamil
+  ln_ta_des,
+  ln_te_title, // Telugu
+  ln_te_des,
+  ln_pa_title, // Punjabi
+  ln_pa_des,
+  noti_icon
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append text data (notification content)
+    formData.append("content_id", content_id); // Notification ID to identify the one to update
+    formData.append("ln_en_title", ln_en_title);
+    formData.append("ln_en_des", ln_en_des);
+    formData.append("ln_bn_title", ln_bn_title);
+    formData.append("ln_bn_des", ln_bn_des);
+    formData.append("ln_hn_title", ln_hn_title);
+    formData.append("ln_hn_des", ln_hn_des);
+    formData.append("ln_as_title", ln_as_title); // Assamese title
+    formData.append("ln_as_des", ln_as_des); // Assamese description
+    formData.append("ln_gu_title", ln_gu_title); // Gujarati title
+    formData.append("ln_gu_des", ln_gu_des); // Gujarati description
+    formData.append("ln_kn_title", ln_kn_title); // Kannada title
+    formData.append("ln_kn_des", ln_kn_des); // Kannada description
+    formData.append("ln_ml_title", ln_ml_title); // Malayalam title
+    formData.append("ln_ml_des", ln_ml_des); // Malayalam description
+    formData.append("ln_mr_title", ln_mr_title); // Marathi title
+    formData.append("ln_mr_des", ln_mr_des); // Marathi description
+    formData.append("ln_or_title", ln_or_title); // Odia title
+    formData.append("ln_or_des", ln_or_des); // Odia description
+    formData.append("ln_ta_title", ln_ta_title); // Tamil title
+    formData.append("ln_ta_des", ln_ta_des); // Tamil description
+    formData.append("ln_te_title", ln_te_title); // Telugu title
+    formData.append("ln_te_des", ln_te_des); // Telugu description
+    formData.append("ln_pa_title", ln_pa_title); // Punjabi title
+    formData.append("ln_pa_des", ln_pa_des); // Punjabi description
+
+    // Append icon (image) if provided
+    if (noti_icon && noti_icon[0]) {
+      formData.append("noti_icon", noti_icon[0]); // Assuming 'noti_icon' is a file (image)
+    }
+
+    // Make the request using FormData
+    const response = await api.post(
+      `${baseURL}/edit-notification-content`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+          "Content-Type": "multipart/form-data", // Ensures the API knows it's handling form data
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to edit notification content:", error);
+    throw error;
+  }
+};
+
+// NOTIFICATION TYPE LIST
+export const notificationTypeList = async (token) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/notification-type-list`,
+      {}, // Empty object as the request body if not required
       {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization header
@@ -399,16 +555,16 @@ export const addNotificationContent = async (
     return response.data.result;
   } catch (error) {
     // Log and throw the error in case of failure
-    console.error("Failed to fetch banner features:", error);
+    console.error("Failed to notificaton type list:", error);
     throw error;
   }
 };
 
-// NOTIFICATION TYPE LIST
-export const notificationTypeList = async (token) => {
+// NOTIFICATION CONTENT LIST
+export const notificationContentList = async (token) => {
   try {
     const response = await api.post(
-      `${baseURL}/notification-type-list`,
+      `${baseURL}/notification-content-list`,
       {}, // Empty object as the request body if not required
       {
         headers: {

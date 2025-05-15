@@ -14,7 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { TiWarning } from "react-icons/ti";
 import Select from "react-select";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { addComboPlan, fetchBannerFeatureList, fetchBoostFeatureList, fetchCategoryList, fetchPromotionTagList, fetchStateList } from "../../../services/api";
+import { addNotificationContent, notificationTypeList } from "../../../services/api";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
@@ -25,7 +25,6 @@ export default function AddNotificationContent() {
 
     const token = useSelector((state) => state.auth.token);
     const navigate = useNavigate();
-    // console.log(token);
 
     const {
         register,
@@ -35,49 +34,68 @@ export default function AddNotificationContent() {
         formState: { errors },
     } = useForm();
 
+    const { data: notificationTypes } = useQuery({
+        queryKey: ["notification-type-list"],
+        queryFn: async () => {
+            return await notificationTypeList(token);
+        }
+    });
 
-
-
-    const addComboPlanMutation = useMutation({
+    const addNotificationMutation = useMutation({
         mutationFn: async (data) => {
-            return await addComboPlan(
+            return await addNotificationContent(
                 token,
-                data.plan_name,
-                data.plan_duration,
-                data.plan_price,
-                data.banner_feature_id.value,
-                data.boosts_feature_id.value,
-                data.no_of_boost,
-                data.no_of_product,
-                data.category_id.map((item) => item.value).join(","),
-                data.state_id.map((item) => item.value).join(","),
-                data.package_description,
-                data.promotion_tag_id.value
+                data.noti_type_id.value,
+                data.ln_en_title,
+                data.ln_en_des,
+                data.ln_bn_title,
+                data.ln_bn_des,
+                data.ln_hi_title,
+                data.ln_hi_des,
+                data.ln_gu_title,
+                data.ln_gu_des,
+                data.ln_kn_title,
+                data.ln_kn_des,
+                data.ln_ml_title,
+                data.ln_ml_des,
+                data.ln_mr_title,
+                data.ln_mr_des,
+                data.ln_or_title,
+                data.ln_or_des,
+                data.ln_ta_title,
+                data.ln_ta_des,
+                data.ln_te_title,
+                data.ln_te_des,
+                data.ln_pa_title,
+                data.ln_pa_des,
+                data.ln_as_title,
+                data.ln_as_des,
+                data.notification_image
             );
         },
         onSuccess: (response) => {
             if (response.success === 1) {
                 toast.success(response.message);
                 reset();
-                navigate("/combo-plan/combo-plan-list");
+                navigate("/notification/notification-content-list");
             } else {
                 toast.error(response.message || "Something went wrong");
             }
         },
         onError: (error) => {
-            toast.error("Failed to add combo plan. Please try again.");
+            toast.error("Failed to add notification content. Please try again.");
         },
     });
 
     const onSubmit = (data) => {
-        addComboPlanMutation.mutate(data);
+        addNotificationMutation.mutate(data);
     };
+
     return (
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
                 <AdminHeader head_text="Notification" />
-
                 <div className="form-wrapper bg-white p-5">
                     <form
                         onSubmit={handleSubmit(onSubmit)}
@@ -87,110 +105,101 @@ export default function AddNotificationContent() {
                             <h2 className="text-2xl font-bold text-center font-dmsans">Add Notification Content</h2>
                         </div>
 
-                        {/* English Section */}
-                        <div className="language-notification border border-dashed rounded-2xl p-5 relative overflow-hidden">
-                            <p className="bg-gradient-green inline-block text-white absolute right-3 top-3 px-3 py-1 text-sm rounded-2xl">English</p>
-
-                            {/* Title */}
-                            <div className="mb-3 mt-6">
-                                <label htmlFor="ln_en_title" className="block font-bold text-sm mb-1">Notification English Title</label>
-                                <input
-                                    type="text"
-                                    id="ln_en_title"
-                                    placeholder="Enter English title"
-                                    className="w-full border px-3 py-2 rounded"
-                                    {...register("ln_en_title", { required: "Enter English Notification Title" })}
-                                />
-                                {errors.ln_en_title && (
-                                    <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.ln_en_title.message}</p>
+                        {/* Notification Type */}
+                        <div className="notification-type lg:col-span-2 col-span-1">
+                            <label htmlFor="noti_type_id" className="block font-bold text-sm mb-1">Notification Type</label>
+                            <Controller
+                                name="noti_type_id"
+                                control={control}
+                                rules={{ required: "Select Notification Type" }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        options={notificationTypes?.response}
+                                        placeholder="-- Select Notification Type --"
+                                        classNamePrefix="react-select"
+                                    />
                                 )}
-                            </div>
-
-                            {/* Description */}
-                            <div>
-                                <label htmlFor="ln_en_des" className="block font-bold text-sm mb-1">Notification English Description</label>
-                                <input
-                                    type="text"
-                                    id="ln_en_des"
-                                    placeholder="Enter English description"
-                                    className="w-full border px-3 py-2 rounded"
-                                    {...register("ln_en_des", { required: "Enter English Notification Description" })}
-                                />
-                                {errors.ln_en_des && (
-                                    <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.ln_en_des.message}</p>
-                                )}
-                            </div>
+                            />
+                            {errors.noti_type_id && (
+                                <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.noti_type_id.message}</p>
+                            )}
                         </div>
 
-                        {/* Bengali Section */}
-                        <div className="language-notification border border-dashed rounded-2xl p-5 relative overflow-hidden">
-                            <p className="bg-gradient-green inline-block text-white absolute right-3 top-3 px-3 py-1 text-sm rounded-2xl">Bengali</p>
-
-                            {/* Title */}
-                            <div className="mb-3 mt-6">
-                                <label htmlFor="ln_bn_title" className="block font-bold text-sm mb-1">Notification Bengali Title</label>
-                                <input
-                                    type="text"
-                                    id="ln_bn_title"
-                                    placeholder="Enter Bengali title"
-                                    className="w-full border px-3 py-2 rounded"
-                                    {...register("ln_bn_title", { required: "Enter Bengali Notification Title" })}
-                                />
-                                {errors.ln_bn_title && (
-                                    <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.ln_bn_title.message}</p>
-                                )}
-                            </div>
-
-                            {/* Description */}
-                            <div>
-                                <label htmlFor="ln_bn_des" className="block font-bold text-sm mb-1">Notification Bengali Description</label>
-                                <input
-                                    type="text"
-                                    id="ln_bn_des"
-                                    placeholder="Enter Bengali description"
-                                    className="w-full border px-3 py-2 rounded"
-                                    {...register("ln_bn_des", { required: "Enter Bengali Notification Description" })}
-                                />
-                                {errors.ln_bn_des && (
-                                    <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.ln_bn_des.message}</p>
-                                )}
-                            </div>
+                        {/* Notification Image */}
+                        <div className="lg:col-span-2 col-span-1">
+                            <label htmlFor="notification_image" className="block font-bold text-sm mb-1">Notification Image</label>
+                            <input
+                                type="file"
+                                id="notification_image"
+                                className="w-full border px-3 py-2 rounded"
+                                {...register("notification_image", {
+                                    required: "Please upload a notification image",
+                                    validate: (fileList) => {
+                                        if (fileList && fileList[0]) {
+                                            const file = fileList[0];
+                                            if (!file.type.startsWith("image/")) {
+                                                return "Please upload a valid image file.";
+                                            }
+                                        }
+                                        return true;
+                                    }
+                                })}
+                            />
+                            {errors.notification_image && (
+                                <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.notification_image.message}</p>
+                            )}
                         </div>
 
-                        {/* Hindi Section */}
-                        <div className="language-notification border border-dashed rounded-2xl p-5 relative overflow-hidden">
-                            <p className="bg-gradient-green inline-block text-white absolute right-3 top-3 px-3 py-1 text-sm rounded-2xl">Hindi</p>
+                        {/* Language Sections */}
+                        {[
+                            { code: 'en', label: 'English' },
+                            { code: 'bn', label: 'Bengali' },
+                            { code: 'hi', label: 'Hindi' },
+                            { code: 'gu', label: 'Gujarati' },
+                            { code: 'kn', label: 'Kannada' },
+                            { code: 'ml', label: 'Malayalam' },
+                            { code: 'mr', label: 'Marathi' },
+                            { code: 'or', label: 'Oriya' },
+                            { code: 'ta', label: 'Tamil' },
+                            { code: 'te', label: 'Telugu' },
+                            { code: 'pa', label: 'Punjabi' },
+                            { code: 'as', label: 'Assamese' }
+                        ].map((language) => (
+                            <div key={language.code} className="language-notification border border-dashed rounded-2xl p-5 relative overflow-hidden">
+                                <p className="bg-gradient-green inline-block text-white absolute right-3 top-3 px-3 py-1 text-sm rounded-2xl">{language.label}</p>
 
-                            {/* Title */}
-                            <div className="mb-3 mt-6">
-                                <label htmlFor="ln_hi_title" className="block font-bold text-sm mb-1">Notification Hindi Title</label>
-                                <input
-                                    type="text"
-                                    id="ln_hi_title"
-                                    placeholder="Enter Hindi title"
-                                    className="w-full border px-3 py-2 rounded"
-                                    {...register("ln_hi_title", { required: "Enter Hindi Notification Title" })}
-                                />
-                                {errors.ln_hi_title && (
-                                    <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.ln_hi_title.message}</p>
-                                )}
-                            </div>
+                                {/* Title */}
+                                <div className="mb-3 mt-6">
+                                    <label htmlFor={`ln_${language.code}_title`} className="block font-bold text-sm mb-1">{`Notification ${language.label} Title`}</label>
+                                    <input
+                                        type="text"
+                                        id={`ln_${language.code}_title`}
+                                        placeholder={`Enter ${language.label} title`}
+                                        className="w-full border px-3 py-2 rounded"
+                                        {...register(`ln_${language.code}_title`, { required: `Enter ${language.label} Notification Title` })}
+                                    />
+                                    {errors[`ln_${language.code}_title`] && (
+                                        <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors[`ln_${language.code}_title`].message}</p>
+                                    )}
+                                </div>
 
-                            {/* Description */}
-                            <div>
-                                <label htmlFor="ln_hi_des" className="block font-bold text-sm mb-1">Notification Hindi Description</label>
-                                <input
-                                    type="text"
-                                    id="ln_hi_des"
-                                    placeholder="Enter Hindi description"
-                                    className="w-full border px-3 py-2 rounded"
-                                    {...register("ln_hi_des", { required: "Enter Hindi Notification Description" })}
-                                />
-                                {errors.ln_hi_des && (
-                                    <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.ln_hi_des.message}</p>
-                                )}
+                                {/* Description */}
+                                <div>
+                                    <label htmlFor={`ln_${language.code}_des`} className="block font-bold text-sm mb-1">{`Notification ${language.label} Description`}</label>
+                                    <input
+                                        type="text"
+                                        id={`ln_${language.code}_des`}
+                                        placeholder={`Enter ${language.label} description`}
+                                        className="w-full border px-3 py-2 rounded"
+                                        {...register(`ln_${language.code}_des`, { required: `Enter ${language.label} Notification Description` })}
+                                    />
+                                    {errors[`ln_${language.code}_des`] && (
+                                        <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors[`ln_${language.code}_des`].message}</p>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        ))}
 
                         {/* Submit Button */}
                         <div className="form-submit-btn mt-5 lg:col-span-2 col-span-1 rounded-2xl p-5 text-center bg-whitesmoke">
@@ -198,14 +207,12 @@ export default function AddNotificationContent() {
                                 type="submit"
                                 className="bg-gradient-green text-white px-4 py-2 rounded hover:bg-[#000]"
                             >
-                                {addComboPlanMutation.isPending ? "Submitting..." : "Submit Plan"}
+                                {addNotificationMutation.isPending ? "Submitting..." : "Submit Notification"}
                             </button>
                         </div>
                     </form>
-
-
                 </div>
-                {addComboPlanMutation.isPending ? <Loader task="Creating Combo Plan..." /> : null}
+                {addNotificationMutation.isPending ? <Loader task="Creating Notification..." /> : null}
             </SidebarInset>
         </SidebarProvider>
     );

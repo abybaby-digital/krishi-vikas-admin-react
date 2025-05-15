@@ -8,6 +8,7 @@ import ProtectedRoute from "./pages/admin/ProtectedRoute";
 import { setToken, setUsers } from "./redux/features/Auth/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CryptoJS from "crypto-js";
+import EditNotificationContent from "./pages/admin/Notifications/editNotificationContent";
 
 // Lazy-loaded components
 const Dashboard = React.lazy(() => import("./pages/admin/Dashboard"));
@@ -19,6 +20,8 @@ const EditComboPlan = React.lazy(() => import("./pages/admin/Combo-Plan/EditComb
 const ComboPlanPurchase = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPlanPurchase"));
 const ComboPlanPurchaseList = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPlanPurchaseList"));
 const AddNotificationContent = React.lazy(() => import("./pages/admin/Notifications/AddNotificationContent"));
+const NotificationContentList = React.lazy(() => import("./pages/admin/Notifications/NotificationContentList"));
+const Edit = React.lazy(() => import("./pages/admin/Notifications/NotificationContentList"));
 
 const ScrollToTop = () => {
   const location = useLocation();
@@ -73,6 +76,8 @@ const App = () => {
             <Route path="/combo-plan/combo-plan-purchase" element={<ComboPlanPurchase />} />
             <Route path="/combo-plan/combo-plan-purchase-list" element={<ComboPlanPurchaseList />} />
             <Route path="/notification/add-notification-content" element={<AddNotificationContent />} />
+            <Route path="/notification/edit/:id" element={<EditNotificationContent />} />
+            <Route path="/notification/notification-content-list" element={<NotificationContentList />} />
           </Route>
 
         </Routes>
