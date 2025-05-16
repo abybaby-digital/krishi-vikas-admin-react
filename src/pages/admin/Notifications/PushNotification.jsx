@@ -78,7 +78,7 @@ export default function PushNotification() {
             if (res.success === 1) {
                 toast.success("Notification Scheduled successfully!");
                 reset();
-                navigate("/notifications/list");
+                navigate("/notification/notification-schedule-list");
             } else {
                 toast.error(res.message || "Failed to send notification.");
             }
@@ -113,8 +113,8 @@ export default function PushNotification() {
                 <AdminHeader head_text="Push Notification" />
 
                 <div className="bg-white p-5">
-                    <form onSubmit={handleSubmit(onSubmit)} className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-4 lg:grid-cols-3 grid-cols-1">
-                        <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 xl:col-span-4 col-span-1">
+                    <form onSubmit={handleSubmit(onSubmit)} className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 md:grid-cols-4 grid-cols-1">
+                        <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 col-span-full">
                             <h2 className="text-2xl font-bold text-center font-dmsans">Notification Schedule</h2>
                         </div>
 
@@ -272,7 +272,7 @@ export default function PushNotification() {
                         </div>
 
                         {/* Submit Button */}
-                        <div className="form-submit-btn mt-5 xl:col-span-4 lg:col-span-3 col-span-1 rounded-2xl p-5 text-center bg-whitesmoke">
+                        <div className="form-submit-btn mt-5 xl:col-span-4 col-span-full rounded-2xl p-5 text-center bg-whitesmoke">
                             <button
                                 type="submit"
                                 className="bg-gradient-green text-white px-4 py-2 rounded hover:bg-[#000]"

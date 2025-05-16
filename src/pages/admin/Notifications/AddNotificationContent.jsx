@@ -30,6 +30,8 @@ export default function AddNotificationContent() {
     const [newNotiType, setNewNotiType] = useState(false);
     const [newNotiTypeName, setNewNotiTypeName] = useState("");
 
+    // console.log(newNotiTypeName);
+
     const {
         register,
         handleSubmit,
@@ -39,11 +41,29 @@ export default function AddNotificationContent() {
     } = useForm();
 
     const { data: notificationTypes } = useQuery({
-        queryKey: ["notification-type-list"],
+        queryKey: ["notification-type-list", newNotiTypeName],
         queryFn: async () => {
-            return await notificationTypeList(token);
+            return await notificationTypeList(token ,"1");
         }
     });
+
+    const notificationTypeMutation = useMutation({
+        mutationFn: async (data) => {
+            return await addNotificationType(token, data);
+        },
+        onSuccess: (response) => {
+            if (response.success === 1) {
+                toast.success(response.message);
+                setNewNotiType(false);
+                setNewNotiTypeName("");
+            }
+        }
+
+    })
+
+    const createNotificationType = (noti_type) => {
+        notificationTypeMutation.mutate(noti_type);
+    }
 
     const addNotificationMutation = useMutation({
         mutationFn: async (data) => {
@@ -95,23 +115,7 @@ export default function AddNotificationContent() {
         addNotificationMutation.mutate(data);
     };
 
-    const newNotiTypeMutation = useMutation({
-        mutationFn: async (data) => {
-            return await addNotificationType(token, data);
-        },
-        onSuccess: (response) => {
-            if (response.success === 1) {
-                toast.success(response.message);
-                setNewNotiType(false);
-                setNewNotiTypeName("");
-            } else {
-                toast.error(response.message || "Something went wrong");
-            }
-        },
-        onError: (error) => {
-            toast.error("Failed to add notification type. Please try again.");
-        },
-    });
+
 
     return (
         <SidebarProvider>
@@ -121,7 +125,7 @@ export default function AddNotificationContent() {
                 <div className="form-wrapper bg-white p-5">
                     <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className="bg-white shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1"
+                        className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1"
                     >
                         <div className="form-heading bg-whitesmoke rounded-2xl p-5 lg:col-span-2 col-span-1 flex justify-between items-center">
                             <p>If Notification Type doesn't exist , </p> <button type="button" className="bg-gradient-green px-5 py-2 text-white" onClick={() => {
@@ -133,12 +137,11 @@ export default function AddNotificationContent() {
                         {
                             newNotiType &&
                             <div className="p-5 flex gap-3 justify-center new-notification-type lg:col-span-2 col-span-1 shadow rounded-2xl">
-                                <input type="text" value={newNotiTypeName} onChange={(e)=>{setNewNotiTypeName(e.target.value)}} name="new_not" className="w-full border px-3 py-2 rounded" placeholder="Enter  Notification Type Name" />
-                                <button className="bg-black text-white px-5 py-" type="button">Create</button>
+                                <input type="text" value={newNotiTypeName} onChange={(e) => { setNewNotiTypeName(e.target.value) }} name="new_not" className="w-full border px-3 py-2 rounded" placeholder="Enter  Notification Type Name" />
+                                <button className="bg-black text-white px-5 " type="button" disabled={newNotiTypeName.length === 0} onClick={() => { createNotificationType(newNotiTypeName) }}>Create</button>
                                 <button type="button" className="bg-red-500 text-white px-5 py-" onClick={() => {
                                     setNewNotiType(false);
                                     setNewNotiTypeName("");
-                                    useMutation.mutate(newNotiTypeName);
                                 }}>Cancel</button>
                             </div>
                         }
@@ -260,6 +263,7 @@ export default function AddNotificationContent() {
                     </form>
                 </div>
                 {addNotificationMutation.isPending ? <Loader task="Creating Notification..." /> : null}
+                {notificationTypeMutation.isPending ? <Loader task="Creating New Notification Type..." /> : null}
             </SidebarInset>
         </SidebarProvider>
     );

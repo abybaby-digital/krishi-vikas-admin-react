@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // const baseURL = "https://krishivikas.com/api/v2";
-// const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
+const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
 
-const baseURL = "http://192.168.0.204:8080/api/admin";
+// const baseURL = "http://192.168.0.204:8080/api/admin";
 
 const api = axios.create({
   baseURL: baseURL,
@@ -538,6 +538,32 @@ export const editNotificationContent = async (
   }
 };
 
+// NOTIFICATION CONTENT BY ID
+export const fetchNotificationContentById = async (
+  token,
+  notification_content_id
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/notification-content-by-id`,
+      {
+        notification_content_id: notification_content_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fecth notification content:", error);
+    throw error;
+  }
+};
 // ADD NOTIFICATION TYPE
 
 export const addNotificationType = async (token, notification_type_name) => {
@@ -564,11 +590,13 @@ export const addNotificationType = async (token, notification_type_name) => {
 };
 
 // NOTIFICATION TYPE LIST
-export const notificationTypeList = async (token) => {
+export const notificationTypeList = async (token, status) => {
   try {
     const response = await api.post(
       `${baseURL}/notification-type-list`,
-      {}, // Empty object as the request body if not required
+      {
+        status: status,
+      }, // Empty object as the request body if not required
       {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization header
@@ -683,7 +711,7 @@ export const editNotificationSchedule = async (
   category_id,
   post_id,
   redirection_url,
-  notification_img // Optional image (can be updated or left unchanged)
+  notification_img 
 ) => {
   try {
     const formData = new FormData();
@@ -739,6 +767,33 @@ export const fetchNotificationScheduleList = async (
       {
         language_id: language_id,
         created_at: created_at,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to notificaton Schedule list:", error);
+    throw error;
+  }
+};
+
+// NOTIFICATION SCHEDULE DETAILS BY ID
+export const fetchNotificationScheduleDataById = async (
+  token,
+  schedule_notification_id
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/schedule-notification-by-id`,
+      {
+        schedule_notification_id: schedule_notification_id,
       }, // Empty object as the request body if not required
       {
         headers: {

@@ -133,7 +133,7 @@ export default function AddComboPlan() {
                 <div className="form-wrapper bg-white p-5">
                     <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className="bg-white shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-4 lg:grid-cols-3 grid-cols-1"
+                        className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-4 lg:grid-cols-3 grid-cols-1"
                     >
                         <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 xl:col-span-4 lg:col-span-3 col-span-1">
                             <h2 className="text-2xl font-bold text-center font-dmsans">Add Combo Plan</h2>
