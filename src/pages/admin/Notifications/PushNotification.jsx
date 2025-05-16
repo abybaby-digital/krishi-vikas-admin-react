@@ -115,7 +115,7 @@ export default function PushNotification() {
                 <div className="bg-white p-5">
                     <form onSubmit={handleSubmit(onSubmit)} className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 md:grid-cols-4 grid-cols-1">
                         <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 col-span-full">
-                            <h2 className="text-2xl font-bold text-center font-dmsans">Notification Schedule</h2>
+                            <h2 className="text-2xl font-bold text-center font-dmsans">Push Notification Schedule</h2>
                         </div>
 
                         {/* Language Selection */}

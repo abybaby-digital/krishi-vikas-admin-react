@@ -55,12 +55,14 @@ export default function EditPushNotification() {
         enabled: !!id,
     });
 
-    console.log(existingNotification?.response.state_ids.split(",").map(Number));
+    console.log(existingNotification?.response?.state_ids?.split(",").map(Number));
+    console.log(districtOptions);
 
 
+    // Step 1: Populate static fields once notification is fetched
     useEffect(() => {
-        if (existingNotification?.response) {
-            const notif = existingNotification?.response;
+        const notif = existingNotification?.response;
+        if (notif) {
             reset({
                 title: notif.title,
                 description: notif.description,
@@ -72,17 +74,49 @@ export default function EditPushNotification() {
                 category_id: notif.category_id,
                 post_id: notif.post_id,
                 redirection_url: notif.redirection_url,
-                states: stateList?.response?.filter(item => notif?.state_ids.split(',').includes(String(item.value))),
-                // states: (notif.state_ids.split(",").map(Number)).map((s) => ({ label: s.name, value: s.id })),
-                districts: notif.districts?.map((d) => ({ label: d.name, value: d.id })),
             });
-            setSelectedStates(notif.states?.map((s) => ({ label: s.name, value: s.id })) || []);
         }
     }, [existingNotification]);
 
+    // Step 2: Populate selectedStates based on notification and state list
+    useEffect(() => {
+        const notif = existingNotification?.response;
+        if (notif && stateList?.response) {
+            const selected = stateList.response.filter((item) =>
+                notif?.state_ids?.split(',').includes(String(item.value))
+            );
+            setSelectedStates(selected);
+            setValue("states", selected); // ✅ populate form state field
+        }
+    }, [existingNotification, stateList]);
+
+    // Step 3: Fetch districts after states are set, and then populate them
+    useEffect(() => {
+        if (selectedStates.length > 0) {
+            const stateIds = selectedStates.map((s) => s.value).join(",");
+            fetchDistrictListByState(token, stateIds).then((res) => {
+                const districts = res.response;
+                setDistrictOptions(districts);
+
+                const notif = existingNotification?.response;
+                if (notif?.dist_ids) {
+                    const selectedDistricts = districts.filter((d) =>
+                        notif.dist_ids.split(',').includes(String(d.value))
+                    );
+                    setValue("districts", selectedDistricts); // ✅ populate district field
+                }
+            });
+        } else {
+            setDistrictOptions([]);
+            setValue("districts", []);
+        }
+    }, [selectedStates]);
+
+
+
     useEffect(() => {
         if (selectedStates.length) {
-            const stateIds = selectedStates.map((s) => s.value).join(",");
+            const stateIds = selectedStates?.map((s) => s.value).join(",");
             fetchDistrictListByState(token, stateIds).then((res) => {
                 setDistrictOptions(res.response);
             });
@@ -91,10 +125,14 @@ export default function EditPushNotification() {
         }
     }, [selectedStates]);
 
+    console.log("type", typeof (+id));
+
+
     const editPushNotificationMutation = useMutation({
         mutationFn: (data) =>
             editNotificationSchedule(
                 token,
+                +id,
                 data.title,
                 data.description,
                 data.redirection_type,
@@ -111,9 +149,9 @@ export default function EditPushNotification() {
             ),
         onSuccess: (res) => {
             if (res.success === 1) {
-                toast.success("Notification Scheduled successfully!");
+                toast.success("Notification Re-Scheduled successfully!");
                 reset();
-                navigate("/notifications/list");
+                navigate("/notification/notification-schedule-list");
             } else {
                 toast.error(res.message || "Failed to send notification.");
             }
@@ -122,6 +160,7 @@ export default function EditPushNotification() {
             toast.error("An error occurred. Please try again.");
         },
     });
+
 
     const onSubmit = (formData) => {
         const payload = {
@@ -134,7 +173,7 @@ export default function EditPushNotification() {
 
         console.log(payload);
 
-        // editPushNotificationMutation.mutate(payload);
+        editPushNotificationMutation.mutate(payload);
 
     };
 
@@ -146,7 +185,7 @@ export default function EditPushNotification() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <AdminHeader head_text="Edit Notification" />
+                <AdminHeader head_text="Push Notification" />
 
                 <div className="bg-white p-5">
                     {notificationLoading ?
@@ -158,7 +197,7 @@ export default function EditPushNotification() {
                         >
                             <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 xl:col-span-4 col-span-1">
                                 <h2 className="text-2xl font-bold text-center font-dmsans">
-                                    Edit Notification
+                                    Edit Push Notification Schedule
                                 </h2>
                             </div>
 

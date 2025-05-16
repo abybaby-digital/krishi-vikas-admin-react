@@ -705,6 +705,8 @@ export const editNotificationSchedule = async (
   description,
   redirection_type,
   language_id,
+  state_ids,
+  dist_ids,
   notification_date,
   notification_time,
   banner_id,
@@ -722,6 +724,8 @@ export const editNotificationSchedule = async (
     formData.append("description", description);
     formData.append("redirection_type", redirection_type);
     formData.append("language_id", language_id);
+    formData.append("state_ids", state_ids);
+    formData.append("dist_ids", dist_ids);
     formData.append("notification_date", notification_date);
     formData.append("notification_time", notification_time);
     formData.append("banner_id", banner_id);

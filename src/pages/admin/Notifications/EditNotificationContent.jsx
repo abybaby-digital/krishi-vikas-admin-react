@@ -104,7 +104,6 @@ export default function EditNotificationContent() {
     const onSubmit = (data) => {
         // Trigger the mutation with the form data
         console.log(data);
-
         editNotificationContentMutation.mutate(data);
     };
 
@@ -177,7 +176,7 @@ export default function EditNotificationContent() {
                                 {[
                                     { code: 'en', label: 'English' },
                                     { code: 'bn', label: 'Bengali' },
-                                    { code: 'hi', label: 'Hindi' },
+                                    { code: 'hn', label: 'Hindi' },
                                     { code: 'gu', label: 'Gujarati' },
                                     { code: 'kn', label: 'Kannada' },
                                     { code: 'ml', label: 'Malayalam' },
