@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // const baseURL = "https://krishivikas.com/api/v2";
-const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
+// const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
 
-// const baseURL = "http://192.168.0.204:8080/api/admin";
+const baseURL = "http://192.168.0.204:8080/api/admin";
 
 const api = axios.create({
   baseURL: baseURL,
@@ -540,7 +540,7 @@ export const editNotificationContent = async (
 
 // ADD NOTIFICATION TYPE
 
-export const addNotificationType = async (token, notification_type_name) => { 
+export const addNotificationType = async (token, notification_type_name) => {
   try {
     const response = await api.post(
       `${baseURL}/add-notification-type`,
@@ -561,7 +561,7 @@ export const addNotificationType = async (token, notification_type_name) => {
     console.error("Failed to add notification type:", error);
     throw error;
   }
-}
+};
 
 // NOTIFICATION TYPE LIST
 export const notificationTypeList = async (token) => {
@@ -603,6 +603,203 @@ export const notificationContentList = async (token) => {
   } catch (error) {
     // Log and throw the error in case of failure
     console.error("Failed to notificaton type list:", error);
+    throw error;
+  }
+};
+
+// ADD NOTIFICATION SCHEDULE
+export const addNotificationSchedule = async (
+  token,
+  title,
+  description,
+  redirection_type,
+  language_id,
+  state_ids,
+  dist_ids,
+  notification_date,
+  notification_time,
+  banner_id,
+  category_id,
+  post_id,
+  redirection_url,
+  notification_img
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("redirection_type", redirection_type);
+    formData.append("language_id", language_id);
+    formData.append("state_ids", state_ids);
+    formData.append("dist_ids", dist_ids);
+    formData.append("notification_date", notification_date);
+    formData.append("notification_time", notification_time);
+    formData.append("banner_id", banner_id);
+    formData.append("category_id", category_id);
+    formData.append("post_id", post_id);
+    formData.append("redirection_url", redirection_url);
+
+    // Append image file
+    if (notification_img instanceof File) {
+      formData.append("notification_img", notification_img);
+    } else if (Array.isArray(notification_img) && notification_img[0]) {
+      formData.append("notification_img", notification_img[0]); // assuming it's a FileList or array
+    }
+
+    // Send POST request
+    const response = await api.post(
+      `${baseURL}/add-schedule-notification`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add notification schedule:", error);
+    throw error;
+  }
+};
+
+// EDIT NOTIFICATION API
+
+export const editNotificationSchedule = async (
+  token,
+  notification_id, // NEW: ID of the notification to edit
+  title,
+  description,
+  redirection_type,
+  language_id,
+  notification_date,
+  notification_time,
+  banner_id,
+  category_id,
+  post_id,
+  redirection_url,
+  notification_img // Optional image (can be updated or left unchanged)
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all necessary fields
+    formData.append("notification_id", notification_id);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("redirection_type", redirection_type);
+    formData.append("language_id", language_id);
+    formData.append("notification_date", notification_date);
+    formData.append("notification_time", notification_time);
+    formData.append("banner_id", banner_id);
+    formData.append("category_id", category_id);
+    formData.append("post_id", post_id);
+    formData.append("redirection_url", redirection_url);
+
+    // Append image only if a new one is provided
+    if (notification_img instanceof File) {
+      formData.append("notification_img", notification_img);
+    } else if (Array.isArray(notification_img) && notification_img[0]) {
+      formData.append("notification_img", notification_img[0]);
+    }
+
+    // Send POST or PUT request to edit notification
+    const response = await api.post(
+      `${baseURL}/edit-notification-schedule`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to edit notification schedule:", error);
+    throw error;
+  }
+};
+
+// NOTIFICATION SCHEDULE LIST
+export const fetchNotificationScheduleList = async (
+  token,
+  language_id,
+  created_at
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/schedule-notification-list`,
+      {
+        language_id: language_id,
+        created_at: created_at,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to notificaton Schedule list:", error);
+    throw error;
+  }
+};
+
+// DISTRICT LIST
+
+export const fetchDistrictListByState = async (token, state_id) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/district-list`,
+      {
+        state_id: state_id,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to notificaton Schedule list:", error);
+    throw error;
+  }
+};
+
+// LANGUAGE LIST
+
+export const fetchLanguageList = async (token) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/language-list`,
+      {}, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to notificaton Schedule list:", error);
     throw error;
   }
 };

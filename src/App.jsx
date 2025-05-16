@@ -22,6 +22,9 @@ const ComboPlanPurchaseList = React.lazy(() => import("./pages/admin/Combo-Plan/
 const AddNotificationContent = React.lazy(() => import("./pages/admin/Notifications/AddNotificationContent"));
 const NotificationContentList = React.lazy(() => import("./pages/admin/Notifications/NotificationContentList"));
 const EditNotificationContent = React.lazy(() => import("./pages/admin/Notifications/EditNotificationContent"));
+const PushNotification = React.lazy(() => import("./pages/admin/Notifications/PushNotification"));
+const EditPushNotification = React.lazy(() => import("./pages/admin/Notifications/EditPushNotification"));
+const NotificationScheduleList = React.lazy(() => import("./pages/admin/Notifications/NotificationScheduleList"));
 
 const ScrollToTop = () => {
   const location = useLocation();
@@ -78,6 +81,9 @@ const App = () => {
             <Route path="/notification/add-notification-content" element={<AddNotificationContent />} />
             <Route path="/notification/edit/:id" element={<EditNotificationContent />} />
             <Route path="/notification/notification-content-list" element={<NotificationContentList />} />
+            <Route path="/notification/notification-schedule" element={<PushNotification />} />
+            <Route path="/notification/notification-schedule/edit/:id" element={<EditPushNotification />} />
+            <Route path="/notification/notification-schedule-list" element={<NotificationScheduleList />} />
           </Route>
 
         </Routes>

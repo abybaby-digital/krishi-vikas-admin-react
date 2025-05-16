@@ -264,6 +264,14 @@ const data = {
           title: "Notification Content Info",
           url: "/notification/notification-content-list",
         },
+        {
+          title: "Notification Schedule",
+          url: "/notification/notification-schedule",
+        },
+        {
+          title: "Notification Schedule List",
+          url: "/notification/notification-schedule-list",
+        },
 
       ],
     },
