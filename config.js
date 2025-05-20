@@ -1,2 +1,2 @@
-const BASE_URL = "krishivikas.com";
+const BASE_URL = "";
 export default BASE_URL;
