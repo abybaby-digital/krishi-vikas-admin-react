@@ -25,6 +25,8 @@ const EditNotificationContent = React.lazy(() => import("./pages/admin/Notificat
 const PushNotification = React.lazy(() => import("./pages/admin/Notifications/PushNotification"));
 const EditPushNotification = React.lazy(() => import("./pages/admin/Notifications/EditPushNotification"));
 const NotificationScheduleList = React.lazy(() => import("./pages/admin/Notifications/NotificationScheduleList"));
+const AddTractor = React.lazy(() => import("./pages/admin/Tractor/AddTractor"));
+
 
 const ScrollToTop = () => {
   const location = useLocation();
@@ -84,6 +86,7 @@ const App = () => {
             <Route path="/notification/notification-schedule" element={<PushNotification />} />
             <Route path="/notification/notification-schedule/edit/:id" element={<EditPushNotification />} />
             <Route path="/notification/notification-schedule-list" element={<NotificationScheduleList />} />
+            <Route path="/tractor/add-post" element={<AddTractor />} />
           </Route>
 
         </Routes>

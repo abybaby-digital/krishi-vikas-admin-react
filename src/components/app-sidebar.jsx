@@ -70,162 +70,163 @@ const data = {
       url: "/",
       icon: TbLayoutDashboardFilled,
     },
-    // {
-    //   title: "Tractor",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: PiTractorFill,
-    //   items: [
-    //     {
-    //       title: "Brands",
-    //       url: "/tractor/brands",
-    //     },
-    //     {
-    //       title: "Models",
-    //       url: "/tractor/models",
-    //     },
-    //     {
-    //       title: "Specifications",
-    //       url: "/tractor/spec",
-    //     },
-    //     {
-    //       title: "Posts",
-    //       url: "/tractor/posts",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Goods Vehicle",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: FaTruck,
-    //   items: [
-    //     {
-    //       title: "Brands",
-    //       url: "/goods vehicle/brands",
-    //     },
-    //     {
-    //       title: "Models",
-    //       url: "/goods vehicle/models",
-    //     },
-    //     {
-    //       title: "Specifications",
-    //       url: "/goods vehicle/spec",
-    //     },
-    //     {
-    //       title: "Posts",
-    //       url: "/goods vehicle/posts",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Harvester",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: GiFarmTractor,
-    //   items: [
-    //     {
-    //       title: "Brands",
-    //       url: "/harvester/brands",
-    //     },
-    //     {
-    //       title: "Models",
-    //       url: "/harvester/models",
-    //     },
-    //     {
-    //       title: "Specifications",
-    //       url: "/harvester/spec",
-    //     },
-    //     {
-    //       title: "Posts",
-    //       url: "/harvester/posts",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Implements",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: GiFarmer,
-    //   items: [
-    //     {
-    //       title: "Brands",
-    //       url: "/implements/brands",
-    //     },
-    //     {
-    //       title: "Models",
-    //       url: "/implements/models",
-    //     },
-    //     {
-    //       title: "Specifications",
-    //       url: "/implements/spec",
-    //     },
-    //     {
-    //       title: "Posts",
-    //       url: "/implements/posts",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Tyres",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: GiTyre,
-    //   items: [
-    //     {
-    //       title: "Brands",
-    //       url: "/tyres/brands",
-    //     },
-    //     {
-    //       title: "Models",
-    //       url: "/tyres/models",
-    //     },
-    //     {
-    //       title: "Specifications",
-    //       url: "/tyres/spec",
-    //     },
-    //     {
-    //       title: "Posts",
-    //       url: "/tyres/posts",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Seeds",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: GiPlantSeed,
-    //   items: [
-    //     {
-    //       title: "Posts",
-    //       url: "/seeds/posts",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Pesticides",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: MdPestControl,
-    //   items: [
-    //     {
-    //       title: "Posts",
-    //       url: "/pesticides/posts",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Fertilizer",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: GiFertilizerBag,
-    //   items: [
-    //     {
-    //       title: "Posts",
-    //       url: "/fertilizers/posts",
-    //     },
-    //   ],
-    // },
+    {
+      title: "Tractor",
+      hasSubMenu: true,
+      url: "#",
+      icon: PiTractorFill,
+      items: [
+         {
+          title: "Product Posts",
+          url: "/tractor/add-post",
+        },
+        {
+          title: "Brands",
+          url: "/tractor/brands",
+        },
+        {
+          title: "Models",
+          url: "/tractor/models",
+        },
+        {
+          title: "Specifications",
+          url: "/tractor/spec",
+        },
+       
+      ],
+    },
+    {
+      title: "Goods Vehicle",
+      hasSubMenu: true,
+      url: "#",
+      icon: FaTruck,
+      items: [
+        {
+          title: "Brands",
+          url: "/goods vehicle/brands",
+        },
+        {
+          title: "Models",
+          url: "/goods vehicle/models",
+        },
+        {
+          title: "Specifications",
+          url: "/goods vehicle/spec",
+        },
+        {
+          title: "Posts",
+          url: "/goods vehicle/posts",
+        },
+      ],
+    },
+    {
+      title: "Harvester",
+      hasSubMenu: true,
+      url: "#",
+      icon: GiFarmTractor,
+      items: [
+        {
+          title: "Brands",
+          url: "/harvester/brands",
+        },
+        {
+          title: "Models",
+          url: "/harvester/models",
+        },
+        {
+          title: "Specifications",
+          url: "/harvester/spec",
+        },
+        {
+          title: "Posts",
+          url: "/harvester/posts",
+        },
+      ],
+    },
+    {
+      title: "Implements",
+      hasSubMenu: true,
+      url: "#",
+      icon: GiFarmer,
+      items: [
+        {
+          title: "Brands",
+          url: "/implements/brands",
+        },
+        {
+          title: "Models",
+          url: "/implements/models",
+        },
+        {
+          title: "Specifications",
+          url: "/implements/spec",
+        },
+        {
+          title: "Posts",
+          url: "/implements/posts",
+        },
+      ],
+    },
+    {
+      title: "Tyres",
+      hasSubMenu: true,
+      url: "#",
+      icon: GiTyre,
+      items: [
+        {
+          title: "Brands",
+          url: "/tyres/brands",
+        },
+        {
+          title: "Models",
+          url: "/tyres/models",
+        },
+        {
+          title: "Specifications",
+          url: "/tyres/spec",
+        },
+        {
+          title: "Posts",
+          url: "/tyres/posts",
+        },
+      ],
+    },
+    {
+      title: "Seeds",
+      hasSubMenu: true,
+      url: "#",
+      icon: GiPlantSeed,
+      items: [
+        {
+          title: "Posts",
+          url: "/seeds/posts",
+        },
+      ],
+    },
+    {
+      title: "Pesticides",
+      hasSubMenu: true,
+      url: "#",
+      icon: MdPestControl,
+      items: [
+        {
+          title: "Posts",
+          url: "/pesticides/posts",
+        },
+      ],
+    },
+    {
+      title: "Fertilizer",
+      hasSubMenu: true,
+      url: "#",
+      icon: GiFertilizerBag,
+      items: [
+        {
+          title: "Posts",
+          url: "/fertilizers/posts",
+        },
+      ],
+    },
     {
       title: "Combo Plan",
       hasSubMenu: true,
