@@ -63,7 +63,7 @@ export default function ComboPlanPurchase() {
                 token,
                 user?.id,
                 data.combo_plan_id?.value,
-                data.plan_price,
+                data.client_paid_price,
                 data.tax_category.value,
                 data.mode_of_transaction.value,
                 data.transaction_type.value,
@@ -257,8 +257,6 @@ export default function ComboPlanPurchase() {
                                 )}
                             </div>
 
-
-
                             {/* Plan Price */}
                             <div>
                                 <label htmlFor="plan_price" className="block font-bold text-sm mb-1">Plan Price</label>
@@ -272,6 +270,21 @@ export default function ComboPlanPurchase() {
                                 />
                                 {errors.plan_price && (
                                     <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.plan_price.message}</p>
+                                )}
+                            </div>
+
+                            {/* Plan Paid Price */}
+                            <div>
+                                <label htmlFor="client_paid_price" className="block font-bold text-sm mb-1">Client Paid Price</label>
+                                <input
+                                    type="number"
+                                    id="plan_price"
+                                    placeholder="Enter amount paid to client"
+                                    className="w-full border px-3 py-2 rounded"
+                                    {...register("client_paid_price", { required: "Enter price" })}
+                                />
+                                {errors.client_paid_price && (
+                                    <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.client_paid_price.message}</p>
                                 )}
                             </div>
 

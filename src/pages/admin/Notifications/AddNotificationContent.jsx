@@ -74,8 +74,8 @@ export default function AddNotificationContent() {
                 data.ln_en_des,
                 data.ln_bn_title,
                 data.ln_bn_des,
-                data.ln_hi_title,
-                data.ln_hi_des,
+                data.ln_hn_title,
+                data.ln_hn_des,
                 data.ln_gu_title,
                 data.ln_gu_des,
                 data.ln_kn_title,
@@ -201,7 +201,7 @@ export default function AddNotificationContent() {
                         {[
                             { code: 'en', label: 'English' },
                             { code: 'bn', label: 'Bengali' },
-                            { code: 'hi', label: 'Hindi' },
+                            { code: 'hn', label: 'Hindi' },
                             { code: 'gu', label: 'Gujarati' },
                             { code: 'kn', label: 'Kannada' },
                             { code: 'ml', label: 'Malayalam' },
@@ -212,7 +212,7 @@ export default function AddNotificationContent() {
                             { code: 'pa', label: 'Punjabi' },
                             { code: 'as', label: 'Assamese' }
                         ].map((language) => {
-                            const isRequired = ['en', 'bn', 'hi'].includes(language.code);
+                            // const isRequired = ['en', 'bn', 'hi'].includes(language.code);
                             return (
                                 <div key={language.code} className="language-notification border border-dashed rounded-2xl p-5 relative overflow-hidden">
                                     <p className="bg-gradient-green inline-block text-white absolute right-3 top-3 px-3 py-1 text-sm rounded-2xl">{language.label}</p>
@@ -225,7 +225,7 @@ export default function AddNotificationContent() {
                                             id={`ln_${language.code}_title`}
                                             placeholder={`Enter ${language.label} title`}
                                             className="w-full border px-3 py-2 rounded"
-                                            {...register(`ln_${language.code}_title`, isRequired ? { required: `Enter ${language.label} Notification Title` } : {})}
+                                            {...register(`ln_${language.code}_title`, { required: `Enter ${language.label} Notification Title` })}
                                         />
                                         {errors[`ln_${language.code}_title`] && (
                                             <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors[`ln_${language.code}_title`].message}</p>
@@ -240,7 +240,7 @@ export default function AddNotificationContent() {
                                             id={`ln_${language.code}_des`}
                                             placeholder={`Enter ${language.label} description`}
                                             className="w-full border px-3 py-2 rounded"
-                                            {...register(`ln_${language.code}_des`, isRequired ? { required: `Enter ${language.label} Notification Description` } : {})}
+                                            {...register(`ln_${language.code}_des`,{ required: `Enter ${language.label} Notification Description` })}
                                         />
                                         {errors[`ln_${language.code}_des`] && (
                                             <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors[`ln_${language.code}_des`].message}</p>

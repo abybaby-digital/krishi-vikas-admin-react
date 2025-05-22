@@ -92,8 +92,8 @@ export default function PushNotification() {
         const payload = {
             ...formData,
             language:+formData.language,
-            states: formData.states.map((s) => s.value).join(","),
-            districts: formData.districts.map((d) => d.value).join(","),
+            states: formData.states?.map((s) => s.value).join(","),
+            districts: formData.districts?.map((d) => d.value).join(","),
             image: formData.image[0], 
         };
         mutation.mutate(payload);
@@ -142,17 +142,26 @@ export default function PushNotification() {
                         {/* Date and Time */}
                         <div className="lg:col-span-2 col-span-1">
                             <label className="block font-semibold mb-1">Date</label>
-                            <input type="date" {...register("datepick", { required: true })} className="w-full border rounded px-3 py-2" />
+                            <input type="date" {...register("datepick", { required: "Select Notification date" })} className="w-full border rounded px-3 py-2" />
+                            {errors.datepick && (
+                                <p className="text-red-500 mt-1"><TiWarning className="inline" /> {errors.datepick.message}</p>
+                            )}
                         </div>
                         <div className="lg:col-span-2 col-span-1">
                             <label className="block font-semibold mb-1">Time</label>
-                            <input type="time" {...register("timepick", { required: true })} className="w-full border rounded px-3 py-2" />
+                            <input type="time" {...register("timepick", { required: "Select Notification time" })} className="w-full border rounded px-3 py-2" />
+                            {errors.timepick && (
+                                <p className="text-red-500 mt-1"><TiWarning className="inline" /> {errors.timepick.message}</p>
+                            )}
                         </div>
 
                         {/* Title */}
                         <div className="col-span-full">
                             <label className="block font-semibold mb-1">Title</label>
                             <input type="text" {...register("title", { required: "Enter title" })} className="w-full border rounded px-3 py-2" />
+                            {errors.title && (
+                                <p className="text-red-500 mt-1"><TiWarning className="inline" /> {errors.title.message}</p>
+                            )}
                         </div>
 
                         {/* States */}
@@ -161,7 +170,7 @@ export default function PushNotification() {
                             <Controller
                                 control={control}
                                 name="states"
-                                rules={{ required: "Select state(s)" }}
+                                // rules={{ required: "Select state(s)" }}
                                 render={({ field }) => (
                                     <Select
                                         {...field}

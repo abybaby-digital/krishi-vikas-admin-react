@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const baseURL = "https://krishivikas.com/api/v2";
-//const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
+// const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
 const baseURL = "https://krishivikas.com/api/admin";
 // const baseURL = "http://192.168.0.204:8080/api/admin";
 
@@ -76,6 +76,54 @@ export const addComboPlan = async (
     throw error;
   }
 };
+
+// ADD COMBO BANNER
+
+export const addComboBanner = async (
+  token,
+  user_id,
+  combo_plan_id,
+  campaign_name,
+  campaign_banner,
+  campaign_state,
+  campaign_category,
+  subscription_details_id,
+  seller_language_id
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("user_id", user_id);
+    formData.append("combo_plan_id", combo_plan_id);
+    formData.append("campaign_name", campaign_name);
+    // formData.append("campaign_banner", campaign_banner);
+    formData.append("campaign_state", campaign_state);
+    formData.append("campaign_category", campaign_category);
+    formData.append("subscription_details_id", subscription_details_id);
+    formData.append("seller_language_id", seller_language_id);
+
+    // Append icon (image)
+    if (campaign_banner && campaign_banner[0]) {
+      formData.append("campaign_banner", campaign_banner[0]); // Assuming 'noti_icon' is a file (image)
+    }
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/add-combo-banner`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add combo banner:", error);
+    throw error;
+  }
+};
+
 // COMBO PLAN PURCHASE
 
 export const makeComboPlanPurchase = async (
@@ -375,8 +423,6 @@ export const addNotificationContent = async (
   ln_bn_des,
   ln_hn_title,
   ln_hn_des,
-  ln_as_title, // Assamese
-  ln_as_des,
   ln_gu_title, // Gujarati
   ln_gu_des,
   ln_kn_title, // Kannada
@@ -393,6 +439,8 @@ export const addNotificationContent = async (
   ln_te_des,
   ln_pa_title, // Punjabi
   ln_pa_des,
+  ln_as_title, // Assamese
+  ln_as_des,
   noti_icon
 ) => {
   try {
@@ -713,7 +761,7 @@ export const editNotificationSchedule = async (
   category_id,
   post_id,
   redirection_url,
-  notification_img 
+  notification_img
 ) => {
   try {
     const formData = new FormData();

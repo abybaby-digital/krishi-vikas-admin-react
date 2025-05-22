@@ -16,6 +16,7 @@ const BrandsPage = React.lazy(() => import("./pages/admin/BrandsPage"));
 const ModelsPage = React.lazy(() => import("./pages/admin/ModelsPage"));
 const AddComboPlan = React.lazy(() => import("./pages/admin/Combo-Plan/AddComboPlan"));
 const ComboPlanList = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPlanList"));
+const ComboBannerList = React.lazy(() => import("./pages/admin/Combo-Plan/ComboBannerList"));
 const EditComboPlan = React.lazy(() => import("./pages/admin/Combo-Plan/EditComboPlan"));
 const ComboPlanPurchase = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPlanPurchase"));
 const ComboPlanPurchaseList = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPlanPurchaseList"));
@@ -26,6 +27,7 @@ const PushNotification = React.lazy(() => import("./pages/admin/Notifications/Pu
 const EditPushNotification = React.lazy(() => import("./pages/admin/Notifications/EditPushNotification"));
 const NotificationScheduleList = React.lazy(() => import("./pages/admin/Notifications/NotificationScheduleList"));
 const AddTractor = React.lazy(() => import("./pages/admin/Tractor/AddTractor"));
+const AddComboBanner = React.lazy(() => import("./pages/admin/Combo-Plan/AddComboBanner"));
 
 
 const ScrollToTop = () => {
@@ -77,9 +79,11 @@ const App = () => {
             <Route path="/:category/models" element={<ModelsPage />} />
             <Route path="/combo-plan/add-combo-plan" element={<AddComboPlan />} />
             <Route path="/combo-plan/combo-plan-list" element={<ComboPlanList />} />
+            <Route path="/combo-plan/combo-banner-list" element={<ComboBannerList />} />
             <Route path="/combo-plan/edit/:id" element={<EditComboPlan />} />
             <Route path="/combo-plan/combo-plan-purchase" element={<ComboPlanPurchase />} />
             <Route path="/combo-plan/combo-plan-purchase-list" element={<ComboPlanPurchaseList />} />
+            <Route path="/combo-plan/add-combo-banner" element={<AddComboBanner />} />
             <Route path="/notification/add-notification-content" element={<AddNotificationContent />} />
             <Route path="/notification/edit/:id" element={<EditNotificationContent />} />
             <Route path="/notification/notification-content-list" element={<NotificationContentList />} />

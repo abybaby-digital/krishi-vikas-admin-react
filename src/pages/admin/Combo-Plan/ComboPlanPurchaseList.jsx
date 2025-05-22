@@ -16,6 +16,8 @@ import ViewComboPlan from "./ViewComboPlan";
 import { useState } from "react";
 import ViewComboPlanPurchase from "./ViewComboPlanPurchase";
 import { FaDownload } from "react-icons/fa6";
+import { MdOutlinePostAdd } from "react-icons/md";
+
 
 export default function ComboPlanList() {
     const token = useSelector((state) => state.auth.token);
@@ -33,6 +35,10 @@ export default function ComboPlanList() {
         queryFn: async () => await fetchComboPlanPurchaseList(token),
     });
 
+    const storeDataToSession = (data) => {
+        sessionStorage.setItem("combo-user",JSON.stringify(data));
+    }
+
     const columns = [
         {
             name: "Actions",
@@ -47,12 +53,13 @@ export default function ComboPlanList() {
                     >
                         <BsEyeFill />
                     </button>
-                    {/* <Link
+                    <Link
                         className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        to={`/combo-plan/edit/${row.id}`}
+                        to={`/combo-plan/add-combo-banner`}
+                        onClick={() => { storeDataToSession(row); }}
                     >
-                        <AiFillEdit />
-                    </Link> */}
+                        <MdOutlinePostAdd />
+                    </Link>
                 </div>
             ),
             ignoreRowClick: true,
@@ -68,7 +75,7 @@ export default function ComboPlanList() {
                     rel="noopener noreferrer"
                     className="text-darkGreen border border-darkGreen hover:bg-lightdark hover:text-white px-2 py-1 inline-flex text-nowrap"
                 >
-                    <FaDownload className="inline me-1 mb-1"/>Download
+                    <FaDownload className="inline me-1 mb-1" />Download
                 </a>
             ),
         },
@@ -105,7 +112,7 @@ export default function ComboPlanList() {
             name: "Amount Paid",
             selector: (row) => `₹${parseFloat(row.customer_paid_amount).toFixed(2)}`,
         },
-        
+
         {
             name: "Status",
             selector: (row) => (row.status === "1" ? "Active" : "Inactive"),
