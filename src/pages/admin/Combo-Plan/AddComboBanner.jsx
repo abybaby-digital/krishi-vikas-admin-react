@@ -33,6 +33,7 @@ export default function AddComboBanner() {
         handleSubmit,
         control,
         reset,
+        setValue,
         formState: { errors },
     } = useForm();
 
@@ -121,6 +122,18 @@ export default function AddComboBanner() {
         }
     }, [])
 
+    const handleSelectAllStates = () => {
+        setValue("campaign_state", stateList?.response);
+    }
+    const handleSelectAllCategory = () => {
+        setValue("campaign_category", categoryList?.response);
+    }
+    const handleSelectAllLanguage = () => {
+        setValue("seller_language_id", languageList?.response);
+    }
+
+    console.log(stateList);
+
 
     return (
         <SidebarProvider>
@@ -166,7 +179,18 @@ export default function AddComboBanner() {
 
                         {/* State IDs */}
                         <div>
-                            <label htmlFor="campaign_state" className="block font-bold text-sm mb-1">States</label>
+                            <div className="flex justify-between items-center">
+                                <label htmlFor="campaign_state" className="block font-bold text-sm mb-1">States</label>
+                                {stateList?.response.length > 0 && (
+                                    <button
+                                        type="button"
+                                        className="text-sm text-black hover:underline"
+                                        onClick={handleSelectAllStates}
+                                    >
+                                        Select All States
+                                    </button>
+                                )}
+                            </div>
                             <Controller
                                 name="campaign_state"
                                 control={control}
@@ -188,7 +212,19 @@ export default function AddComboBanner() {
 
                         {/* Campaign Category IDs */}
                         <div>
-                            <label htmlFor="campaign_category" className="block font-bold text-sm mb-1">Category</label>
+                            
+                            <div className="flex justify-between items-center">
+                                <label htmlFor="campaign_category" className="block font-bold text-sm mb-1">Category</label>
+                                {categoryList?.response.length > 0 && (
+                                    <button
+                                        type="button"
+                                        className="text-sm text-black hover:underline"
+                                        onClick={handleSelectAllCategory}
+                                    >
+                                        Select All Categories
+                                    </button>
+                                )}
+                            </div>
                             <Controller
                                 name="campaign_category"
                                 control={control}
@@ -198,7 +234,7 @@ export default function AddComboBanner() {
                                         {...field}
                                         isMulti
                                         options={categoryList?.response}
-                                        placeholder="-- Select State --"
+                                        placeholder="-- Select Category --"
                                         classNamePrefix="react-select"
                                     />
                                 )}
@@ -210,7 +246,19 @@ export default function AddComboBanner() {
 
                         {/* Banner Language IDs */}
                         <div>
-                            <label htmlFor="seller_language_id" className="block font-bold text-sm mb-1">Banner Language</label>
+                            
+                            <div className="flex justify-between items-center">
+                               <label htmlFor="seller_language_id" className="block font-bold text-sm mb-1">Banner Language</label>
+                                {languageList?.response.length > 0 && (
+                                    <button
+                                        type="button"
+                                        className="text-sm text-black hover:underline"
+                                        onClick={handleSelectAllLanguage}
+                                    >
+                                        Select All Languages
+                                    </button>
+                                )}
+                            </div>
                             <Controller
                                 name="seller_language_id"
                                 control={control}
@@ -220,7 +268,7 @@ export default function AddComboBanner() {
                                         {...field}
                                         isMulti
                                         options={languageList?.response}
-                                        placeholder="-- Select State --"
+                                        placeholder="-- Select Language --"
                                         classNamePrefix="react-select"
                                     />
                                 )}
