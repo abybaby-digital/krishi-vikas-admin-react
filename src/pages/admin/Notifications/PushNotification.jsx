@@ -16,6 +16,7 @@ import {
 } from "@/services/api"; // You must implement this API call
 
 import { useState, useEffect } from "react";
+import { fetchCategoryList } from "../../../services/api";
 
 export default function PushNotification() {
     const token = useSelector((state) => state.auth.token);
@@ -54,12 +55,20 @@ export default function PushNotification() {
         }
     }, [selectedStates]);
 
+    const { data: categoryList } = useQuery({
+        queryKey: ["category-list"],
+        queryFn: async () => {
+            return await fetchCategoryList(token);
+        }
+    })
+
+    console.log(categoryList);
 
 
 
     const mutation = useMutation({
         mutationFn: (data) => addNotificationSchedule(
-            token, 
+            token,
             data.title,
             data.description,
             data.redirection_type,
@@ -69,7 +78,7 @@ export default function PushNotification() {
             data.datepick,
             data.timepick,
             data.banner_id,
-            data.category_id,
+            +data.category_id,
             data.post_id,
             data.redirection_url,
             data.image,
@@ -91,14 +100,14 @@ export default function PushNotification() {
     const onSubmit = (formData) => {
         const payload = {
             ...formData,
-            language:+formData.language,
+            language: +formData.language,
             states: formData.states?.map((s) => s.value).join(","),
             districts: formData.districts?.map((d) => d.value).join(","),
-            image: formData.image[0], 
+            image: formData.image[0],
         };
         mutation.mutate(payload);
-        console.log(+formData.language);
-        console.log(payload);
+        // console.log(+formData.language);
+        // console.log(typeof(+payload.category_id));
 
     };
 
@@ -243,7 +252,16 @@ export default function PushNotification() {
                             <>
                                 <div>
                                     <label className="block font-semibold mb-1">Category ID</label>
-                                    <input type="text" {...register("category_id")} className="w-full border rounded px-3 py-2" />
+                                    {/* <input type="text" {...register("category_id")} className="w-full border rounded px-3 py-2" /> */}
+                                    <select name="" id="category_id" className="w-full p-3 border rounded px-3 py-2"
+                                        {...register("category_id")}>
+                                            <option value="#" selected disabled>Select Category</option>
+                                        {
+                                            categoryList?.response?.map((item, idx) => (
+                                                <option key={idx} value={item.value}>{item.label}</option>
+                                            ))
+                                        }
+                                    </select>
                                 </div>
                                 <div>
                                     <label className="block font-semibold mb-1">Post ID</label>

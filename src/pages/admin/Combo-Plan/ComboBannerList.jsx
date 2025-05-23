@@ -6,7 +6,7 @@ import {
 import AdminHeader from "../../../components/admin/AdminHeader";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
-import { fetchComboPlanList } from "../../../services/api";
+import { fetchCategoryList, fetchComboBannerList, fetchComboPlanList, fetchLanguageList, fetchStateList } from "../../../services/api";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
@@ -14,6 +14,8 @@ import { AiFillEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import ViewComboPlan from "./ViewComboPlan";
 import { useState } from "react";
+import { BsFilterSquareFill } from "react-icons/bs";
+import ViewComboBanner from "./ViewComboBanner";
 
 
 export default function ComboBannerList() {
@@ -24,6 +26,15 @@ export default function ComboBannerList() {
     const [search, setSearch] = useState("");
 
 
+    // FILTER PARAMETERS
+
+    const [skip, setSkip] = useState(null);
+    const [take, setTake] = useState(null);
+    const [status, setStatus] = useState(null);
+    const [stateIds, setStateIds] = useState(null);
+    const [languageIds, setLanguageIds] = useState(null);
+    const [categoryIds, setCategoryIds] = useState(null);
+
 
 
     // Fetch combo plan data
@@ -33,8 +44,39 @@ export default function ComboBannerList() {
         isError,
         error,
     } = useQuery({
-        queryKey: ["combo-plan-list"],
-        queryFn: async () => await fetchComboPlanList(token),
+        queryKey: ["combo-banner-list", skip, take, status, stateIds, languageIds, categoryIds],
+        queryFn: async () => await fetchComboBannerList(token, skip, take, status, stateIds, languageIds, categoryIds),
+    });
+
+    // STATE LIST
+    const {
+        data: stateList,
+        isLoading: stateLoading,
+        error: stateError,
+    } = useQuery({
+        queryKey: ["stateList"],
+        queryFn: () => fetchStateList(token),
+    });
+
+    // CATEGORY LIST
+    const {
+        data: categoryList,
+        isLoading: categoryLoading,
+        error: categoryError,
+    } = useQuery({
+        queryKey: ["categoryList"],
+        queryFn: () => fetchCategoryList(token),
+    });
+
+
+    // LANGUAGE LIST
+    const {
+        data: languageList,
+        isLoading: languageLoading,
+        error: languageError,
+    } = useQuery({
+        queryKey: ["languageList"],
+        queryFn: () => fetchLanguageList(token),
     });
 
     // Define table columns
@@ -51,12 +93,12 @@ export default function ComboBannerList() {
                     >
                         <BsEyeFill />
                     </button>
-                    <Link
+                    {/* <Link
                         className="bg-white shadow rounded-lg p-2 hover:scale-90"
                         to={`/combo-plan/edit/${row.id}`}
                     >
                         <AiFillEdit />
-                    </Link>
+                    </Link> */}
                 </div>
             ),
             ignoreRowClick: true,
@@ -64,66 +106,57 @@ export default function ComboBannerList() {
             button: true,
         },
         {
-            name: "Plan Name",
-            selector: (row) => row.name,
+            name: "Campaign Name",
+            selector: (row) => row.campaign_name,
             sortable: true,
         },
         {
-            name: "Plan Price",
-            selector: (row) => row.price,
+            name: "Combo Plan",
+            selector: (row) => row.combo_plan_name,
             sortable: true,
         },
         {
-            name: "Plan Duration (days)",
-            selector: (row) => row.duration,
+            name: "User",
+            selector: (row) => row.user_name,
             sortable: true,
         },
         {
-            name: "Banner Feature",
-            selector: (row) => row.banner_feature_name,
+            name: "Category",
+            selector: (row) => row.campaign_category_name,
             sortable: true,
         },
         {
-            name: "Boost Feature",
-            selector: (row) => row.boost_feature_name,
+            name: "Language",
+            selector: (row) => row.campaign_language,
             sortable: true,
         },
         {
-            name: "Number of Boosts",
-            selector: (row) => row.no_of_boost,
+            name: "State",
+            selector: (row) => row.state_name || "All States",
             sortable: true,
         },
         {
-            name: "Number of Products",
-            selector: (row) => row.no_of_product,
+            name: "Start Date",
+            selector: (row) => new Date(row.banner_start_date).toLocaleDateString(),
             sortable: true,
         },
         {
-            name: "Categories",
-            selector: (row) => row.category_names,
+            name: "End Date",
+            selector: (row) => new Date(row.banner_end_date).toLocaleDateString(),
             sortable: true,
         },
         {
-            name: "States",
-            selector: (row) => row.state_names,
-            sortable: true,
-        },
-        {
-            name: "Promotion Tag",
+            name: "Banner",
             cell: (row) => (
-                <>
-                    {row.promotional_tag_name}
-                    {/* <img src={row.promotional_tag_icon} alt="promotional_tag_icon" /> */}
-                </>
+                <img
+                    src={row.campaign_banner}
+                    alt="Banner"
+                    className="h-12 w-auto rounded"
+                />
             ),
-            sortable: true,
         },
-        {
-            name: "Package Description",
-            selector: (row) => row.package_description,
-        },
-
     ];
+
 
     const customStyles = {
         headCells: {
@@ -160,15 +193,15 @@ export default function ComboBannerList() {
     const filteredData = data?.response?.filter((item) => {
         const searchText = search.toLowerCase();
         return (
-            item.name?.toLowerCase().includes(searchText) ||
-            item.banner_feature_name?.toLowerCase().includes(searchText) ||
-            item.boost_feature_name?.toLowerCase().includes(searchText) ||
-            item.category_names?.toLowerCase().includes(searchText) ||
-            item.state_names?.toLowerCase().includes(searchText) ||
-            item.promotional_tag_name?.toLowerCase().includes(searchText) ||
-            item.package_description?.toLowerCase().includes(searchText)
+            item.campaign_name?.toLowerCase().includes(searchText) ||
+            item.user_name?.toLowerCase().includes(searchText) ||
+            item.combo_plan_name?.toLowerCase().includes(searchText) ||
+            item.campaign_category_name?.toLowerCase().includes(searchText) ||
+            item.campaign_language?.toLowerCase().includes(searchText) ||
+            item.state_name?.toLowerCase().includes(searchText)
         );
     }) || [];
+
 
 
 
@@ -183,18 +216,139 @@ export default function ComboBannerList() {
 
                     <div className="form-wrapper bg-white p-5">
                         <div className="flex justify-between form-heading bg-whitesmoke rounded-2xl mb-5 p-5 xl:col-span-4 lg:col-span-3 col-span-1">
-                            <h2 className="text-2xl text-center font-bold text-center font-dmsans">
-                                Combo Banner Uploaded
+                            <h2 className="text-2xl font-bold text-center font-dmsans">
+                                Combo Banner List
                             </h2>
-                            
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Search combo plans..."
+                                    className="border border-gray-300 rounded-md px-4 py-2 w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-green-600"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid gap-5 lg:grid-cols-4 form-heading bg-whitesmoke rounded-2xl mb-3 p-3">
+                            {/* State Filter */}
+                            <div className="flex items-center">
+                                <BsFilterSquareFill className="inline me-1 mb-1" />
+                                <select
+                                    name="state"
+                                    id="state"
+                                    className="px-3 py-2 rounded-xl shadow w-full"
+                                    value={stateIds || ""}
+                                    onChange={(e) => setStateIds(e.target.value || null)}
+                                >
+                                    <option value="" disabled>Choose States</option>
+                                    {
+                                        stateList?.response.map((item, idx) => (
+                                            <option key={idx} value={item.value}>{item.label}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+
+                            {/* Category Filter */}
+                            <div className="flex items-center">
+                                <BsFilterSquareFill className="inline me-1 mb-1" />
+                                <select
+                                    name="category"
+                                    id="category"
+                                    className="px-3 py-2 rounded-xl shadow w-full"
+                                    value={categoryIds || ""}
+                                    onChange={(e) => setCategoryIds(e.target.value || null)}
+                                >
+                                    <option value="" disabled>Choose Category</option>
+                                    {
+                                        categoryList?.response.map((item, idx) => (
+                                            <option key={idx} value={item.value}>{item.label}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+
+                            {/* Language Filter */}
+                            <div className="flex items-center">
+                                <BsFilterSquareFill className="inline me-1 mb-1" />
+                                <select
+                                    name="language"
+                                    id="language"
+                                    className="px-3 py-2 rounded-xl shadow w-full"
+                                    value={languageIds || ""}
+                                    onChange={(e) => setLanguageIds(e.target.value || null)}
+                                >
+                                    <option value="" disabled>Choose Language</option>
+                                    {
+                                        languageList?.response.map((item, idx) => (
+                                            <option key={idx} value={item.value}>{item.label}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
+
+                            {/* Status Filter */}
+                            <div className="flex items-center">
+                                <BsFilterSquareFill className="inline me-1 mb-1" />
+                                <select
+                                    name="status"
+                                    id="status"
+                                    className="px-3 py-2 rounded-xl shadow w-full"
+                                    value={status ?? ""}
+                                    onChange={(e) => setStatus(e.target.value || null)}
+                                >
+                                    <option value="" disabled>Choose Status</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
+                                </select>
+                            </div>
+
+
+                            {
+                                (stateIds || languageIds || categoryIds || status) &&
+                                <div className="flex justify-end col-span-full">
+                                    <button
+                                        className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                                        onClick={() => {
+                                            setStateIds(null);
+                                            setCategoryIds(null);
+                                            setLanguageIds(null);
+                                            setStatus(null);
+                                        }}
+                                    >
+                                        Reset Filters
+                                    </button>
+                                </div>
+                            }
 
                         </div>
-                        <Link to="/combo-plan/combo-plan-purchase-list" className="text-blue-500 block text-center">Upload Another One</Link>
 
-                        
-                        
+
+                        {isLoading ? (
+                            <Loader />
+                        ) : isError ? (
+                            <div className="text-red-500 text-center py-4">
+                                Failed to load combo banner campaigns: {error?.message || "Unknown error"}
+                            </div>
+                        ) : (
+                            <div className="table-wrapper bg-white shadow rounded-2xl overflow-hidden">
+                                <DataTable
+                                    columns={columns}
+                                    data={filteredData || []}
+                                    pagination
+                                    highlightOnHover
+                                    responsive
+                                    persistTableHead
+                                    noDataComponent="No combo banner campaigns found."
+                                    customStyles={customStyles}
+                                />
+                            </div>
+                        )}
+
+
                     </div>
-                    <ViewComboPlan modal={modal} setModal={setModal} singleComboData={singleComboData} />
+                    <ViewComboBanner modal={modal} setModal={setModal} singleComboData={singleComboData} />
                 </SidebarInset>
             </SidebarProvider>
         </>

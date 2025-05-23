@@ -10,6 +10,8 @@ import {
 import { DialogClose } from '@radix-ui/react-dialog';
 import { CiSquareRemove } from "react-icons/ci";
 
+const date = new Date();
+
 const ViewNotification = ({ modal, setModal, singleNotification }) => {
     return (
         <Dialog open={modal}>
@@ -65,18 +67,18 @@ const ViewNotification = ({ modal, setModal, singleNotification }) => {
                     </div>
 
                     <div className="data-group border-b pb-5">
-                        <p className='font-semibold text-darkGreen text-lg'>Language ID</p>
-                        <p>{singleNotification?.language_id}</p>
+                        <p className='font-semibold text-darkGreen text-lg'>Language</p>
+                        <p>{singleNotification?.language_name}</p>
                     </div>
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>States</p>
-                        <p>{singleNotification?.state_ids}</p>
+                        <p>{singleNotification?.state_name}</p>
                     </div>
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Districts</p>
-                        <p>{singleNotification?.dist_ids}</p>
+                        <p>{singleNotification?.district_name}</p>
                     </div>
 
                     <div className="data-group border-b pb-5">
@@ -86,13 +88,13 @@ const ViewNotification = ({ modal, setModal, singleNotification }) => {
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Created At</p>
-                        <p>{singleNotification?.created_at}</p>
+                        <p><p>{new Date(singleNotification?.created_at).toLocaleDateString()}</p></p>
                     </div>
 
-                    <div className="data-group border-b pb-5">
+                    {/* <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Updated At</p>
-                        <p>{singleNotification?.updated_at}</p>
-                    </div>
+                        <p>{singleNotification?.updated_at?.slice(0,10)}</p>
+                    </div> */}
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Notification Image</p>

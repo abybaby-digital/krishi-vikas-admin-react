@@ -211,8 +211,7 @@ export default function AddComboBanner() {
                         </div>
 
                         {/* Campaign Category IDs */}
-                        <div>
-                            
+                        <div>  
                             <div className="flex justify-between items-center">
                                 <label htmlFor="campaign_category" className="block font-bold text-sm mb-1">Category</label>
                                 {categoryList?.response.length > 0 && (

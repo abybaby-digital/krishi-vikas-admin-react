@@ -161,6 +161,8 @@ export default function ComboPlanPurchase() {
                                 <thead className="text-left bg-whitesmoke p-2">
                                     <th className="p-2">User Name</th>
                                     <th className="p-2">User Type</th>
+                                    <th className="p-2">Company Name</th>
+                                    <th className="p-2">GST No</th>
                                     <th className="p-2">User Phone No</th>
                                     <th className="p-2"></th>
                                 </thead>
@@ -168,6 +170,8 @@ export default function ComboPlanPurchase() {
                                     <tr>
                                         <td className="p-2">{user?.name}</td>
                                         <td className="p-2">{user?.user_type_name}</td>
+                                        <td className="p-2">{user?.company_name}</td>
+                                        <td className="p-2">{user?.gst_no}</td>
                                         <td className="p-2">{user?.mobile}</td>
                                         <td className="p-2">
                                             <button onClick={() => { setPurchaseOpen(true) }} className="bg-gradient-green text-white px-5 text-sm py-2 rounded-2xl active:scale-95"><IoAddCircleOutline className="inline text-xl me-1 mb-1" />ADD COMBO PLAN</button>
@@ -372,6 +376,14 @@ export default function ComboPlanPurchase() {
                                     </div>
                                     : null
                             }
+
+
+                            <div className="calculation-preview border border-dashed p-5 col-span-full flex justify-between">
+                                <p><strong>Rate:</strong> {watch("client_paid_price")}</p>
+                                <p><strong>Discount:</strong> {watch("plan_price") - (watch("client_paid_price") / 1.18)} </p>
+                                <p><strong>18% GST:</strong> {watch("client_paid_price") - (watch("client_paid_price") / 1.18)} </p>
+                                <p><strong>Amount:</strong> {watch("client_paid_price") / 1.18}</p>
+                            </div>
 
 
                             {/* Submit Button */}

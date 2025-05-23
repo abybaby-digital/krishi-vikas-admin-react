@@ -250,6 +250,10 @@ const data = {
           title: "Combo Plan Purchase List",
           url: "/combo-plan/combo-plan-purchase-list",
         },
+        {
+          title: "Combo Banner List",
+          url: "/combo-plan/combo-banner-list",
+        },
       ],
     },
     {

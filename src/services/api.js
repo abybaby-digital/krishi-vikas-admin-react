@@ -229,6 +229,44 @@ export const fetchComboPlanList = async (token) => {
   }
 };
 
+// COMBO BANNER LIST
+
+export const fetchComboBannerList = async (
+  token,
+  skip,
+  take,
+  status,
+  state_ids,
+  language_ids,
+  category_ids
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/combo-banner-list`,
+      {
+        skip: skip,
+        take: take,
+        status: status,
+        state_ids: state_ids,
+        language_ids: language_ids,
+        category_ids: category_ids,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
+    throw error;
+  }
+};
+
 // COMBO PLAN PURCHASE LIST
 
 export const fetchComboPlanPurchaseList = async (token) => {
