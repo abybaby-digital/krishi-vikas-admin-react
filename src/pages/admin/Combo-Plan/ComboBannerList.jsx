@@ -222,7 +222,7 @@ export default function ComboBannerList() {
                             <div>
                                 <input
                                     type="text"
-                                    placeholder="Search combo plans..."
+                                    placeholder="Search..."
                                     className="border border-gray-300 rounded-md px-4 py-2 w-full max-w-sm focus:outline-none focus:ring-2 focus:ring-green-600"
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}

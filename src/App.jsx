@@ -27,6 +27,7 @@ const PushNotification = React.lazy(() => import("./pages/admin/Notifications/Pu
 const EditPushNotification = React.lazy(() => import("./pages/admin/Notifications/EditPushNotification"));
 const NotificationScheduleList = React.lazy(() => import("./pages/admin/Notifications/NotificationScheduleList"));
 const AddTractor = React.lazy(() => import("./pages/admin/Tractor/AddTractor"));
+const TractorPostList = React.lazy(() => import("./pages/admin/Tractor/TractorPostList"));
 const AddComboBanner = React.lazy(() => import("./pages/admin/Combo-Plan/AddComboBanner"));
 
 
@@ -91,6 +92,7 @@ const App = () => {
             <Route path="/notification/notification-schedule/edit/:id" element={<EditPushNotification />} />
             <Route path="/notification/notification-schedule-list" element={<NotificationScheduleList />} />
             <Route path="/tractor/add-post" element={<AddTractor />} />
+            <Route path="/tractor/tractor-post-list" element={<TractorPostList />} />
           </Route>
 
         </Routes>

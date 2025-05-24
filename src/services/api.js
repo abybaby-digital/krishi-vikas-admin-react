@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // const baseURL = "https://krishivikas.com/api/v2";
-// const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
-const baseURL = "https://krishivikas.com/api/admin";
+const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
+// const baseURL = "https://krishivikas.com/api/admin";
 // const baseURL = "http://192.168.0.204:8080/api/admin";
 
 const api = axios.create({
@@ -945,6 +945,178 @@ export const fetchLanguageList = async (token) => {
   } catch (error) {
     // Log and throw the error in case of failure
     console.error("Failed to notificaton Schedule list:", error);
+    throw error;
+  }
+};
+
+// TRACTOR POST
+
+export const addTractorPost = async (
+  token,
+  {
+    category_id,
+    product_type,
+    brand_id,
+    title,
+    year_of_purchase,
+    rc_available,
+    noc_available,
+    registration_no,
+    description,
+    price,
+    rent_type,
+    is_negotiable,
+    model_id,
+    left_image,
+    right_image,
+    front_image,
+    back_image,
+    meter_image,
+    tyre_image,
+    seller_state_id,
+    seller_district_id,
+    phone_no,
+  }
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append text fields
+    formData.append("category_id", category_id);
+    formData.append("product_type", product_type);
+    formData.append("brand_id", brand_id);
+    formData.append("title", title);
+    formData.append("year_of_purchase", year_of_purchase);
+    formData.append("rc_available", rc_available);
+    formData.append("noc_available", noc_available);
+    formData.append("registration_no", registration_no);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("rent_type", rent_type);
+    formData.append("is_negotiable", is_negotiable);
+    formData.append("model_id", model_id);
+    formData.append("seller_state_id", seller_state_id);
+    formData.append("seller_district_id", seller_district_id);
+    formData.append("phone_no", phone_no);
+
+    // Append image fields (check if valid File)
+    if (left_image instanceof File) formData.append("left_image", left_image);
+    if (right_image instanceof File)
+      formData.append("right_image", right_image);
+    if (front_image instanceof File)
+      formData.append("front_image", front_image);
+    if (back_image instanceof File) formData.append("back_image", back_image);
+    if (meter_image instanceof File)
+      formData.append("meter_image", meter_image);
+    if (tyre_image instanceof File) formData.append("tyre_image", tyre_image);
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/add-tractor`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add tractor post:", error);
+    throw error;
+  }
+};
+
+// CATGORY WISE POST LIST
+
+export const categoryWiseProductList = async (
+  token,
+  category_id,
+  skip,
+  take
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/list-data-by-category-id`,
+      {
+        category_id: category_id,
+        skip: skip,
+        take: take,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to Category Post List:", error);
+    throw error;
+  }
+};
+
+// CATGORY WISE POST VIEW BY IDS
+
+export const categoryWiseProductViewById = async (
+  token,
+  category_id,
+  post_id
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/view-by-category-id`,
+      {
+        category_id: category_id,
+        post_id: post_id,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to category viewt:", error);
+    throw error;
+  }
+};
+
+
+// POST APPROVAL CHANGE API
+
+export const postApprovalChange = async (
+  token,
+  category_id,
+  post_id,
+  status
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/category-status-change`,
+      {
+        category_id: category_id,
+        post_id: post_id,
+        status:status
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to category viewt:", error);
     throw error;
   }
 };

@@ -23,9 +23,6 @@ export default function ComboPlanList() {
     const [singleComboData, setSingleCombo] = useState({});
     const [search, setSearch] = useState("");
 
-
-
-
     // Fetch combo plan data
     const {
         data,
