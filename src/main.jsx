@@ -7,7 +7,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import "animate.css";
 
+
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
 
 import "swiper/css";
 import "swiper/css/navigation";

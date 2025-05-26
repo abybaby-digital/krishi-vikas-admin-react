@@ -23,7 +23,7 @@ import DataLoader from '../../../components/DataLoader';
 import { Skeleton } from "@/components/ui/skeleton"
 
 
-const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
+const ViewGoodsVehiclePost = ({ modal, setModal, singlePostData }) => {
 
     const categoryId = singlePostData?.category_id;
     const postId = singlePostData?.id;
@@ -60,7 +60,7 @@ const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
             <DialogTrigger></DialogTrigger>
             <DialogContent className="p-8">
                 <DialogHeader>
-                    <DialogTitle className="bg-whitesmoke text-center p-3 font-dmsans rounded-xl">View Tractor Post Details</DialogTitle>
+                    <DialogTitle className="bg-whitesmoke text-center p-3 font-dmsans rounded-xl">View Tyre Post Details</DialogTitle>
                     <hr />
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
@@ -212,20 +212,7 @@ const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
                                 </div>
 
                                 <div className="other-info p-3 flex gap-2 justify-center flex-wrap shadow rounded-2xl m-2">
-                                    <div className="rc_available flex items-center gap-2 shadow p-2 rounded-xl">
-                                        <p>RC Available</p>
-                                        {
-                                            postViewById?.response.rc_available ?
-                                                <SiTicktick className='bg-green-500 p-2 text-3xl text-white rounded-full' /> : <ImCancelCircle className='bg-red-500 p-2 text-3xl text-white rounded-full' />
-                                        }
-                                    </div>
-                                    <div className="noc_available flex items-center gap-2 shadow p-2 rounded-xl">
-                                        <p>NOC Available</p>
-                                        {
-                                            postViewById?.response.noc_available ?
-                                                <SiTicktick className='bg-green-500 p-2 text-3xl text-white rounded-full' /> : <ImCancelCircle className='bg-red-500 p-2 text-3xl text-white rounded-full' />
-                                        }
-                                    </div>
+                                    
                                     <div className="is_negotiable flex items-center gap-2 shadow p-2 rounded-xl">
                                         <p>Price Negotiable</p>
                                         {
@@ -249,4 +236,4 @@ const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
     );
 };
 
-export default ViewTractorPost;
+export default ViewGoodsVehiclePost;

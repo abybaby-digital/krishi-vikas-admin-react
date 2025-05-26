@@ -8,9 +8,9 @@ import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
 import { useState } from "react";
-import ViewTractorPost from "./ViewTractorPost";
+import ViewImplementsPost from "./ViewImplementsPost";
 
-export default function TractorPostList() {
+export default function ImplementsPostList() {
     const token = useSelector((state) => state.auth.token);
     const [modal, setModal] = useState(false);
     const [singlePostData, setSinglePost] = useState({});
@@ -24,8 +24,8 @@ export default function TractorPostList() {
         isError,
         error,
     } = useQuery({
-        queryKey: ["tractor-posts" , modal],
-        queryFn: () => categoryWiseProductList(token, 1, skip, take),
+        queryKey: ["implements-posts", modal],
+        queryFn: () => categoryWiseProductList(token, 5, skip, take),
     });
 
     const columns = [
@@ -161,7 +161,7 @@ export default function TractorPostList() {
         const searchText = search.toLowerCase();
         return (
             item.title?.toLowerCase().includes(searchText) ||
-            item.id?.toString().includes(searchText) ||
+            item.id.toString().includes(searchText) ||
             item.description?.toLowerCase().includes(searchText) ||
             item.type_new_or_old?.toLowerCase().includes(searchText) ||
             item.set_sell_or_rent?.toLowerCase().includes(searchText) ||
@@ -174,10 +174,10 @@ export default function TractorPostList() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <AdminHeader head_text="Tractor Posts" />
+                <AdminHeader head_text="Implements Posts" />
                 <div className="form-wrapper bg-white p-5">
                     <div className="flex justify-between form-heading bg-whitesmoke rounded-2xl mb-5 p-5">
-                        <h2 className="text-2xl font-bold text-center font-dmsans">Tractor Post List</h2>
+                        <h2 className="text-2xl font-bold text-center font-dmsans">Implements Posts List</h2>
                         <input
                             type="text"
                             placeholder="Search ..."
@@ -208,7 +208,7 @@ export default function TractorPostList() {
                     )}
                 </div>
 
-                <ViewTractorPost modal={modal} setModal={setModal} singlePostData={singlePostData} />
+                <ViewImplementsPost modal={modal} setModal={setModal} singlePostData={singlePostData} />
             </SidebarInset>
         </SidebarProvider>
     );

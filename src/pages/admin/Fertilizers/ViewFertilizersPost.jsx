@@ -23,7 +23,7 @@ import DataLoader from '../../../components/DataLoader';
 import { Skeleton } from "@/components/ui/skeleton"
 
 
-const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
+const ViewGoodsVehiclePost = ({ modal, setModal, singlePostData }) => {
 
     const categoryId = singlePostData?.category_id;
     const postId = singlePostData?.id;
@@ -60,7 +60,7 @@ const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
             <DialogTrigger></DialogTrigger>
             <DialogContent className="p-8">
                 <DialogHeader>
-                    <DialogTitle className="bg-whitesmoke text-center p-3 font-dmsans rounded-xl">View Tractor Post Details</DialogTitle>
+                    <DialogTitle className="bg-whitesmoke text-center p-3 font-dmsans rounded-xl">View Goods Vehicle Post Details</DialogTitle>
                     <hr />
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
@@ -161,71 +161,34 @@ const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
                             </div>
                             <div className="right-post-data rounded-2xl overflow-hidden shadow">
                                 <div className="post-images p-3 grid grid-cols-3 gap-2">
-                                    {postViewById?.response.front_image && <div className='shadow rounded-xl border border-dashed p-1'>
-                                        <a href={postViewById?.response.front_image} data-fancybox="postImages" data-caption="Front Image">
-                                            <img src={postViewById?.response.front_image} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
+                                    {postViewById?.response.image1 && <div className='shadow rounded-xl border border-dashed p-1'>
+                                        <a href={postViewById?.response.image1} data-fancybox="postImages" data-caption="Image 1">
+                                            <img src={postViewById?.response.image1} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
                                         </a>
 
-                                        <p className='text-center'>Front Image</p>
+                                        <p className='text-center'>Image 1</p>
                                     </div>}
 
-                                    {postViewById?.response.back_image && <div className='shadow rounded-xl border border-dashed p-1'>
-                                        <a href={postViewById?.response.back_image} data-fancybox="postImages" data-caption="Back Image">
-                                            <img src={postViewById?.response.back_image} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
+                                    {postViewById?.response.image2 && <div className='shadow rounded-xl border border-dashed p-1'>
+                                        <a href={postViewById?.response.image2} data-fancybox="postImages" data-caption="Image 2">
+                                            <img src={postViewById?.response.image2} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
                                         </a>
 
-                                        <p className='text-center'>Back Image</p>
+                                        <p className='text-center'>Image 2</p>
                                     </div>}
 
-                                    {postViewById?.response.left_image && <div className='shadow rounded-xl border border-dashed p-1'>
-                                        <a href={postViewById?.response.left_image} data-fancybox="postImages" data-caption="Left Image">
-                                            <img src={postViewById?.response.left_image} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
+                                    {postViewById?.response.image3 && <div className='shadow rounded-xl border border-dashed p-1'>
+                                        <a href={postViewById?.response.image3} data-fancybox="postImages" data-caption="Image 3">
+                                            <img src={postViewById?.response.image3} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
                                         </a>
 
-                                        <p className='text-center'>Left Image</p>
-                                    </div>}
-
-                                    {postViewById?.response.right_image && <div className='shadow rounded-xl border border-dashed p-1'>
-                                        <a href={postViewById?.response.right_image} data-fancybox="postImages" data-caption="Right Image">
-                                            <img src={postViewById?.response.right_image} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
-                                        </a>
-                                        
-                                        <p className='text-center'>Right Image</p>
-                                    </div>}
-
-                                    {postViewById?.response.meter_image && <div className='shadow rounded-xl border border-dashed p-1'>
-                                        <a href={postViewById?.response.meter_image} data-fancybox="postImages" data-caption="Meter Image">
-                                            <img src={postViewById?.response.meter_image} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
-                                        </a>
-
-                                        <p className='text-center'>Meter Image</p>
-                                    </div>}
-
-                                    {postViewById?.response.tyre_image && <div className='shadow rounded-xl border border-dashed p-1'>
-                                        <a href={postViewById?.response.tyre_image} data-fancybox="postImages" data-caption="Tyre Image">
-                                            <img src={postViewById?.response.tyre_image} alt="image" className='object-cover h-[150px] w-full rounded-xl' />
-                                        </a>
-
-                                        <p className='text-center'>Tyre Image</p>
+                                        <p className='text-center'>Image 3</p>
                                     </div>}
 
                                 </div>
 
                                 <div className="other-info p-3 flex gap-2 justify-center flex-wrap shadow rounded-2xl m-2">
-                                    <div className="rc_available flex items-center gap-2 shadow p-2 rounded-xl">
-                                        <p>RC Available</p>
-                                        {
-                                            postViewById?.response.rc_available ?
-                                                <SiTicktick className='bg-green-500 p-2 text-3xl text-white rounded-full' /> : <ImCancelCircle className='bg-red-500 p-2 text-3xl text-white rounded-full' />
-                                        }
-                                    </div>
-                                    <div className="noc_available flex items-center gap-2 shadow p-2 rounded-xl">
-                                        <p>NOC Available</p>
-                                        {
-                                            postViewById?.response.noc_available ?
-                                                <SiTicktick className='bg-green-500 p-2 text-3xl text-white rounded-full' /> : <ImCancelCircle className='bg-red-500 p-2 text-3xl text-white rounded-full' />
-                                        }
-                                    </div>
+
                                     <div className="is_negotiable flex items-center gap-2 shadow p-2 rounded-xl">
                                         <p>Price Negotiable</p>
                                         {
@@ -249,4 +212,4 @@ const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
     );
 };
 
-export default ViewTractorPost;
+export default ViewGoodsVehiclePost;

@@ -23,7 +23,7 @@ import DataLoader from '../../../components/DataLoader';
 import { Skeleton } from "@/components/ui/skeleton"
 
 
-const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
+const ViewGoodsVehiclePost = ({ modal, setModal, singlePostData }) => {
 
     const categoryId = singlePostData?.category_id;
     const postId = singlePostData?.id;
@@ -60,8 +60,8 @@ const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
             <DialogTrigger></DialogTrigger>
             <DialogContent className="p-8">
                 <DialogHeader>
-                    <DialogTitle className="bg-whitesmoke text-center p-3 font-dmsans rounded-xl">View Tractor Post Details</DialogTitle>
-                    <hr />
+                    <DialogTitle className="bg-whitesmoke text-center p-3 font-dmsans rounded-xl">View Harvester Post Details</DialogTitle>
+                    <hr /> 
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
 
@@ -249,4 +249,4 @@ const ViewTractorPost = ({ modal, setModal, singlePostData }) => {
     );
 };
 
-export default ViewTractorPost;
+export default ViewGoodsVehiclePost;

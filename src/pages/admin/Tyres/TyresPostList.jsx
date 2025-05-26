@@ -8,9 +8,9 @@ import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
 import { useState } from "react";
-import ViewTractorPost from "./ViewTractorPost";
+import ViewTyrePost from "./ViewTyrePost";
 
-export default function TractorPostList() {
+export default function TyresPostList() {
     const token = useSelector((state) => state.auth.token);
     const [modal, setModal] = useState(false);
     const [singlePostData, setSinglePost] = useState({});
@@ -24,8 +24,8 @@ export default function TractorPostList() {
         isError,
         error,
     } = useQuery({
-        queryKey: ["tractor-posts" , modal],
-        queryFn: () => categoryWiseProductList(token, 1, skip, take),
+        queryKey: ["tyres-posts" , modal],
+        queryFn: () => categoryWiseProductList(token, 7, skip, take),
     });
 
     const columns = [
@@ -82,7 +82,6 @@ export default function TractorPostList() {
             selector: (row) => row.set_sell_or_rent,
             sortable: true,
         },
-
         {
             name: "Year of purchase",
             selector: (row) => row.year_of_purchase,
@@ -97,28 +96,12 @@ export default function TractorPostList() {
             name: "Price Negotiable",
             selector: (row) => row.is_negotiable ? "Yes" : "No",
             sortable: true,
-        },
-        {
-            name: "RC Available",
-            selector: (row) => row.rc_available ? "Yes" : "No",
-            sortable: true,
-        },
-        {
-            name: "NOC Available",
-            selector: (row) => row.noc_available ? "Yes" : "No",
-            sortable: true,
-        },
-        {
-            name: "Registration No",
-            selector: (row) => row.registration_no,
-            sortable: true,
-        },
+        }, 
         {
             name: "Description",
             selector: (row) => row.description,
             sortable: true,
         },
-
         {
             name: "Location",
             selector: (row) => row.area || row.address,
@@ -161,10 +144,9 @@ export default function TractorPostList() {
         const searchText = search.toLowerCase();
         return (
             item.title?.toLowerCase().includes(searchText) ||
-            item.id?.toString().includes(searchText) ||
+            item.id.toString().includes(searchText) ||
             item.description?.toLowerCase().includes(searchText) ||
             item.type_new_or_old?.toLowerCase().includes(searchText) ||
-            item.set_sell_or_rent?.toLowerCase().includes(searchText) ||
             item.registration_no?.toLowerCase().includes(searchText) ||
             item.area?.toLowerCase().includes(searchText)
         );
@@ -174,10 +156,10 @@ export default function TractorPostList() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <AdminHeader head_text="Tractor Posts" />
+                <AdminHeader head_text="Tyres Posts" />
                 <div className="form-wrapper bg-white p-5">
                     <div className="flex justify-between form-heading bg-whitesmoke rounded-2xl mb-5 p-5">
-                        <h2 className="text-2xl font-bold text-center font-dmsans">Tractor Post List</h2>
+                        <h2 className="text-2xl font-bold text-center font-dmsans">Tyres Post List</h2>
                         <input
                             type="text"
                             placeholder="Search ..."
@@ -208,7 +190,7 @@ export default function TractorPostList() {
                     )}
                 </div>
 
-                <ViewTractorPost modal={modal} setModal={setModal} singlePostData={singlePostData} />
+                <ViewTyrePost modal={modal} setModal={setModal} singlePostData={singlePostData} />
             </SidebarInset>
         </SidebarProvider>
     );

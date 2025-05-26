@@ -77,26 +77,26 @@ const data = {
       url: "#",
       icon: PiTractorFill,
       items: [
-        {
-          title: "Product Posts",
-          url: "/tractor/add-post",
-        },
+        // {
+        //   title: "Product Posts",
+        //   url: "/tractor/add-post",
+        // },
         {
           title: "Post Lists",
-          url: "/tractor/tractor-post-list",
+          url: "/tractor/post-list",
         },
-        {
-          title: "Brands",
-          url: "/tractor/brands",
-        },
-        {
-          title: "Models",
-          url: "/tractor/models",
-        },
-        {
-          title: "Specifications",
-          url: "/tractor/spec",
-        },
+        // {
+        //   title: "Brands",
+        //   url: "/tractor/brands",
+        // },
+        // {
+        //   title: "Models",
+        //   url: "/tractor/models",
+        // },
+        // {
+        //   title: "Specifications",
+        //   url: "/tractor/spec",
+        // },
 
       ],
     },
@@ -106,22 +106,26 @@ const data = {
       url: "#",
       icon: FaTruck,
       items: [
+        // {
+        //   title: "Product Posts",
+        //   url: "/goods-vehicle/add-post",
+        // },
         {
-          title: "Brands",
-          url: "/goods vehicle/brands",
+          title: "Post Lists",
+          url: "/goods-vehicle/post-list",
         },
-        {
-          title: "Models",
-          url: "/goods vehicle/models",
-        },
-        {
-          title: "Specifications",
-          url: "/goods vehicle/spec",
-        },
-        {
-          title: "Posts",
-          url: "/goods vehicle/posts",
-        },
+        // {
+        //   title: "Brands",
+        //   url: "/goods-vehicle/brands",
+        // },
+        // {
+        //   title: "Models",
+        //   url: "/goods-vehicle/models",
+        // },
+        // {
+        //   title: "Specifications",
+        //   url: "/goods-vehicle/spec",
+        // },
       ],
     },
     {
@@ -130,22 +134,27 @@ const data = {
       url: "#",
       icon: GiFarmTractor,
       items: [
+        // {
+        //   title: "Product Posts",
+        //   url: "/harvester/add-post",
+        // },
         {
-          title: "Brands",
-          url: "/harvester/brands",
+          title: "Post Lists",
+          url: "/harvester/post-list",
         },
-        {
-          title: "Models",
-          url: "/harvester/models",
-        },
-        {
-          title: "Specifications",
-          url: "/harvester/spec",
-        },
-        {
-          title: "Posts",
-          url: "/harvester/posts",
-        },
+        // {
+        //   title: "Brands",
+        //   url: "/harvester/brands",
+        // },
+        // {
+        //   title: "Models",
+        //   url: "/harvester/models",
+        // },
+        // {
+        //   title: "Specifications",
+        //   url: "/harvester/spec",
+        // },
+        
       ],
     },
     {
@@ -154,22 +163,27 @@ const data = {
       url: "#",
       icon: GiFarmer,
       items: [
+        // {
+        //   title: "Product Posts",
+        //   url: "/implements/add-post",
+        // },
         {
-          title: "Brands",
-          url: "/implements/brands",
+          title: "Post Lists",
+          url: "/implements/post-list",
         },
-        {
-          title: "Models",
-          url: "/implements/models",
-        },
-        {
-          title: "Specifications",
-          url: "/implements/spec",
-        },
-        {
-          title: "Posts",
-          url: "/implements/posts",
-        },
+        // {
+        //   title: "Brands",
+        //   url: "/implements/brands",
+        // },
+        // {
+        //   title: "Models",
+        //   url: "/implements/models",
+        // },
+        // {
+        //   title: "Specifications",
+        //   url: "/implements/spec",
+        // },
+        
       ],
     },
     {
@@ -178,22 +192,27 @@ const data = {
       url: "#",
       icon: GiTyre,
       items: [
+        // {
+        //   title: "Product Posts",
+        //   url: "/tyres/add-post",
+        // },
         {
-          title: "Brands",
-          url: "/tyres/brands",
+          title: "Post Lists",
+          url: "/tyres/post-list",
         },
-        {
-          title: "Models",
-          url: "/tyres/models",
-        },
-        {
-          title: "Specifications",
-          url: "/tyres/spec",
-        },
-        {
-          title: "Posts",
-          url: "/tyres/posts",
-        },
+        // {
+        //   title: "Brands",
+        //   url: "/tyres/brands",
+        // },
+        // {
+        //   title: "Models",
+        //   url: "/tyres/models",
+        // },
+        // {
+        //   title: "Specifications",
+        //   url: "/tyres/spec",
+        // },
+        
       ],
     },
     {
@@ -202,10 +221,18 @@ const data = {
       url: "#",
       icon: GiPlantSeed,
       items: [
+        // {
+        //   title: "Product Posts",
+        //   url: "/seeds/add-post",
+        // },
         {
-          title: "Posts",
-          url: "/seeds/posts",
+          title: "Post Lists",
+          url: "/seeds/post-list",
         },
+        // {
+        //   title: "Posts",
+        //   url: "/seeds/posts",
+        // },
       ],
     },
     {
@@ -214,9 +241,13 @@ const data = {
       url: "#",
       icon: MdPestControl,
       items: [
+        // {
+        //   title: "Product Posts",
+        //   url: "/pesticides/add-post",
+        // },
         {
-          title: "Posts",
-          url: "/pesticides/posts",
+          title: "Post Lists",
+          url: "/pesticides/post-list",
         },
       ],
     },
@@ -226,9 +257,13 @@ const data = {
       url: "#",
       icon: GiFertilizerBag,
       items: [
+        // {
+        //   title: "Product Posts",
+        //   url: "/fertilizers/add-post",
+        // },
         {
-          title: "Posts",
-          url: "/fertilizers/posts",
+          title: "Post Lists",
+          url: "/fertilizers/post-list",
         },
       ],
     },

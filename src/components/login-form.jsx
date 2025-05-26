@@ -42,7 +42,7 @@ export function LoginForm({
 
   const user = useSelector((state) => state.auth.user);
 
-  console.log(user);
+  // console.log(user);
 
 
 

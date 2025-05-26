@@ -8,6 +8,7 @@ import ProtectedRoute from "./pages/admin/ProtectedRoute";
 import { setToken, setUsers } from "./redux/features/Auth/AuthSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CryptoJS from "crypto-js";
+import { Fancybox } from "@fancyapps/ui";
 
 
 // Lazy-loaded components
@@ -19,6 +20,7 @@ const ComboPlanList = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPla
 const ComboBannerList = React.lazy(() => import("./pages/admin/Combo-Plan/ComboBannerList"));
 const EditComboPlan = React.lazy(() => import("./pages/admin/Combo-Plan/EditComboPlan"));
 const ComboPlanPurchase = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPlanPurchase"));
+const AddComboBanner = React.lazy(() => import("./pages/admin/Combo-Plan/AddComboBanner"));
 const ComboPlanPurchaseList = React.lazy(() => import("./pages/admin/Combo-Plan/ComboPlanPurchaseList"));
 const AddNotificationContent = React.lazy(() => import("./pages/admin/Notifications/AddNotificationContent"));
 const NotificationContentList = React.lazy(() => import("./pages/admin/Notifications/NotificationContentList"));
@@ -28,7 +30,14 @@ const EditPushNotification = React.lazy(() => import("./pages/admin/Notification
 const NotificationScheduleList = React.lazy(() => import("./pages/admin/Notifications/NotificationScheduleList"));
 const AddTractor = React.lazy(() => import("./pages/admin/Tractor/AddTractor"));
 const TractorPostList = React.lazy(() => import("./pages/admin/Tractor/TractorPostList"));
-const AddComboBanner = React.lazy(() => import("./pages/admin/Combo-Plan/AddComboBanner"));
+const GoodsVehiclePostList = React.lazy(() => import("./pages/admin/Goods-Vehicle/GoodsVehiclePostList"));
+const TyresPostList = React.lazy(() => import("./pages/admin/Tyres/TyresPostList"));
+const HarvesterPostList = React.lazy(() => import("./pages/admin/Harvester/HarvesterPostList"));
+const ImplementsPostList = React.lazy(() => import("./pages/admin/Implements/ImplementsPostList"));
+const SeedPostList = React.lazy(() => import("./pages/admin/Seeds/SeedPostList"));
+const FertilizersPostList = React.lazy(() => import("./pages/admin/Fertilizers/FertilizersPostList"));
+const PesticidesPostList = React.lazy(() => import("./pages/admin/Pesticides/PesticidesPostList"));
+
 
 
 const ScrollToTop = () => {
@@ -40,7 +49,18 @@ const ScrollToTop = () => {
   return null;
 };
 
+
+
+
+
+
 const App = () => {
+
+  useEffect(() => {
+    Fancybox.bind("[data-fancybox]", {
+      // Your custom options
+    });
+  }, [])
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -92,7 +112,14 @@ const App = () => {
             <Route path="/notification/notification-schedule/edit/:id" element={<EditPushNotification />} />
             <Route path="/notification/notification-schedule-list" element={<NotificationScheduleList />} />
             <Route path="/tractor/add-post" element={<AddTractor />} />
-            <Route path="/tractor/tractor-post-list" element={<TractorPostList />} />
+            <Route path="/tractor/post-list" element={<TractorPostList />} />
+            <Route path="/goods-vehicle/post-list" element={<GoodsVehiclePostList />} />
+            <Route path="/harvester/post-list" element={<HarvesterPostList />} />
+            <Route path="/implements/post-list" element={<ImplementsPostList />} />
+            <Route path="/seeds/post-list" element={<SeedPostList />} />
+            <Route path="/pesticides/post-list" element={<PesticidesPostList />} />
+            <Route path="/fertilizers/post-list" element={<FertilizersPostList />} />
+            <Route path="/tyres/post-list" element={<TyresPostList />} />
           </Route>
 
         </Routes>
