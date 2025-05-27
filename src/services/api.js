@@ -1088,7 +1088,6 @@ export const categoryWiseProductViewById = async (
   }
 };
 
-
 // POST APPROVAL CHANGE API
 
 export const postApprovalChange = async (
@@ -1103,7 +1102,7 @@ export const postApprovalChange = async (
       {
         category_id: category_id,
         post_id: post_id,
-        status:status
+        status: status,
       }, // Empty object as the request body if not required
       {
         headers: {
@@ -1117,6 +1116,163 @@ export const postApprovalChange = async (
   } catch (error) {
     // Log and throw the error in case of failure
     console.error("Failed to category viewt:", error);
+    throw error;
+  }
+};
+
+
+
+// ADD PREMIUM PRODUCT
+
+export const addPremiumProduct = async (
+  token,
+  category_id,
+  product_type,
+  brand_id,
+  model_id,
+  product_description,
+  product_price,
+  phone_no,
+  backend_price
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/add-premium-product`,
+      {
+        category_id: category_id,
+        product_type: product_type,
+        brand_id: brand_id,
+        model_id: model_id,
+        product_description: product_description,
+        product_price: product_price,
+        phone_no: phone_no,
+        backend_price: backend_price,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to add premium product:", error);
+    throw error;
+  }
+};
+
+
+
+// EDIT PREMIUM PRODUCT
+
+export const editPremiumProduct = async (
+  token,
+  premium_product_id,
+  category_id,
+  product_type,
+  brand_id,
+  model_id,
+  product_description,
+  product_price,
+  phone_no,
+  backend_price
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/edit-premium-product`,
+      {
+        premium_product_id: premium_product_id,
+        category_id: category_id,
+        product_type: product_type,
+        brand_id: brand_id,
+        model_id: model_id,
+        product_description: product_description,
+        product_price: product_price,
+        phone_no: phone_no,
+        backend_price: backend_price,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to edit premium product:", error);
+    throw error;
+  }
+};
+
+
+
+
+// PREMIUM PRODUCT LIST
+
+export const PremiumProductList = async (
+  token,
+  skip,
+  take,
+  category_id,
+  status,
+  created_at
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/premium-product-list`,
+      {
+        skip: skip,
+        take: take,
+        category_id: category_id,
+        status: status,
+        created_at: created_at,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to add premium product:", error);
+    throw error;
+  }
+};
+
+// BRANDS LIST
+
+export const fetchBrandsList = async (
+  token,
+  category_id,
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/brand-list`,
+      {
+        category_id: category_id,
+      }, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to add premium product:", error);
     throw error;
   }
 };

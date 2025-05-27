@@ -37,7 +37,8 @@ const ImplementsPostList = React.lazy(() => import("./pages/admin/Implements/Imp
 const SeedPostList = React.lazy(() => import("./pages/admin/Seeds/SeedPostList"));
 const FertilizersPostList = React.lazy(() => import("./pages/admin/Fertilizers/FertilizersPostList"));
 const PesticidesPostList = React.lazy(() => import("./pages/admin/Pesticides/PesticidesPostList"));
-
+const PremiumProductList = React.lazy(() => import("./pages/admin/Premium-Product/PremiumProductList"));
+const AddPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/AddPremiumProduct"));
 
 
 const ScrollToTop = () => {
@@ -50,15 +51,10 @@ const ScrollToTop = () => {
 };
 
 
-
-
-
-
 const App = () => {
 
   useEffect(() => {
     Fancybox.bind("[data-fancybox]", {
-      // Your custom options
     });
   }, [])
 
@@ -69,10 +65,8 @@ const App = () => {
   const encryptedToken = sessionStorage.getItem("token");
   const user = sessionStorage.getItem("user");
 
-  // console.log(encryptedToken);
   useEffect(() => {
     if (user) {
-      // console.log(JSON.parse(user));
       dispatch(setUsers(JSON.parse(user)));
     }
     if (!encryptedToken) {
@@ -85,6 +79,7 @@ const App = () => {
   }, [encryptedToken, dispatch, navigate]);
 
   const userInfo = useSelector(state => state.auth);
+
   return (
     <>
       <Toaster position="bottom-right" reverseOrder={false} />
@@ -120,6 +115,8 @@ const App = () => {
             <Route path="/pesticides/post-list" element={<PesticidesPostList />} />
             <Route path="/fertilizers/post-list" element={<FertilizersPostList />} />
             <Route path="/tyres/post-list" element={<TyresPostList />} />
+            <Route path="/premium-product/add" element={<AddPremiumProduct />} />
+            <Route path="/premium-product/product-list" element={<PremiumProductList />} />
           </Route>
 
         </Routes>

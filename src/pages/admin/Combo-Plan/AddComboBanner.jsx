@@ -93,7 +93,7 @@ export default function AddComboBanner() {
             if (response.success === 1) {
                 toast.success(response.message);
                 reset();
-                navigate("/combo-plan/combo-plan-list");
+                navigate("/combo-plan/combo-banner-list");
                 // window.location.reload();
             } else {
                 toast.error(response.message || "Something went wrong");
@@ -211,7 +211,7 @@ export default function AddComboBanner() {
                         </div>
 
                         {/* Campaign Category IDs */}
-                        <div>  
+                        <div>
                             <div className="flex justify-between items-center">
                                 <label htmlFor="campaign_category" className="block font-bold text-sm mb-1">Category</label>
                                 {categoryList?.response.length > 0 && (
@@ -245,9 +245,9 @@ export default function AddComboBanner() {
 
                         {/* Banner Language IDs */}
                         <div>
-                            
+
                             <div className="flex justify-between items-center">
-                               <label htmlFor="seller_language_id" className="block font-bold text-sm mb-1">Banner Language</label>
+                                <label htmlFor="seller_language_id" className="block font-bold text-sm mb-1">Banner Language</label>
                                 {languageList?.response.length > 0 && (
                                     <button
                                         type="button"

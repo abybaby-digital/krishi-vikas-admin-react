@@ -24,6 +24,7 @@ import { CgCreditCard } from "react-icons/cg";
 import { MdNotificationsActive } from "react-icons/md";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { IoNewspaper } from "react-icons/io5";
+import { MdWorkspacePremium } from "react-icons/md";
 
 
 import { NavMain } from "@/components/nav-main"
@@ -154,7 +155,7 @@ const data = {
         //   title: "Specifications",
         //   url: "/harvester/spec",
         // },
-        
+
       ],
     },
     {
@@ -183,7 +184,7 @@ const data = {
         //   title: "Specifications",
         //   url: "/implements/spec",
         // },
-        
+
       ],
     },
     {
@@ -212,7 +213,7 @@ const data = {
         //   title: "Specifications",
         //   url: "/tyres/spec",
         // },
-        
+
       ],
     },
     {
@@ -264,6 +265,26 @@ const data = {
         {
           title: "Post Lists",
           url: "/fertilizers/post-list",
+        },
+      ],
+    },
+    {
+      title: "Premium Product",
+      hasSubMenu: true,
+      url: "#",
+      icon: MdWorkspacePremium,
+      items: [
+        // {
+        //   title: "Product Posts",
+        //   url: "/fertilizers/add-post",
+        // },
+        {
+          title: "Add Premium Product",
+          url: "/premium-product/add",
+        },
+        {
+          title: "Premium Product List",
+          url: "/premium-product/product-list",
         },
       ],
     },

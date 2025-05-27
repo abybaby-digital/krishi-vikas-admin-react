@@ -32,6 +32,7 @@ export default function AddComboPlan() {
         handleSubmit,
         control,
         reset,
+        setValue,
         formState: { errors },
     } = useForm();
 
@@ -124,18 +125,28 @@ export default function AddComboPlan() {
     const onSubmit = (data) => {
         addComboPlanMutation.mutate(data);
     };
+
+    const handleSelectAllStates = () => {
+        setValue("state_id", stateList?.response);
+    }
+    const handleSelectAllCategory = () => {
+        setValue("category_id", categoryList?.response);
+    }
+
+
+
     return (
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <AdminHeader head_text="Combo Plan"/>
+                <AdminHeader head_text="Combo Plan" />
 
                 <div className="form-wrapper bg-white p-5">
                     <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-4 lg:grid-cols-3 grid-cols-1"
+                        className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-2 lg:grid-cols-2 grid-cols-1"
                     >
-                        <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 xl:col-span-4 lg:col-span-3 col-span-1">
+                        <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 col-span-full">
                             <h2 className="text-2xl font-bold text-center font-dmsans">Add Combo Plan</h2>
                         </div>
 
@@ -258,7 +269,19 @@ export default function AddComboPlan() {
 
                         {/* Category IDs */}
                         <div>
-                            <label htmlFor="category_id" className="block font-bold text-sm mb-1">Categories</label>
+                            <div className="flex justify-between items-center">
+                                <label htmlFor="category_id" className="block font-bold text-sm mb-1">Categories</label>
+                                {categoryList?.response.length > 0 && (
+                                    <button
+                                        type="button"
+                                        className="text-sm text-black hover:underline"
+                                        onClick={handleSelectAllCategory}
+                                    >
+                                        Select All Categories
+                                    </button>
+                                )}
+                            </div>
+
                             <Controller
                                 name="category_id"
                                 control={control}
@@ -280,7 +303,19 @@ export default function AddComboPlan() {
 
                         {/* State IDs */}
                         <div>
-                            <label htmlFor="state_id" className="block font-bold text-sm mb-1">States</label>
+                            <div className="flex justify-between items-center">
+                                <label htmlFor="state_id" className="block font-bold text-sm mb-1">States</label>
+                                {stateList?.response.length > 0 && (
+                                    <button
+                                        type="button"
+                                        className="text-sm text-black hover:underline"
+                                        onClick={handleSelectAllStates}
+                                    >
+                                        Select All States
+                                    </button>
+                                )}
+                            </div>
+
                             <Controller
                                 name="state_id"
                                 control={control}
@@ -331,11 +366,11 @@ export default function AddComboPlan() {
                                 className="w-full border px-3 py-2 rounded"
                                 {...register("package_description")}
                             />
-                            
+
                         </div>
 
                         {/* Submit Button */}
-                        <div className="form-submit-btn mt-5 xl:col-span-4 lg:col-span-3 col-span-1 rounded-2xl p-5 text-center bg-whitesmoke">
+                        <div className="form-submit-btn mt-5 col-span-full rounded-2xl p-5 text-center bg-whitesmoke">
                             <button
                                 type="submit"
                                 className="bg-gradient-green text-white px-4 py-2 rounded hover:bg-[#000]"
@@ -344,10 +379,10 @@ export default function AddComboPlan() {
                             </button>
                         </div>
 
-                
+
                     </form>
                 </div>
-                 {addComboPlanMutation.isPending ? <Loader task="Creating Combo Plan..." /> : null}
+                {addComboPlanMutation.isPending ? <Loader task="Creating Combo Plan..." /> : null}
             </SidebarInset>
         </SidebarProvider>
     );
