@@ -21,7 +21,16 @@ const ViewComboBanner = ({ modal, setModal, singleComboData }) => {
                     <DialogDescription />
                 </DialogHeader>
 
-                <div className="content-dialog grid md:grid-cols-3 xl:grid-cols-4 grid-cols-1 gap-5">
+                <div className="content-dialog max-h-[80vh] overflow-y-auto grid md:grid-cols-3 xl:grid-cols-4 grid-cols-1 gap-5">
+
+                    <div className="data-group col-span-full border-b pb-5">
+                        <p className='font-semibold text-darkGreen text-lg'>Banner Image</p>
+                        
+                        <a href={singleComboData?.campaign_banner} data-fancybox data-caption="Banner Image">
+                            <img src={singleComboData?.campaign_banner} alt="image" className='object-cover h-[250px] max-w-md rounded-xl my-2 mx-auto' />
+                        </a>
+                    </div>
+
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Campaign Name</p>
                         <p>{singleComboData?.campaign_name}</p>
@@ -62,14 +71,7 @@ const ViewComboBanner = ({ modal, setModal, singleComboData }) => {
                         <p>{new Date(singleComboData?.banner_end_date).toLocaleDateString()}</p>
                     </div>
 
-                    <div className="data-group col-span-full border-b pb-5">
-                        <p className='font-semibold text-darkGreen text-lg'>Banner Image</p>
-                        <img
-                            src={singleComboData?.campaign_banner}
-                            alt="Campaign Banner"
-                            className="w-full max-w-md rounded-lg"
-                        />
-                    </div>
+
                 </div>
 
                 <DialogClose asChild className='bg-white text-2xl absolute z-50 right-3 top-3'>

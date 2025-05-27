@@ -81,6 +81,7 @@ export default function ComboBannerList() {
 
     // Define table columns
     const columns = [
+        
         {
             name: "Actions",
             cell: (row) => (
@@ -106,55 +107,64 @@ export default function ComboBannerList() {
             button: true,
         },
         {
+            name: "Banner",
+            width: "150px",
+            cell: (row) => (
+
+                <a href={row?.campaign_banner} data-fancybox data-caption="Banner Image">
+                    <img src={row?.campaign_banner} alt="image" className="h-12 w-auto rounded my-2" />
+                </a>
+            ),
+        },
+        {
             name: "Campaign Name",
+            width: "250px",
             selector: (row) => row.campaign_name,
             sortable: true,
         },
         {
             name: "Combo Plan",
+            width: "250px",
             selector: (row) => row.combo_plan_name,
             sortable: true,
         },
         {
             name: "User",
+            width: "250px",
             selector: (row) => row.user_name,
             sortable: true,
         },
         {
             name: "Category",
+            width: "250px",
             selector: (row) => row.campaign_category_name,
             sortable: true,
         },
         {
             name: "Language",
+            width: "250px",
             selector: (row) => row.campaign_language,
             sortable: true,
         },
         {
             name: "State",
+            width: "250px",
             selector: (row) => row.state_name || "All States",
             sortable: true,
         },
         {
             name: "Start Date",
+            width: "250px",
             selector: (row) => new Date(row.banner_start_date).toLocaleDateString(),
             sortable: true,
         },
         {
             name: "End Date",
+            width: "250px",
             selector: (row) => new Date(row.banner_end_date).toLocaleDateString(),
             sortable: true,
         },
-        {
-            name: "Banner",
-            cell: (row) => (
-                <img
-                    src={row.campaign_banner}
-                    alt="Banner"
-                    className="h-12 w-auto rounded"
-                />
-            ),
-        },
+
     ];
 
 
