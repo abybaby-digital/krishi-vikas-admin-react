@@ -107,6 +107,12 @@ export default function ComboBannerList() {
             button: true,
         },
         {
+            name: "Banner Id",
+            width: "250px",
+            selector: (row) => row.id,
+            sortable: true,
+        },
+        {
             name: "Banner",
             width: "150px",
             cell: (row) => (
@@ -204,6 +210,7 @@ export default function ComboBannerList() {
         const searchText = search.toLowerCase();
         return (
             item.campaign_name?.toLowerCase().includes(searchText) ||
+            item.id?.toString().includes(searchText)||
             item.user_name?.toLowerCase().includes(searchText) ||
             item.combo_plan_name?.toLowerCase().includes(searchText) ||
             item.campaign_category_name?.toLowerCase().includes(searchText) ||
