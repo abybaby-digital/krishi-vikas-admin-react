@@ -26,7 +26,7 @@ const ViewComboBanner = ({ modal, setModal, singleComboData }) => {
                     <div className="data-group col-span-full border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Banner Image</p>
                         
-                        <a href={singleComboData?.campaign_banner} data-fancybox data-caption="Banner Image">
+                        <a href={singleComboData?.campaign_banner} data-fancybox={singleComboData?.campaign_banner} data-caption="Banner Image">
                             <img src={singleComboData?.campaign_banner} alt="image" className='object-cover h-[250px] max-w-md rounded-xl my-2 mx-auto' />
                         </a>
                     </div>
@@ -63,12 +63,12 @@ const ViewComboBanner = ({ modal, setModal, singleComboData }) => {
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Start Date</p>
-                        <p>{new Date(singleComboData?.banner_start_date).toLocaleDateString()}</p>
+                        <p>{singleComboData?.banner_start_date?.slice(0,11)}</p>
                     </div>
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>End Date</p>
-                        <p>{new Date(singleComboData?.banner_end_date).toLocaleDateString()}</p>
+                        <p>{singleComboData?.banner_end_date?.slice(0,11)}</p>
                     </div>
 
 
