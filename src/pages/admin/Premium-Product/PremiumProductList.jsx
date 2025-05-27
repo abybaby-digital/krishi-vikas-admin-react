@@ -3,12 +3,12 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
-import { categoryWiseProductList } from "../../../services/api";
+import { categoryWiseProductList, fetchPremiumProductList } from "../../../services/api";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
 import { useState } from "react";
-import ViewFertilizersPost from "./ViewFertilizersPost";
+import ViewPremiumProduct from "./ViewPremiumProduct";
 
 export default function PremiumProductList() {
     const token = useSelector((state) => state.auth.token);
@@ -27,7 +27,7 @@ export default function PremiumProductList() {
         error,
     } = useQuery({
         queryKey: ["premium-product-list", modal],
-        queryFn: () => categoryWiseProductList(token, skip, take, take),
+        queryFn: () => fetchPremiumProductList(token, skip, take, take),
     });
 
     const columns = [
@@ -182,7 +182,7 @@ export default function PremiumProductList() {
                     )}
                 </div>
 
-                <ViewFertilizersPost modal={modal} setModal={setModal} singlePostData={singlePostData} />
+                <ViewPremiumProduct modal={modal} setModal={setModal} singlePostData={singlePostData} />
             </SidebarInset>
         </SidebarProvider>
     );

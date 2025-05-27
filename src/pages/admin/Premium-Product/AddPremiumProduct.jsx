@@ -14,7 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { TiWarning } from "react-icons/ti";
 import Select from "react-select";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { addComboBanner, fetchBrandsList, fetchCategoryList, fetchLanguageList, fetchStateList } from "../../../services/api";
+import { addComboBanner, addPremiumProduct, fetchBrandsList, fetchCategoryList, fetchLanguageList, fetchModelsList, fetchStateList } from "../../../services/api";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
@@ -85,8 +85,8 @@ export default function AddPremiumProduct() {
         isLoading: modelLoading,
         error: modelError,
     } = useQuery({
-        queryKey: ["brandList" , watch("category_id")?.value],
-        queryFn: () => fetchBrandsList(token , +watch("category_id")?.value),
+        queryKey: ["modelList" , watch("category_id")?.value , watch("brand_id")?.value],
+        queryFn: () => fetchModelsList(token , +watch("category_id")?.value , +watch("brand_id")?.value),
     });
 
     const comboUser = JSON.parse(sessionStorage.getItem("combo-user"));
@@ -97,23 +97,23 @@ export default function AddPremiumProduct() {
 
     const addPremiumProductMutation = useMutation({
         mutationFn: async (data) => {
-            return await addComboBanner(
+            return await addPremiumProduct(
                 token,
-                comboUser?.user_id,
-                comboUser?.plan_id,
-                data.campaign_name,
-                data.campaign_banner,
-                data.campaign_state.map((item) => item.value).join(","),
-                data.campaign_category.map((item) => item.value).join(","),
-                comboUser?.subscription_details_id,
-                data.seller_language_id.map((item) => item.value).join(","),
+                data.category_id?.value,
+                data.product_type?.value,
+                data.brand_id?.value,
+                data.model_id?.value,
+                data.product_description,
+                data.product_price,
+                data.phone_no,
+                data.backend_price, 
             );
         },
         onSuccess: (response) => {
             if (response.success === 1) {
                 toast.success(response.message);
                 reset();
-                navigate("/combo-plan/combo-plan-list");
+                navigate("/premium-product/product-list");
                 // window.location.reload();
             } else {
                 toast.error(response.message || "Something went wrong");
@@ -128,7 +128,7 @@ export default function AddPremiumProduct() {
     });
 
     const onSubmit = (data) => {
-        // addPremiumProductMutation.mutate(data);
+        addPremiumProductMutation.mutate(data);
         console.log(data);
     };
 
@@ -269,7 +269,7 @@ export default function AddPremiumProduct() {
                                     <Select
 
                                         {...field}
-                                        options={[]}
+                                        options={modelList?.response}
                                         placeholder="-- Select Model --"
                                         classNamePrefix="react-select"
                                     />

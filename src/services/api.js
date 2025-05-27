@@ -1215,7 +1215,7 @@ export const editPremiumProduct = async (
 
 // PREMIUM PRODUCT LIST
 
-export const PremiumProductList = async (
+export const fetchPremiumProductList = async (
   token,
   skip,
   take,
@@ -1273,6 +1273,38 @@ export const fetchBrandsList = async (
   } catch (error) {
     // Log and throw the error in case of failure
     console.error("Failed to add premium product:", error);
+    throw error;
+  }
+};
+
+
+
+// MODELS LIST
+
+export const fetchModelsList = async (
+  token,
+  category_id,
+  brand_id
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/model-list`,
+      {
+        category_id: category_id,
+        brand_id: brand_id,
+      }, 
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch model list:", error);
     throw error;
   }
 };
