@@ -1120,8 +1120,6 @@ export const postApprovalChange = async (
   }
 };
 
-
-
 // ADD PREMIUM PRODUCT
 
 export const addPremiumProduct = async (
@@ -1133,7 +1131,7 @@ export const addPremiumProduct = async (
   product_description,
   product_price,
   phone_no,
-  backend_price
+  price
 ) => {
   try {
     const response = await api.post(
@@ -1146,7 +1144,7 @@ export const addPremiumProduct = async (
         product_description: product_description,
         product_price: product_price,
         phone_no: phone_no,
-        backend_price: backend_price,
+        price: price,
       }, // Empty object as the request body if not required
       {
         headers: {
@@ -1164,8 +1162,6 @@ export const addPremiumProduct = async (
   }
 };
 
-
-
 // EDIT PREMIUM PRODUCT
 
 export const editPremiumProduct = async (
@@ -1178,7 +1174,7 @@ export const editPremiumProduct = async (
   product_description,
   product_price,
   phone_no,
-  backend_price
+  price
 ) => {
   try {
     const response = await api.post(
@@ -1192,7 +1188,7 @@ export const editPremiumProduct = async (
         product_description: product_description,
         product_price: product_price,
         phone_no: phone_no,
-        backend_price: backend_price,
+        price: price,
       }, // Empty object as the request body if not required
       {
         headers: {
@@ -1209,9 +1205,6 @@ export const editPremiumProduct = async (
     throw error;
   }
 };
-
-
-
 
 // PREMIUM PRODUCT LIST
 
@@ -1251,16 +1244,13 @@ export const fetchPremiumProductList = async (
 
 // BRANDS LIST
 
-export const fetchBrandsList = async (
-  token,
-  category_id,
-) => {
+export const fetchBrandsList = async (token, category_id) => {
   try {
     const response = await api.post(
       `${baseURL}/brand-list`,
       {
         category_id: category_id,
-      }, 
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization header
@@ -1277,22 +1267,16 @@ export const fetchBrandsList = async (
   }
 };
 
-
-
 // MODELS LIST
 
-export const fetchModelsList = async (
-  token,
-  category_id,
-  brand_id
-) => {
+export const fetchModelsList = async (token, category_id, brand_id) => {
   try {
     const response = await api.post(
       `${baseURL}/model-list`,
       {
         category_id: category_id,
         brand_id: brand_id,
-      }, 
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`, // Authorization header

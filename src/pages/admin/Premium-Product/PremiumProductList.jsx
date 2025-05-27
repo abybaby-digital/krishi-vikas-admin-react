@@ -50,55 +50,63 @@ export default function PremiumProductList() {
         },
         {
             name: "Status",
-            selector: (row) => row.status === "0" ? (<span className="border border-dashed p-2 text-orange-500 border-orange-500">Pending</span>) :
-                row.status === "1" ? (<span className="border border-dashed p-2 text-green-500 border-green-500">Approved</span>) : (<span className="border border-dashed p-2 text-red-500 border-red-500">Rejected</span>),
+            selector: (row) =>
+                row.status === "0" ? (
+                    <span className="border border-dashed p-2 text-orange-500 border-orange-500">Pending</span>
+                ) : row.status === "1" ? (
+                    <span className="border border-dashed p-2 text-green-500 border-green-500">Approved</span>
+                ) : (
+                    <span className="border border-dashed p-2 text-red-500 border-red-500">Rejected</span>
+                ),
             sortable: true,
         },
         {
-            name: "Post Id",
+            name: "Post ID",
             selector: (row) => row.id,
             sortable: true,
         },
         {
-            name: "Title",
-            selector: (row) => row.title,
-            sortable: true,
-        },
-        // {
-        //     name: "Brand ID",
-        //     selector: (row) => row.brand_id,
-        //     sortable: true,
-        // },
-        // {
-        //     name: "Model ID",
-        //     selector: (row) => row.model_id,
-        //     sortable: true,
-        // },
-
-        {
-            name: "Price",
-            selector: (row) => `${row.price} ${row.rent_type ? (row.rent_type) : ""}`,
+            name: "Product Type",
+            selector: (row) => row.product_type,
             sortable: true,
         },
         {
-            name: "Price Negotiable",
-            selector: (row) => row.is_negotiable ? "Yes" : "No",
+            name: "Brand ID",
+            selector: (row) => row.brand_id,
             sortable: true,
         },
-
-
+        {
+            name: "Model ID",
+            selector: (row) => row.model_id,
+            sortable: true,
+        },
+        {
+            name: "Product Price",
+            selector: (row) => `${parseFloat(row.product_price).toLocaleString()}`,
+            sortable: true,
+        },
+        {
+            name: "Backend Price",
+            selector: (row) => `${parseFloat(row.backend_price).toLocaleString()}`,
+            sortable: true,
+        },
+        {
+            name: "Boosted",
+            selector: (row) => (row.is_boosted === "1" ? "Yes" : "No"),
+            sortable: true,
+        },
         {
             name: "Description",
-            selector: (row) => row.description,
+            selector: (row) => row.product_description,
             sortable: true,
         },
-
         {
-            name: "Location",
-            selector: (row) => row.area || row.address,
+            name: "Created At",
+            selector: (row) => new Date(row.created_at).toLocaleString(),
+            sortable: true,
         },
-
     ];
+
 
     const customStyles = {
         headCells: {
@@ -148,10 +156,10 @@ export default function PremiumProductList() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <AdminHeader head_text="Fertilizers Posts" />
+                <AdminHeader head_text="Premium Product" />
                 <div className="form-wrapper bg-white p-5">
                     <div className="flex justify-between form-heading bg-whitesmoke rounded-2xl mb-5 p-5">
-                        <h2 className="text-2xl font-bold text-center font-dmsans">Fertilizers Post List</h2>
+                        <h2 className="text-2xl font-bold text-center font-dmsans">Premium Product List</h2>
                         <input
                             type="text"
                             placeholder="Search..."

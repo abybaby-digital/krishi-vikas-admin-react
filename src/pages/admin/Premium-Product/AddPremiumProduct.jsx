@@ -74,8 +74,8 @@ export default function AddPremiumProduct() {
         isLoading: brandLoading,
         error: brandError,
     } = useQuery({
-        queryKey: ["brandList" , watch("category_id")?.value],
-        queryFn: () => fetchBrandsList(token , +watch("category_id")?.value),
+        queryKey: ["brandList", watch("category_id")?.value],
+        queryFn: () => fetchBrandsList(token, +watch("category_id")?.value),
     });
 
 
@@ -85,8 +85,8 @@ export default function AddPremiumProduct() {
         isLoading: modelLoading,
         error: modelError,
     } = useQuery({
-        queryKey: ["modelList" , watch("category_id")?.value , watch("brand_id")?.value],
-        queryFn: () => fetchModelsList(token , +watch("category_id")?.value , +watch("brand_id")?.value),
+        queryKey: ["modelList", watch("category_id")?.value, watch("brand_id")?.value],
+        queryFn: () => fetchModelsList(token, +watch("category_id")?.value, +watch("brand_id")?.value),
     });
 
     const comboUser = JSON.parse(sessionStorage.getItem("combo-user"));
@@ -106,7 +106,7 @@ export default function AddPremiumProduct() {
                 data.product_description,
                 data.product_price,
                 data.phone_no,
-                data.backend_price, 
+                data.price,
             );
         },
         onSuccess: (response) => {
@@ -160,7 +160,7 @@ export default function AddPremiumProduct() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <AdminHeader head_text="Combo Banner" />
+                <AdminHeader head_text="Premium Product" />
 
                 <div className="form-wrapper bg-white p-5">
                     <form
@@ -171,16 +171,13 @@ export default function AddPremiumProduct() {
                             <h2 className="text-2xl font-bold text-center font-dmsans">Add Premium Product</h2>
                         </div>
 
-                        {/*Category IDs */}
+                        {/* Category */}
                         <div>
-                            <div className="flex justify-between items-center">
-                                <label htmlFor="category_id" className="block font-bold text-sm mb-1">Category</label>
-
-                            </div>
+                            <label htmlFor="category_id" className="block font-bold text-sm mb-1">Category</label>
                             <Controller
                                 name="category_id"
                                 control={control}
-                                rules={{ required: "Select Campaign Category" }}
+                                rules={{ required: "Select a category" }}
                                 render={({ field }) => (
                                     <Select
                                         {...field}
@@ -190,61 +187,41 @@ export default function AddPremiumProduct() {
                                     />
                                 )}
                             />
-                            {errors.category_id && (
-                                <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.category_id.message}</p>
-                            )}
+                            {errors.category_id && <p className="text-red-500 text-sm">{errors.category_id.message}</p>}
                         </div>
 
-
-                        {/*Product type */}
-                        <div>
-                            <div className="flex justify-between items-center">
-                                <label htmlFor="product_type" className="block font-bold text-sm mb-1">Product Type</label>
-                            </div>
+                        {/* Product Type */}
+                        <div className="hidden">
+                            <label htmlFor="product_type" className="block font-bold text-sm mb-1">Product Type</label>
                             <Controller
                                 name="product_type"
                                 control={control}
-                                defaultValue={{
-                                    value: "sell_new",
-                                    label: "Sell New"
-                                }}
+                                rules={{ required: "Select a product type" }}
+                                defaultValue={{ value: "sell_new", label: "Sell New" }}
                                 render={({ field }) => (
                                     <Select
-                                        isDisabled={true}
+                                        isDisabled
                                         {...field}
-                                        options={
-                                            [
-                                                {
-                                                    value: "sell_new",
-                                                    label: "Sell New"
-                                                },
-                                                {
-                                                    value: "sell_old",
-                                                    label: "Sell Old"
-                                                },
-                                            ]
-                                        }
-                                        placeholder="-- Select Product Type --"
+                                        options={[
+                                            { value: "sell_new", label: "Sell New" },
+                                            { value: "sell_old", label: "Sell Old" }
+                                        ]}
                                         classNamePrefix="react-select"
                                     />
                                 )}
                             />
-                            {errors.product_type && (
-                                <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.product_type.message}</p>
-                            )}
+                            {errors.product_type && <p className="text-red-500 text-sm">{errors.product_type.message}</p>}
                         </div>
 
-                        {/*Brand type */}
+                        {/* Brand */}
                         <div>
-                            <div className="flex justify-between items-center">
-                                <label htmlFor="brand_id" className="block font-bold text-sm mb-1">Select Brand</label>
-                            </div>
+                            <label htmlFor="brand_id" className="block font-bold text-sm mb-1">Brand</label>
                             <Controller
                                 name="brand_id"
                                 control={control}
+                                rules={{ required: "Select a brand" }}
                                 render={({ field }) => (
                                     <Select
-
                                         {...field}
                                         options={brandList?.response}
                                         placeholder="-- Select Brand --"
@@ -252,22 +229,18 @@ export default function AddPremiumProduct() {
                                     />
                                 )}
                             />
-                            {errors.brand_id && (
-                                <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.brand_id.message}</p>
-                            )}
+                            {errors.brand_id && <p className="text-red-500 text-sm">{errors.brand_id.message}</p>}
                         </div>
 
-                        {/*Model type */}
+                        {/* Model */}
                         <div>
-                            <div className="flex justify-between items-center">
-                                <label htmlFor="model_id" className="block font-bold text-sm mb-1">Select Model</label>
-                            </div>
+                            <label htmlFor="model_id" className="block font-bold text-sm mb-1">Model</label>
                             <Controller
                                 name="model_id"
                                 control={control}
+                                rules={{ required: "Select a model" }}
                                 render={({ field }) => (
                                     <Select
-
                                         {...field}
                                         options={modelList?.response}
                                         placeholder="-- Select Model --"
@@ -275,24 +248,39 @@ export default function AddPremiumProduct() {
                                     />
                                 )}
                             />
-                            {errors.model_id && (
-                                <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.model_id.message}</p>
-                            )}
+                            {errors.model_id && <p className="text-red-500 text-sm">{errors.model_id.message}</p>}
+                        </div>
+
+                        {/* Phone No */}
+                        <div>
+                            <label htmlFor="phone_no" className="block font-bold text-sm mb-1">Phone No</label>
+                            <input
+                                type="tel"
+                                id="phone_no"
+                                placeholder="Enter Phone No"
+                                className="w-full border px-3 py-2 rounded"
+                                {...register("phone_no", {
+                                    required: "Enter Phone No",
+                                    pattern: {
+                                        value: /^[0-9]{10,14}$/,
+                                        message: "Enter a valid phone number"
+                                    }
+                                })}
+                            />
+                            {errors.phone_no && <p className="text-red-500 text-sm">{errors.phone_no.message}</p>}
                         </div>
 
                         {/* Product Description */}
                         <div className="col-span-full">
                             <label htmlFor="product_description" className="block font-bold text-sm mb-1">Product Description</label>
-                            <textarea type="text"
+                            <textarea
                                 id="product_description"
-                                placeholder="Enter Product Description"
+                                placeholder="Enter product description"
                                 rows={4}
                                 className="w-full border px-3 py-2 rounded"
-                                {...register("product_description")}>
-
-                            </textarea>
-
-
+                                {...register("product_description")}
+                            />
+                            {errors.product_description && <p className="text-red-500 text-sm">{errors.product_description.message}</p>}
                         </div>
 
                         {/* Product Price */}
@@ -303,32 +291,28 @@ export default function AddPremiumProduct() {
                                 id="product_price"
                                 placeholder="Enter Product Price"
                                 className="w-full border px-3 py-2 rounded"
-                                {...register("product_price", { required: "Enter Product Price" })}
+                                {...register("product_price", {
+                                    min: { value: 1, message: "Price must be greater than zero" }
+                                })}
                             />
+                            {errors.product_price && <p className="text-red-500 text-sm">{errors.product_price.message}</p>}
                         </div>
 
-                        {/* Phone No */}
-                        <div>
-                            <label htmlFor="phone_no" className="block font-bold text-sm mb-1">Phone No</label>
-                            <input
-                                type="number"
-                                id="phone_no"
-                                placeholder="Enter Phone No"
-                                className="w-full border px-3 py-2 rounded"
-                                {...register("phone_no", { required: "Enter Phone No" })}
-                            />
-                        </div>
+
 
                         {/* Backend Price */}
                         <div>
-                            <label htmlFor="backend_price" className="block font-bold text-sm mb-1">Backend Price</label>
+                            <label htmlFor="price" className="block font-bold text-sm mb-1">Price</label>
                             <input
                                 type="number"
-                                id="backend_price"
-                                placeholder="Enter Backend Price"
+                                id="price"
+                                placeholder="Enter price"
                                 className="w-full border px-3 py-2 rounded"
-                                {...register("backend_price", { required: "Enter Backend Price" })}
+                                {...register("price", {
+                                    min: { value: 1, message: "Price must be greater than zero" }
+                                })}
                             />
+                            {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
                         </div>
 
                         {/* Submit Button */}
@@ -340,11 +324,10 @@ export default function AddPremiumProduct() {
                                 {addPremiumProductMutation.isPending ? "Submitting..." : "Submit"}
                             </button>
                         </div>
-
-
                     </form>
+
                 </div>
-                {addPremiumProductMutation.isPending ? <Loader task="Submitting Combo Banner..." /> : null}
+                {addPremiumProductMutation.isPending ? <Loader task="Adding Premium Product..." /> : null}
             </SidebarInset>
         </SidebarProvider>
     );
