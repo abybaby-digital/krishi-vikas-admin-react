@@ -7,8 +7,10 @@ import { categoryWiseProductList } from "../../../services/api";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
+import { MdEditDocument } from "react-icons/md";
 import { useState } from "react";
 import ViewTractorPost from "./ViewTractorPost";
+import { useNavigate } from "react-router-dom";
 
 export default function TractorPostList() {
     const token = useSelector((state) => state.auth.token);
@@ -18,13 +20,15 @@ export default function TractorPostList() {
     const [skip, setSkip] = useState(null);
     const [take, setTake] = useState(null);
 
+    const navigate = useNavigate();
+
     const {
         data,
         isLoading,
         isError,
         error,
     } = useQuery({
-        queryKey: ["tractor-posts" , modal],
+        queryKey: ["tractor-posts", modal],
         queryFn: () => categoryWiseProductList(token, 1, skip, take),
     });
 
@@ -32,15 +36,27 @@ export default function TractorPostList() {
         {
             name: "Actions",
             cell: (row) => (
-                <button
-                    className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                    onClick={() => {
-                        setModal(true);
-                        setSinglePost(row);
-                    }}
-                >
-                    <BsEyeFill />
-                </button>
+                <>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 me-2 hover:scale-90"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                        }}
+                    >
+                        <BsEyeFill />
+                    </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                            navigate(`/tractor/edit-post/${row.id}`)
+                        }}
+                    >
+                        <MdEditDocument />
+                    </button>
+                </>
             ),
             ignoreRowClick: true,
             allowOverflow: true,

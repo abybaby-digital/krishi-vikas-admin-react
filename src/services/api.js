@@ -949,14 +949,16 @@ export const fetchLanguageList = async (token) => {
   }
 };
 
-// TRACTOR POST
+// EDIT TRACTOR POST
 
-export const addTractorPost = async (
+export const editTractorPost = async (
   token,
   {
+    post_id,
     category_id,
     product_type,
     brand_id,
+    model_id,
     title,
     year_of_purchase,
     rc_available,
@@ -966,7 +968,6 @@ export const addTractorPost = async (
     price,
     rent_type,
     is_negotiable,
-    model_id,
     left_image,
     right_image,
     front_image,
@@ -982,9 +983,11 @@ export const addTractorPost = async (
     const formData = new FormData();
 
     // Append text fields
+    formData.append("post_id", post_id);
     formData.append("category_id", category_id);
     formData.append("product_type", product_type);
     formData.append("brand_id", brand_id);
+    formData.append("model_id", model_id);
     formData.append("title", title);
     formData.append("year_of_purchase", year_of_purchase);
     formData.append("rc_available", rc_available);
@@ -994,7 +997,6 @@ export const addTractorPost = async (
     formData.append("price", price);
     formData.append("rent_type", rent_type);
     formData.append("is_negotiable", is_negotiable);
-    formData.append("model_id", model_id);
     formData.append("seller_state_id", seller_state_id);
     formData.append("seller_district_id", seller_district_id);
     formData.append("phone_no", phone_no);
@@ -1167,28 +1169,14 @@ export const addPremiumProduct = async (
 export const editPremiumProduct = async (
   token,
   premium_product_id,
-  category_id,
-  product_type,
-  brand_id,
-  model_id,
-  product_description,
-  product_price,
-  phone_no,
-  price
+  product_description
 ) => {
   try {
     const response = await api.post(
       `${baseURL}/edit-premium-product`,
       {
         premium_product_id: premium_product_id,
-        category_id: category_id,
-        product_type: product_type,
-        brand_id: brand_id,
-        model_id: model_id,
         product_description: product_description,
-        product_price: product_price,
-        phone_no: phone_no,
-        price: price,
       }, // Empty object as the request body if not required
       {
         headers: {
@@ -1238,6 +1226,31 @@ export const fetchPremiumProductList = async (
   } catch (error) {
     // Log and throw the error in case of failure
     console.error("Failed to add premium product:", error);
+    throw error;
+  }
+};
+
+// PREMIUM PRODUCT VIEW BY ID
+
+export const fetchPremiumProductById = async (token, premium_product_id) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/premium-product-view-by-id`,
+      {
+        premium_product_id: premium_product_id,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch premium product:", error);
     throw error;
   }
 };

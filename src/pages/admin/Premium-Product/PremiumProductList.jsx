@@ -7,10 +7,13 @@ import { categoryWiseProductList, fetchPremiumProductList } from "../../../servi
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
+import { MdEditDocument } from "react-icons/md";
 import { useState } from "react";
 import ViewPremiumProduct from "./ViewPremiumProduct";
+import { useNavigate } from "react-router-dom";
 
 export default function PremiumProductList() {
+    const navigate = useNavigate();
     const token = useSelector((state) => state.auth.token);
     const [modal, setModal] = useState(false);
     const [categoryId, setCategoryId] = useState(false);
@@ -34,8 +37,9 @@ export default function PremiumProductList() {
         {
             name: "Actions",
             cell: (row) => (
+                <>
                 <button
-                    className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                    className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
                     onClick={() => {
                         setModal(true);
                         setSinglePost(row);
@@ -43,23 +47,34 @@ export default function PremiumProductList() {
                 >
                     <BsEyeFill />
                 </button>
+                <button
+                    className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                    onClick={() => {
+                        setModal(true);
+                        setSinglePost(row);
+                        navigate(`/premium-product/edit/${row.id}`)
+                    }}
+                >
+                    <MdEditDocument />
+                </button>
+                </>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
-        {
-            name: "Status",
-            selector: (row) =>
-                row.status === "0" ? (
-                    <span className="border border-dashed p-2 text-orange-500 border-orange-500">Pending</span>
-                ) : row.status === "1" ? (
-                    <span className="border border-dashed p-2 text-green-500 border-green-500">Approved</span>
-                ) : (
-                    <span className="border border-dashed p-2 text-red-500 border-red-500">Rejected</span>
-                ),
-            sortable: true,
-        },
+        // {
+        //     name: "Status",
+        //     selector: (row) =>
+        //         row.status === "0" ? (
+        //             <span className="border border-dashed p-2 text-orange-500 border-orange-500">Pending</span>
+        //         ) : row.status === "1" ? (
+        //             <span className="border border-dashed p-2 text-green-500 border-green-500">Approved</span>
+        //         ) : (
+        //             <span className="border border-dashed p-2 text-red-500 border-red-500">Rejected</span>
+        //         ),
+        //     sortable: true,
+        // },
         {
             name: "Post ID",
             selector: (row) => row.id,
@@ -82,12 +97,12 @@ export default function PremiumProductList() {
         },
         {
             name: "Product Price",
-            selector: (row) => `${parseFloat(row.product_price).toLocaleString()}`,
+            selector: (row) => `${row.product_price === null ? "" : `Rs. ${row.product_price}`}`,
             sortable: true,
         },
         {
             name: "Backend Price",
-            selector: (row) => `${parseFloat(row.backend_price).toLocaleString()}`,
+            selector: (row) => `${row.backend_price === undefined || null ? "" : `Rs. ${row.backend_price}`}`,
             sortable: true,
         },
         {

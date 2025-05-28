@@ -29,6 +29,7 @@ const PushNotification = React.lazy(() => import("./pages/admin/Notifications/Pu
 const EditPushNotification = React.lazy(() => import("./pages/admin/Notifications/EditPushNotification"));
 const NotificationScheduleList = React.lazy(() => import("./pages/admin/Notifications/NotificationScheduleList"));
 const AddTractor = React.lazy(() => import("./pages/admin/Tractor/AddTractor"));
+const EditTractor = React.lazy(() => import("./pages/admin/Tractor/EditTractor"));
 const TractorPostList = React.lazy(() => import("./pages/admin/Tractor/TractorPostList"));
 const GoodsVehiclePostList = React.lazy(() => import("./pages/admin/Goods-Vehicle/GoodsVehiclePostList"));
 const TyresPostList = React.lazy(() => import("./pages/admin/Tyres/TyresPostList"));
@@ -39,6 +40,7 @@ const FertilizersPostList = React.lazy(() => import("./pages/admin/Fertilizers/F
 const PesticidesPostList = React.lazy(() => import("./pages/admin/Pesticides/PesticidesPostList"));
 const PremiumProductList = React.lazy(() => import("./pages/admin/Premium-Product/PremiumProductList"));
 const AddPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/AddPremiumProduct"));
+const EditPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/EditPremiumProduct"));
 
 
 const ScrollToTop = () => {
@@ -107,6 +109,7 @@ const App = () => {
             <Route path="/notification/notification-schedule/edit/:id" element={<EditPushNotification />} />
             <Route path="/notification/notification-schedule-list" element={<NotificationScheduleList />} />
             <Route path="/tractor/add-post" element={<AddTractor />} />
+            <Route path="/tractor/edit-post/:id" element={<EditTractor />} />
             <Route path="/tractor/post-list" element={<TractorPostList />} />
             <Route path="/goods-vehicle/post-list" element={<GoodsVehiclePostList />} />
             <Route path="/harvester/post-list" element={<HarvesterPostList />} />
@@ -117,6 +120,7 @@ const App = () => {
             <Route path="/tyres/post-list" element={<TyresPostList />} />
             <Route path="/premium-product/add" element={<AddPremiumProduct />} />
             <Route path="/premium-product/product-list" element={<PremiumProductList />} />
+            <Route path="/premium-product/edit/:id" element={<EditPremiumProduct />} />
           </Route>
 
         </Routes>

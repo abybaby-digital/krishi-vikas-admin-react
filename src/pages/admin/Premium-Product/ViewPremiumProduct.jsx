@@ -53,7 +53,7 @@ const ViewPremiumProduct = ({ modal, setModal, singlePostData }) => {
                             <p>{singlePostData?.id}</p>
                         </div>
                         <div className="data-group border-b pb-5">
-                            <p className='font-semibold text-darkGreen text-lg'>Category ID</p>
+                            <p className='font-semibold text-darkGreen text-lg'>Category</p>
                             <p>{singlePostData?.category_id}</p>
                         </div>
                         <div className="data-group border-b pb-5">
@@ -61,24 +61,28 @@ const ViewPremiumProduct = ({ modal, setModal, singlePostData }) => {
                             <p>{singlePostData?.user_id}</p>
                         </div>
                         <div className="data-group border-b pb-5">
+                            <p className='font-semibold text-darkGreen text-lg'>User Name</p>
+                            <p>{singlePostData?.user_name}</p>
+                        </div>
+                        <div className="data-group border-b pb-5">
                             <p className='font-semibold text-darkGreen text-lg'>Product Type</p>
                             <p>{singlePostData?.product_type}</p>
                         </div>
                         <div className="data-group border-b pb-5">
-                            <p className='font-semibold text-darkGreen text-lg'>Brand ID</p>
-                            <p>{singlePostData?.brand_id}</p>
+                            <p className='font-semibold text-darkGreen text-lg'>Brand Name</p>
+                            <p>{singlePostData?.brand_name}</p>
                         </div>
                         <div className="data-group border-b pb-5">
-                            <p className='font-semibold text-darkGreen text-lg'>Model ID</p>
-                            <p>{singlePostData?.model_id}</p>
+                            <p className='font-semibold text-darkGreen text-lg'>Model Name</p>
+                            <p>{singlePostData?.model_name}</p>
                         </div>
                         <div className="data-group border-b pb-5">
                             <p className='font-semibold text-darkGreen text-lg'>Product Price</p>
-                            <p>{parseFloat(singlePostData?.product_price).toLocaleString()} ৳</p>
+                            <p>Rs.{parseFloat(singlePostData?.product_price).toLocaleString()}</p>
                         </div>
                         <div className="data-group border-b pb-5">
                             <p className='font-semibold text-darkGreen text-lg'>Backend Price</p>
-                            <p>{parseFloat(singlePostData?.backend_price).toLocaleString()} ৳</p>
+                            <p>Rs.{parseFloat(singlePostData?.backend_price).toLocaleString()}</p>
                         </div>
                         <div className="data-group border-b pb-5">
                             <p className='font-semibold text-darkGreen text-lg'>Boosted</p>
