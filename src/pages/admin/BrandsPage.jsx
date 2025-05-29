@@ -16,11 +16,39 @@ import {
 
 import BrandsTable from "../../components/admin/brands/BrandsTable"
 import BrandsCreate from "../../components/admin/brands/BrandsCreate"
+import { useParams } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
 
 export default function BrandsPage() {
 
-    
-    
+    const { category } = useParams();
+    console.log(category);
+
+    // GET CATEGORY ID FUNCTION
+
+    const getCategoryId = (category_name) => {
+        switch (category_name) {
+            case "tractor":
+                return 1
+            case "goods-vehicle":
+                return 3
+            case "harvester":
+                return 4
+            case "implements":
+                return 5
+            case "tyres":
+                return 7
+        }
+    }
+
+    //     const {data : brandList , isLoading: brandLoading} = useQuery({
+    //         queryKey: ["brand-list" , category],
+    //         queryFn: async() =>{
+    // return await
+    //         }
+    //     }) 
+
+
     return (
         <SidebarProvider>
             <AppSidebar />

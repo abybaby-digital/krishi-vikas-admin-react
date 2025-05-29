@@ -86,14 +86,14 @@ const data = {
           title: "Post Lists",
           url: "/tractor/post-list",
         },
-        // {
-        //   title: "Brands",
-        //   url: "/tractor/brands",
-        // },
-        // {
-        //   title: "Models",
-        //   url: "/tractor/models",
-        // },
+        {
+          title: "Brands",
+          url: "/tractor/brands",
+        },
+        {
+          title: "Models",
+          url: "/tractor/models",
+        },
         // {
         //   title: "Specifications",
         //   url: "/tractor/spec",
@@ -115,14 +115,14 @@ const data = {
           title: "Post Lists",
           url: "/goods-vehicle/post-list",
         },
-        // {
-        //   title: "Brands",
-        //   url: "/goods-vehicle/brands",
-        // },
-        // {
-        //   title: "Models",
-        //   url: "/goods-vehicle/models",
-        // },
+        {
+          title: "Brands",
+          url: "/goods-vehicle/brands",
+        },
+        {
+          title: "Models",
+          url: "/goods-vehicle/models",
+        },
         // {
         //   title: "Specifications",
         //   url: "/goods-vehicle/spec",
@@ -143,14 +143,14 @@ const data = {
           title: "Post Lists",
           url: "/harvester/post-list",
         },
-        // {
-        //   title: "Brands",
-        //   url: "/harvester/brands",
-        // },
-        // {
-        //   title: "Models",
-        //   url: "/harvester/models",
-        // },
+        {
+          title: "Brands",
+          url: "/harvester/brands",
+        },
+        {
+          title: "Models",
+          url: "/harvester/models",
+        },
         // {
         //   title: "Specifications",
         //   url: "/harvester/spec",
@@ -172,14 +172,14 @@ const data = {
           title: "Post Lists",
           url: "/implements/post-list",
         },
-        // {
-        //   title: "Brands",
-        //   url: "/implements/brands",
-        // },
-        // {
-        //   title: "Models",
-        //   url: "/implements/models",
-        // },
+        {
+          title: "Brands",
+          url: "/implements/brands",
+        },
+        {
+          title: "Models",
+          url: "/implements/models",
+        },
         // {
         //   title: "Specifications",
         //   url: "/implements/spec",
@@ -201,14 +201,14 @@ const data = {
           title: "Post Lists",
           url: "/tyres/post-list",
         },
-        // {
-        //   title: "Brands",
-        //   url: "/tyres/brands",
-        // },
-        // {
-        //   title: "Models",
-        //   url: "/tyres/models",
-        // },
+        {
+          title: "Brands",
+          url: "/tyres/brands",
+        },
+        {
+          title: "Models",
+          url: "/tyres/models",
+        },
         // {
         //   title: "Specifications",
         //   url: "/tyres/spec",

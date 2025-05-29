@@ -953,31 +953,29 @@ export const fetchLanguageList = async (token) => {
 
 export const editTractorPost = async (
   token,
-  {
-    post_id,
-    category_id,
-    product_type,
-    brand_id,
-    model_id,
-    title,
-    year_of_purchase,
-    rc_available,
-    noc_available,
-    registration_no,
-    description,
-    price,
-    rent_type,
-    is_negotiable,
-    left_image,
-    right_image,
-    front_image,
-    back_image,
-    meter_image,
-    tyre_image,
-    seller_state_id,
-    seller_district_id,
-    phone_no,
-  }
+  post_id,
+  category_id,
+  product_type,
+  brand_id,
+  model_id,
+  title,
+  year_of_purchase,
+  rc_available,
+  noc_available,
+  registration_no,
+  description,
+  price,
+  rent_type,
+  is_negotiable,
+  left_image,
+  right_image,
+  front_image,
+  back_image,
+  meter_image,
+  tyre_image,
+  seller_state_id,
+  seller_district_id,
+  phone_no
 ) => {
   try {
     const formData = new FormData();
@@ -1001,19 +999,37 @@ export const editTractorPost = async (
     formData.append("seller_district_id", seller_district_id);
     formData.append("phone_no", phone_no);
 
-    // Append image fields (check if valid File)
-    if (left_image instanceof File) formData.append("left_image", left_image);
-    if (right_image instanceof File)
-      formData.append("right_image", right_image);
-    if (front_image instanceof File)
-      formData.append("front_image", front_image);
-    if (back_image instanceof File) formData.append("back_image", back_image);
-    if (meter_image instanceof File)
-      formData.append("meter_image", meter_image);
-    if (tyre_image instanceof File) formData.append("tyre_image", tyre_image);
+    // Append image files only if they are valid File instances
+    if (left_image && left_image[0]) {
+      formData.append("left_image", left_image[0]);
+    }
+    if (right_image && right_image[0]) {
+      formData.append("right_image", right_image[0]);
+    }
+    if (front_image && front_image[0]) {
+      formData.append("front_image", front_image[0]);
+    }
+    if (back_image && back_image[0]) {
+      formData.append("back_image", back_image[0]);
+    }
+    if (meter_image && meter_image[0]) {
+      formData.append("left_image", left_image[0]);
+    }
+    if (tyre_image && tyre_image[0]) {
+      formData.append("tyre_image", tyre_image[0]);
+    }
+    // if (left_image[0] instanceof File) formData.append("left_image", left_image[0]);
+    // if (right_image[0] instanceof File)
+    //   formData.append("right_image", right_image);
+    // if (front_image[0] instanceof File)
+    //   formData.append("front_image", front_image);
+    // if (back_image[0] instanceof File) formData.append("back_image", back_image);
+    // if (meter_image instanceof File)
+    //   formData.append("meter_image", meter_image);
+    // if (tyre_image[0] instanceof File) formData.append("tyre_image", tyre_image);
 
     // Send POST request
-    const response = await api.post(`${baseURL}/add-tractor`, formData, {
+    const response = await api.post(`${baseURL}/edit-tractor`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
@@ -1302,6 +1318,41 @@ export const fetchModelsList = async (token, category_id, brand_id) => {
   } catch (error) {
     // Log and throw the error in case of failure
     console.error("Failed to fetch model list:", error);
+    throw error;
+  }
+};
+
+
+// UPDATE METAS
+
+export const updateMetas = async (
+  token,
+  category_id,
+  post_id,
+  meta_title,
+  meta_description
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/update-category-meta`,
+      {
+        category_id: category_id,
+        post_id: post_id,
+        meta_title: meta_title,
+        meta_description: meta_description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to update metas:", error);
     throw error;
   }
 };

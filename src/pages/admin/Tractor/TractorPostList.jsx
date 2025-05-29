@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
 import { MdEditDocument } from "react-icons/md";
+import { TbWorldSearch } from "react-icons/tb";
 import { useState } from "react";
 import ViewTractorPost from "./ViewTractorPost";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +21,8 @@ export default function TractorPostList() {
     const [skip, setSkip] = useState(null);
     const [take, setTake] = useState(null);
 
+    const [seoModal, setSeoModal] = useState(false);
+
     const navigate = useNavigate();
 
     const {
@@ -28,13 +31,14 @@ export default function TractorPostList() {
         isError,
         error,
     } = useQuery({
-        queryKey: ["tractor-posts", modal],
+        queryKey: ["tractor-posts"],
         queryFn: () => categoryWiseProductList(token, 1, skip, take),
     });
 
     const columns = [
         {
             name: "Actions",
+            width: "200px",
             cell: (row) => (
                 <>
                     <button
@@ -47,14 +51,25 @@ export default function TractorPostList() {
                         <BsEyeFill />
                     </button>
                     <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
                         onClick={() => {
                             setModal(true);
                             setSinglePost(row);
-                            navigate(`/tractor/edit-post/${row.id}`)
+                            navigate(`/tractor/edit-post/${row.id}`);
+                            sessionStorage.setItem("post-data", JSON.stringify(row));
                         }}
                     >
                         <MdEditDocument />
+                    </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                        onClick={() => {
+                            setModal(true);
+                            setSeoModal(true);
+                            setSinglePost(row);
+                        }}
+                    >
+                        <TbWorldSearch />
                     </button>
                 </>
             ),
@@ -62,12 +77,7 @@ export default function TractorPostList() {
             allowOverflow: true,
             button: true,
         },
-        {
-            name: "Status",
-            selector: (row) => row.status === "0" ? (<span className="border border-dashed p-2 text-orange-500 border-orange-500">Pending</span>) :
-                row.status === "1" ? (<span className="border border-dashed p-2 text-green-500 border-green-500">Approved</span>) : (<span className="border border-dashed p-2 text-red-500 border-red-500">Rejected</span>),
-            sortable: true,
-        },
+        
         {
             name: "Post Id",
             selector: (row) => row.id,
@@ -138,6 +148,12 @@ export default function TractorPostList() {
         {
             name: "Location",
             selector: (row) => row.area || row.address,
+        },
+        {
+            name: "Status",
+            selector: (row) => row.status === "0" ? (<span className="border border-dashed p-2 text-orange-500 border-orange-500">Pending</span>) :
+                row.status === "1" ? (<span className="border border-dashed p-2 text-green-500 border-green-500">Approved</span>) : (<span className="border border-dashed p-2 text-red-500 border-red-500">Rejected</span>),
+            sortable: true,
         },
 
     ];
@@ -224,7 +240,10 @@ export default function TractorPostList() {
                     )}
                 </div>
 
-                <ViewTractorPost modal={modal} setModal={setModal} singlePostData={singlePostData} />
+                
+                <ViewTractorPost modal={modal} setModal={setModal} singlePostData={singlePostData} seoModal={seoModal} setSeoModal = {setSeoModal} />
+            
+            
             </SidebarInset>
         </SidebarProvider>
     );
