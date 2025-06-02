@@ -21,21 +21,25 @@ import toast from 'react-hot-toast';
 import Loader from '../../../components/Loader';
 import DataLoader from '../../../components/DataLoader';
 import { Skeleton } from "@/components/ui/skeleton"
-import MetaUpdate from './MetaUpdate';
+import MetaUpdate from '../../../components/MetaUpdate';
+
 
 
 const ViewTractorPost = ({ modal, setModal, singlePostData, seoModal, setSeoModal }) => {
 
+    const baseUrl = "https://d32neyt9p9wyaf.cloudfront.net";
+    // const baseUrl = "https://krishivikas.com";
+
     const categoryId = singlePostData?.category_id;
     const postId = singlePostData?.id;
     // console.log(singlePostData);
-    
+
     const [status, setStatus] = useState();
     const [refetch, setRefetch] = useState(false);
     const token = useSelector((state) => state.auth.token);
 
     const { data: postViewById, isLoading: postByIdLoading } = useQuery({
-        queryKey: ["post-view-by-id", categoryId, postId, refetch],
+        queryKey: ["post-view-by-id", categoryId, postId, refetch, modal],
         queryFn: async () => {
             return await categoryWiseProductViewById(token, categoryId, postId);
         },
@@ -76,7 +80,7 @@ const ViewTractorPost = ({ modal, setModal, singlePostData, seoModal, setSeoModa
                         :
 
                         seoModal ?
-                            <MetaUpdate postViewById = {postViewById} setModal={setModal} setSeoModal={setSeoModal} />
+                            <MetaUpdate postViewById={postViewById} setModal={setModal} setSeoModal={setSeoModal} />
                             :
                             <div className="max-h-[80vh] overflow-y-auto py-4">
                                 <div className="content-dialog grid md:grid-cols-2 xl:grid-cols-2 grid-cols-1 gap-5">
@@ -135,6 +139,12 @@ const ViewTractorPost = ({ modal, setModal, singlePostData, seoModal, setSeoModa
                                                 <td className='border bg-lightdark p-2 text-white'>Meta Description</td>
                                                 <td className='border p-2 font-bold'>{postViewById?.response.meta_description}</td>
                                             </tr>}
+                                            <tr className='border'>
+                                                <td className='border bg-lightdark p-2 text-white'>Visit Post</td>
+                                                <td className='border p-2 font-bold text-'>
+                                                    <a href={`${baseUrl}/tractor/${postViewById?.response.id}/${postViewById?.response.brand_name}${postViewById?.response.model_name}`} className='border-b text-blue-500' target='_blank'>Click Here</a>
+                                                </td>
+                                            </tr>
                                             {postViewById?.response.set_sell_or_rent && <tr className='border'>
                                                 <td className='border bg-lightdark p-2 text-white'>Sell or Rent</td>
                                                 <td className='border p-2'>{postViewById?.response.set_sell_or_rent}</td>

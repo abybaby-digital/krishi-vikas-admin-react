@@ -9,6 +9,9 @@ import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
 import { useState } from "react";
 import ViewFertilizersPost from "./ViewFertilizersPost";
+import { useNavigate } from "react-router-dom";
+import { MdEditDocument } from "react-icons/md";
+import { TbWorldSearch } from "react-icons/tb";
 
 export default function HarvesterPostList() {
     const token = useSelector((state) => state.auth.token);
@@ -18,40 +21,63 @@ export default function HarvesterPostList() {
     const [skip, setSkip] = useState(null);
     const [take, setTake] = useState(null);
 
+    const [seoModal, setSeoModal] = useState(false);
+
+    const navigate = useNavigate();
+
     const {
         data,
         isLoading,
         isError,
         error,
     } = useQuery({
-        queryKey: ["fertilizers-posts", modal],
+        queryKey: ["fertilizers-posts"],
         queryFn: () => categoryWiseProductList(token, 9, skip, take),
     });
 
     const columns = [
         {
             name: "Actions",
+            width: "200px",
             cell: (row) => (
-                <button
-                    className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                    onClick={() => {
-                        setModal(true);
-                        setSinglePost(row);
-                    }}
-                >
-                    <BsEyeFill />
-                </button>
+                <>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 me-2 hover:scale-90"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                        }}
+                    >
+                        <BsEyeFill />
+                    </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                            navigate(`/tractor/edit-post/${row.id}`);
+                            sessionStorage.setItem("post-data", JSON.stringify(row));
+                        }}
+                    >
+                        <MdEditDocument />
+                    </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                        onClick={() => {
+                            setModal(true);
+                            setSeoModal(true);
+                            setSinglePost(row);
+                        }}
+                    >
+                        <TbWorldSearch />
+                    </button>
+                </>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
-        {
-            name: "Status",
-            selector: (row) => row.status === "0" ? (<span className="border border-dashed p-2 text-orange-500 border-orange-500">Pending</span>) :
-                row.status === "1" ? (<span className="border border-dashed p-2 text-green-500 border-green-500">Approved</span>) : (<span className="border border-dashed p-2 text-red-500 border-red-500">Rejected</span>),
-            sortable: true,
-        },
+
         {
             name: "Post Id",
             selector: (row) => row.id,
@@ -84,7 +110,6 @@ export default function HarvesterPostList() {
             sortable: true,
         },
 
-
         {
             name: "Description",
             selector: (row) => row.description,
@@ -94,6 +119,12 @@ export default function HarvesterPostList() {
         {
             name: "Location",
             selector: (row) => row.area || row.address,
+        },
+        {
+            name: "Status",
+            selector: (row) => row.status === "0" ? (<span className="border border-dashed p-2 text-orange-500 border-orange-500">Pending</span>) :
+                row.status === "1" ? (<span className="border border-dashed p-2 text-green-500 border-green-500">Approved</span>) : (<span className="border border-dashed p-2 text-red-500 border-red-500">Rejected</span>),
+            sortable: true,
         },
 
     ];
@@ -180,7 +211,7 @@ export default function HarvesterPostList() {
                     )}
                 </div>
 
-                <ViewFertilizersPost modal={modal} setModal={setModal} singlePostData={singlePostData} />
+                <ViewFertilizersPost modal={modal} setModal={setModal} singlePostData={singlePostData} seoModal={seoModal} setSeoModal={setSeoModal} />
             </SidebarInset>
         </SidebarProvider>
     );

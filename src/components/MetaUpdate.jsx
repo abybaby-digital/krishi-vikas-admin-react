@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { updateMetas } from '../../../services/api';
+import { updateMetas } from '../services/api';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -14,6 +14,9 @@ const MetaUpdate = ({ postViewById , setModal , setSeoModal }) => {
         formState: { errors },
         setValue,
     } = useForm();
+
+    console.log(postViewById);
+    
 
     const updateMetaMutation = useMutation({
         mutationFn: async (payload) => {

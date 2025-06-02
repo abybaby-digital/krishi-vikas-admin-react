@@ -1,22 +1,36 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import Select from "react-select";
 
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+
 
 
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
+import { fetchBrandsList } from '../../../services/api';
+import { useSelector } from 'react-redux';
 
 
-const ModelsCreate = () => {
+const ModelsCreate = ({ category }) => {
+    const token = useSelector((state) => state.auth.token);
 
     const [imagePreview, setImagePreview] = React.useState(null);
+
+    const getCategoryId = (category_name) => {
+        switch (category_name) {
+            case "tractor":
+                return 1
+            case "goods-vehicle":
+                return 3
+            case "harvester":
+                return 4
+            case "implements":
+                return 5
+            case "tyres":
+                return 7
+        }
+    }
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -32,34 +46,51 @@ const ModelsCreate = () => {
         }
     };
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const {
+        register,
+        handleSubmit,
+        control,
+        reset,
+        watch,
+        setValue,
+        formState: { errors },
+    } = useForm();
     // console.log(errors);
     const onSubmit = async (data) => {
         console.log(data);
         toast.success("Model Created Successfully 😃")
     }
 
+    const { data: brandList } = useQuery({
+        queryKey: ["brand-list", category],
+        queryFn: async () => {
+            return await fetchBrandsList(token, getCategoryId(category))
+        }
+    })
+
     return (
         <div className='w-full bg-white shadow p-5 rounded-2xl'>
             <p className='uppercase text-xl text-darkGreen font-semibold mb-5'>add new model</p>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='mb-4'>
-                    <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='brandName'>
-                        Select Brand Name
-                    </label>
-                    <Select onValueChange={(value) => {
-                        console.log(value);
-                    }}>
-                        <SelectTrigger className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <SelectValue placeholder="-- Select --" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="1">Mahindra</SelectItem>
-                            <SelectItem value="3">Tata Motors</SelectItem>
-                            <SelectItem value="4">Piaggo</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <p className='text-red-500 mt-2'>{errors?.brandname?.message}</p>
+                    <label className="block text-gray-700 text-sm font-bold mb-2">Brand Name</label>
+                    <Controller
+                        control={control}
+                        name="brand_id"
+                        // rules={{ required: "Select state(s)" }}
+                        render={({ field }) => (
+                            <Select
+                                {...field}
+                                className='shadow border-none outline-none'
+                                options={brandList?.response}
+                                onChange={(value) => {
+                                    field.onChange(value);
+                                    // setSelectedStates(value);
+                                }}
+                            />
+                        )}
+                    />
+                    <p className='text-red-500 mt-2'>{errors?.brand_id?.message}</p>
                 </div>
                 <div className='mb-4'>
                     <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='brandName'>
@@ -67,12 +98,12 @@ const ModelsCreate = () => {
                     </label>
                     <input
                         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        id='brandName'
+                        id='model_name'
                         type='text'
-                        {...register('modelname', { required: "brand name required !!" })}
+                        {...register('model_name', { required: "brand name required !!" })}
                         placeholder='Enter model name'
                     />
-                    <p className='text-red-500 mt-2'>{errors?.brandname?.message}</p>
+                    <p className='text-red-500 mt-2'>{errors?.model_name?.message}</p>
                 </div>
                 <div className='mb-4'>
                     <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='brandImage'>
@@ -80,13 +111,13 @@ const ModelsCreate = () => {
                     </label>
                     <input
                         className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                        id='brandImage'
+                        id='model_logo'
                         type='file'
                         accept='image/*'
-                        {...register('modelicon', { required: "upload a brand icon" })}
+                        {...register('model_logo', { required: "upload a brand icon" })}
                         onChange={handleImageChange}
                     />
-                    <p className='text-red-500 mt-2'>{errors?.brandicon?.message}</p>
+                    <p className='text-red-500 mt-2'>{errors?.model_logo?.message}</p>
                 </div>
                 {imagePreview && (
                     <div className='mb-4 text-center'>

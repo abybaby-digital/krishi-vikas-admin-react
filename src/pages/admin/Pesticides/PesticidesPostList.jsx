@@ -9,6 +9,9 @@ import Loader from "../../../components/Loader";
 import { BsEyeFill } from "react-icons/bs";
 import { useState } from "react";
 import ViewPesticidesPost from "./ViewPesticidesPost";
+import { MdEditDocument } from "react-icons/md";
+import { TbWorldSearch } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
 export default function GoodsVehiclePostList() {
     const token = useSelector((state) => state.auth.token);
@@ -18,29 +21,57 @@ export default function GoodsVehiclePostList() {
     const [skip, setSkip] = useState(null);
     const [take, setTake] = useState(null);
 
+    const [seoModal, setSeoModal] = useState(false);
+
+    const navigate = useNavigate();
+
     const {
         data,
         isLoading,
         isError,
         error,
     } = useQuery({
-        queryKey: ["pesticides-posts" , modal],
+        queryKey: ["pesticides-posts"],
         queryFn: () => categoryWiseProductList(token, 8, skip, take),
     });
 
     const columns = [
         {
             name: "Actions",
+            width: "200px",
             cell: (row) => (
-                <button
-                    className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                    onClick={() => {
-                        setModal(true);
-                        setSinglePost(row);
-                    }}
-                >
-                    <BsEyeFill />
-                </button>
+                <>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 me-2 hover:scale-90"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                        }}
+                    >
+                        <BsEyeFill />
+                    </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                            navigate(`/tractor/edit-post/${row.id}`);
+                            sessionStorage.setItem("post-data", JSON.stringify(row));
+                        }}
+                    >
+                        <MdEditDocument />
+                    </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                        onClick={() => {
+                            setModal(true);
+                            setSeoModal(true);
+                            setSinglePost(row);
+                        }}
+                    >
+                        <TbWorldSearch />
+                    </button>
+                </>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
@@ -72,7 +103,7 @@ export default function GoodsVehiclePostList() {
         //     selector: (row) => row.model_id,
         //     sortable: true,
         // },
-        
+
         {
             name: "Price",
             selector: (row) => `${row.price} ${row.rent_type ? (row.rent_type) : ""}`,
@@ -83,8 +114,8 @@ export default function GoodsVehiclePostList() {
             selector: (row) => row.is_negotiable ? "Yes" : "No",
             sortable: true,
         },
-        
-        
+
+
         {
             name: "Description",
             selector: (row) => row.description,
@@ -177,7 +208,7 @@ export default function GoodsVehiclePostList() {
                     )}
                 </div>
 
-                <ViewPesticidesPost modal={modal} setModal={setModal} singlePostData={singlePostData} />
+                <ViewPesticidesPost modal={modal} setModal={setModal} singlePostData={singlePostData} seoModal={seoModal} setSeoModal={setSeoModal} />
             </SidebarInset>
         </SidebarProvider>
     );

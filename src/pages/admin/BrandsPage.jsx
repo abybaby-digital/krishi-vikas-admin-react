@@ -18,11 +18,22 @@ import BrandsTable from "../../components/admin/brands/BrandsTable"
 import BrandsCreate from "../../components/admin/brands/BrandsCreate"
 import { useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
+import { addBrand, fetchBrandAll } from "../../services/api"
+import { useSelector } from "react-redux"
+import DataTable from "react-data-table-component"
+import { useState } from "react"
+import DataLoader from "../../components/DataLoader"
+import { MdEditDocument } from "react-icons/md"
+import EditBrandModal from "./EditBrandModal"
 
 export default function BrandsPage() {
 
     const { category } = useParams();
-    console.log(category);
+    const [refetchList, setRefetchList] = useState(false);
+    const [brandId, setBrandId] = useState(null);
+    const [modal, setModal] = useState(false);
+    // console.log(category);
+    const token = useSelector((state) => state.auth.token);
 
     // GET CATEGORY ID FUNCTION
 
@@ -41,12 +52,92 @@ export default function BrandsPage() {
         }
     }
 
-    //     const {data : brandList , isLoading: brandLoading} = useQuery({
-    //         queryKey: ["brand-list" , category],
-    //         queryFn: async() =>{
-    // return await
-    //         }
-    //     }) 
+    const { data: allBrandList, isLoading: allBrandsLoading } = useQuery({
+        queryKey: ["brandListAll", category, refetchList],
+        queryFn: async () => {
+            return await fetchBrandAll(token, getCategoryId(category));
+        }
+    })
+
+    // console.log(data);
+
+    const columns = [
+        {
+            name: '#',
+            selector: (row, index) => index + 1,
+            width: '60px',
+        },
+        {
+            name: "Actions",
+            width: "200px",
+            cell: (row) => (
+                <>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                        onClick={() => {
+                            setModal(true);
+                            setBrandId(row.id);
+                        }}
+                    >
+                        <MdEditDocument />
+                    </button>
+                </>
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+        },
+        {
+            name: 'Name',
+            selector: row => row.name,
+            sortable: true,
+        },
+        {
+            name: 'Category',
+            selector: row => row.category_name,
+            sortable: true,
+        },
+        {
+            name: 'Popular',
+            selector: row => (row.popular ? 'Yes' : 'No'),
+        },
+        // {
+        //     name: 'Status',
+        //     selector: row => (row.status === '1' ? 'Active' : 'Inactive'),
+        //     cell: row => (
+        //         <span className={`badge ${row.status === '1' ? 'bg-success' : 'bg-danger'}`}>
+        //             {row.status === '1' ? 'Active' : 'Inactive'}
+        //         </span>
+        //     ),
+        // },
+        {
+            name: 'Logo',
+            selector: row => row.logo,
+            cell: row => (
+                <div className="object-contain bg-white p-3 m-2 rounded-full h-[60px] shadow aspect-square">
+                    <img
+                        src={row.logo}
+                        alt={row.name}
+                        className="w-full h-full"
+                    />
+                </div>
+            ),
+        },
+    ];
+
+    const customStyles = {
+        headCells: {
+            style: {
+                fontWeight: 'bold',
+                backgroundColor: '#f4f5f7',
+                color: '#333',
+                fontSize: '14px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                textTransform: 'uppercase',
+            },
+        },
+    };
 
 
     return (
@@ -73,12 +164,34 @@ export default function BrandsPage() {
                     </div>
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-5  bg-whitesmoke">
-                    <div className="grid auto-rows-min gap-4 lg:grid-cols-[350px,1fr] grid-cols-1  rounded-2xl p-5 bg-white shadow">
-                        <BrandsCreate />
-                        <BrandsTable />
+                    <div className="grid auto-rows-min gap-4 lg:grid-cols-[400px,1fr] grid-cols-1  rounded-2xl p-5 bg-white shadow">
+                        <BrandsCreate category={category} refetchList={refetchList} setRefetchList={setRefetchList} />
+
+                        <div className="bg-white rounded-2xl shadow overflow-hidden p-2 text-xl">
+                            <p className="my-3 uppercase text-center font-bold text-darkGreen">{`${category === "goods-vehicle" ? "goods vehicle" : category} Brands`}</p>
+                            {
+                                allBrandsLoading ?
+                                    <DataLoader />
+                                    :
+                                    <DataTable
+                                        columns={columns}
+                                        data={allBrandList?.response}
+                                        pagination
+                                        striped
+                                        highlightOnHover
+                                        responsive
+                                        customStyles={customStyles}
+                                    />
+                            }
+                        </div>
                     </div>
 
                 </div>
+
+                {/* EDIT BRAND MODAL */}
+
+                <EditBrandModal modal={modal} refetchList={refetchList} setRefetchList={setRefetchList} setModal={setModal} category={category} brandId={brandId} />
+
             </SidebarInset>
         </SidebarProvider>
     )

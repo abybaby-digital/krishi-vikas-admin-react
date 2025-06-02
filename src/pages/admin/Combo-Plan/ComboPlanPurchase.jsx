@@ -163,7 +163,9 @@ export default function ComboPlanPurchase() {
                                     <th className="p-2">User Type</th>
                                     <th className="p-2">Company Name</th>
                                     <th className="p-2">GST No</th>
+                                    <th className="p-2">PAN No</th>
                                     <th className="p-2">User Phone No</th>
+                                    <th className="p-2">Address</th>
                                     <th className="p-2"></th>
                                 </thead>
                                 <tbody>
@@ -172,7 +174,9 @@ export default function ComboPlanPurchase() {
                                         <td className="p-2">{user?.user_type_name}</td>
                                         <td className="p-2">{user?.company_name}</td>
                                         <td className="p-2">{user?.gst_no}</td>
+                                        <td className="p-2">{user?.pan_no}</td>
                                         <td className="p-2">{user?.mobile}</td>
+                                        <td className="p-2">{user?.area}</td>
                                         <td className="p-2">
                                             <button onClick={() => { setPurchaseOpen(true) }} className="bg-gradient-green text-white px-5 text-sm py-2 rounded-2xl active:scale-95"><IoAddCircleOutline className="inline text-xl me-1 mb-1" />ADD COMBO PLAN</button>
                                         </td>

@@ -1,10 +1,32 @@
+import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { addBrand } from '../../../services/api';
+import { useSelector } from 'react-redux';
+import Loader from '../../Loader';
 
 
-const BrandsCreate = () => {
+const BrandsCreate = ({ category, refetchList, setRefetchList }) => {
+
+    const getCategoryId = (category_name) => {
+        switch (category_name) {
+            case "tractor":
+                return 1
+            case "goods-vehicle":
+                return 3
+            case "harvester":
+                return 4
+            case "implements":
+                return 5
+            case "tyres":
+                return 7
+        }
+    }
+
+    const token = useSelector((state) => state.auth.token);
+
 
     const [imagePreview, setImagePreview] = React.useState(null);
 
@@ -22,13 +44,32 @@ const BrandsCreate = () => {
         }
     };
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    const addBrandMutation = useMutation({
+        mutationFn: async (data) => {
+            return await addBrand(
+                token,
+                getCategoryId(category),
+                data.brandname,
+                data.brandicon
+            )
+        },
+        onSuccess: (response) => {
+            if (response.success === 1) {
+                toast.success(response.message);
+                reset(); // reset the form fields
+                setImagePreview(null); // reset the image preview
+                setRefetchList(!refetchList);
+            }
+        }
+    })
     // console.log(errors);
-    const onSubmit = async(data) => {
+    const onSubmit = async (data) => {
         console.log(data);
-        toast.success("Brand Created Successfully 😃")
+        addBrandMutation.mutate(data);
     }
-    
+
     return (
         <div className='w-full bg-white shadow p-5 rounded-2xl'>
             <p className='uppercase text-xl text-darkGreen font-semibold mb-5'>add new brand</p>
@@ -72,6 +113,12 @@ const BrandsCreate = () => {
                     Submit
                 </button>
             </form>
+            {
+                addBrandMutation.isPending ? 
+                <Loader task="Adding Brand ..." />
+                :
+                null
+            }
         </div>
     )
 }

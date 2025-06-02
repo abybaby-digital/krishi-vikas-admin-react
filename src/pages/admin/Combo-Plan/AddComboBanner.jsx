@@ -14,13 +14,14 @@ import { useForm, Controller } from "react-hook-form";
 import { TiWarning } from "react-icons/ti";
 import Select from "react-select";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { addComboBanner, fetchCategoryList, fetchLanguageList, fetchStateList } from "../../../services/api";
+import { addComboBanner, fetchCategoryList, fetchDistrictListByState, fetchLanguageList, fetchStateList } from "../../../services/api";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
 
 export default function AddComboBanner() {
 
@@ -34,6 +35,7 @@ export default function AddComboBanner() {
         control,
         reset,
         setValue,
+        watch,
         formState: { errors },
     } = useForm();
 
@@ -47,6 +49,19 @@ export default function AddComboBanner() {
         queryKey: ["stateList"],
         queryFn: () => fetchStateList(token),
     });
+
+    // DISTRICT LIST
+    const {
+        data: districtList,
+        isLoading: districtLoading,
+        error: districtError,
+    } = useQuery({
+        queryKey: ["districtList", watch("campaign_state")],
+        queryFn: () => fetchDistrictListByState(token, watch("campaign_state").map((s) => s.value).join(",")),
+    });
+
+    console.log(districtList);
+
 
     // CATEGORY LIST
     const {
@@ -84,6 +99,7 @@ export default function AddComboBanner() {
                 data.campaign_name,
                 data.campaign_banner,
                 data.campaign_state.map((item) => item.value).join(","),
+                data.campaign_district.map((item) => item.value).join(","),
                 data.campaign_category.map((item) => item.value).join(","),
                 comboUser?.subscription_details_id,
                 data.seller_language_id.map((item) => item.value).join(","),
@@ -125,6 +141,9 @@ export default function AddComboBanner() {
     const handleSelectAllStates = () => {
         setValue("campaign_state", stateList?.response);
     }
+    const handleSelectAllDistrict = () => {
+        setValue("campaign_district", districtList?.response);
+    }
     const handleSelectAllCategory = () => {
         setValue("campaign_category", categoryList?.response);
     }
@@ -132,7 +151,11 @@ export default function AddComboBanner() {
         setValue("seller_language_id", languageList?.response);
     }
 
-    console.log(stateList);
+    console.log(watch("campaign_state")?.map((s) => s.value).join(","));
+
+    useEffect(() => {
+        setValue("campaign_district", [])
+    }, [watch("campaign_state")])
 
 
     return (
@@ -177,6 +200,8 @@ export default function AddComboBanner() {
 
 
 
+
+
                         {/* State IDs */}
                         <div>
                             <div className="flex justify-between items-center">
@@ -207,6 +232,40 @@ export default function AddComboBanner() {
                             />
                             {errors.campaign_state && (
                                 <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.campaign_state.message}</p>
+                            )}
+                        </div>
+
+
+                        {/* District IDs */}
+                        <div>
+                            <div className="flex justify-between items-center">
+                                <label htmlFor="campaign_district" className="block font-bold text-sm mb-1">District</label>
+                                {districtList?.response.length > 0 && (
+                                    <button
+                                        type="button"
+                                        className="text-sm text-black hover:underline"
+                                        onClick={handleSelectAllDistrict}
+                                    >
+                                        Select All Districts
+                                    </button>
+                                )}
+                            </div>
+                            <Controller
+                                name="campaign_district"
+                                control={control}
+                                rules={{ required: "Select District" }}
+                                render={({ field }) => (
+                                    <Select
+                                        {...field}
+                                        isMulti
+                                        options={districtList?.response}
+                                        placeholder="-- Select District --"
+                                        classNamePrefix="react-select"
+                                    />
+                                )}
+                            />
+                            {errors.campaign_district && (
+                                <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.campaign_district.message}</p>
                             )}
                         </div>
 

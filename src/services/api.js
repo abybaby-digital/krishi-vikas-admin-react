@@ -32,6 +32,248 @@ export const adminLogin = async (admin_email, password) => {
   }
 };
 
+// BRAND ADD
+
+export const addBrand = async (token, category_id, name, brand_logo) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("category_id", category_id);
+    formData.append("name", name);
+
+    // Append icon (image)
+    if (brand_logo && brand_logo[0]) {
+      formData.append("brand_logo", brand_logo[0]); // Assuming 'noti_icon' is a file (image)
+    }
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/add-brand`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add brand data:", error);
+    throw error;
+  }
+};
+
+// BRAND EDIT
+
+export const editBrand = async (
+  token,
+  brand_id,
+  category_id,
+  name,
+  brand_logo
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("brand_id", brand_id);
+    formData.append("category_id", category_id);
+    formData.append("name", name);
+
+    // Append icon (image)
+    if (brand_logo && brand_logo[0]) {
+      formData.append("brand_logo", brand_logo[0]); // Assuming 'noti_icon' is a file (image)
+    }
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/edit-brand`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to edit brand data:", error);
+    throw error;
+  }
+};
+
+// BRAND LIST ALL
+
+export const fetchBrandAll = async (token, category_id) => {
+  try {
+    const response = await api.post(
+      "/brand-list-all",
+      {
+        category_id: category_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("Error in fetching brand list:", error);
+    throw error;
+  }
+};
+
+// BRAND DETAILS
+
+export const fetchBrandById = async (token, category_id, brand_id) => {
+  try {
+    const response = await api.post(
+      "/brand-view-by-id",
+      {
+        category_id: category_id,
+        brand_id: brand_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("Error in fetching brand details:", error);
+    throw error;
+  }
+};
+
+// MODEL ADD
+
+export const addModel = async (
+  token,
+  category_id,
+  brand_id,
+  model_name,
+  model_logo
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("category_id", category_id);
+    formData.append("brand_id", brand_id);
+    formData.append("model_name", model_name);
+
+    // Append icon (image)
+    if (model_logo && model_logo[0]) {
+      formData.append("model_logo", model_logo[0]); // Assuming 'noti_icon' is a file (image)
+    }
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/add-model`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add model data:", error);
+    throw error;
+  }
+};
+
+// MODEL EDIT
+
+export const editModel = async (
+  token,
+  brand_id,
+  category_id,
+  name,
+  brand_logo
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("brand_id", brand_id);
+    formData.append("category_id", category_id);
+    formData.append("name", name);
+
+    // Append icon (image)
+    if (brand_logo && brand_logo[0]) {
+      formData.append("brand_logo", brand_logo[0]); // Assuming 'noti_icon' is a file (image)
+    }
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/edit-brand`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to edit brand data:", error);
+    throw error;
+  }
+};
+
+// MODEL LIST ALL
+
+export const fetchModelAll = async (token, category_id, brand_id) => {
+  try {
+    const response = await api.post(
+      "/model-list-all",
+      {
+        category_id: category_id,
+        brand_id: brand_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("Error in fetching model list:", error);
+    throw error;
+  }
+};
+
+// MODEL DETAILS
+
+export const fetchModelById = async (
+  token,
+  category_id,
+  brand_id,
+  model_id
+) => {
+  try {
+    const response = await api.post(
+      "/model-view-by-id",
+      {
+        category_id: category_id,
+        brand_id: brand_id,
+        model_id: model_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error("Error in fetching model details:", error);
+    throw error;
+  }
+};
+
 // ADD COMBO PLAN
 
 export const addComboPlan = async (
@@ -86,6 +328,7 @@ export const addComboBanner = async (
   campaign_name,
   campaign_banner,
   campaign_state,
+  campaign_district,
   campaign_category,
   subscription_details_id,
   seller_language_id
@@ -99,6 +342,7 @@ export const addComboBanner = async (
     formData.append("campaign_name", campaign_name);
     // formData.append("campaign_banner", campaign_banner);
     formData.append("campaign_state", campaign_state);
+    formData.append("campaign_district", campaign_district);
     formData.append("campaign_category", campaign_category);
     formData.append("subscription_details_id", subscription_details_id);
     formData.append("seller_language_id", seller_language_id);
@@ -1321,7 +1565,6 @@ export const fetchModelsList = async (token, category_id, brand_id) => {
     throw error;
   }
 };
-
 
 // UPDATE METAS
 

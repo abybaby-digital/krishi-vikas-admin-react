@@ -21,6 +21,8 @@ export default function TractorPostList() {
     const [skip, setSkip] = useState(null);
     const [take, setTake] = useState(null);
 
+    
+
     const [seoModal, setSeoModal] = useState(false);
 
     const navigate = useNavigate();

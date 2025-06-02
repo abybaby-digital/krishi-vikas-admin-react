@@ -667,7 +667,7 @@ export default function EditTractor() {
                             </form>
                         </div>
                 }
-                {editTractorPostMutation.isPending ? <Loader task="Creating Combo Plan..." /> : null}
+                {editTractorPostMutation.isPending ? <Loader task="Editing Post..." /> : null}
             </SidebarInset>
         </SidebarProvider>
     );

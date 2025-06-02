@@ -60,6 +60,10 @@ const ViewComboBanner = ({ modal, setModal, singleComboData }) => {
                         <p className='font-semibold text-darkGreen text-lg'>State</p>
                         <p>{singleComboData?.state_name || "All States"}</p>
                     </div>
+                    <div className="data-group border-b pb-5 col-span-full">
+                        <p className='font-semibold text-darkGreen text-lg'>District</p>
+                        <p>{singleComboData?.district_name || "All States"}</p>
+                    </div>
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Start Date</p>
