@@ -55,7 +55,7 @@ export default function HarvesterPostList() {
                         onClick={() => {
                             setModal(true);
                             setSinglePost(row);
-                            navigate(`/tractor/edit-post/${row.id}`);
+                            navigate(`/fertilizers/edit-post/${row.id}`);
                             sessionStorage.setItem("post-data", JSON.stringify(row));
                         }}
                     >

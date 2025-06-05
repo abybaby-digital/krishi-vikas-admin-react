@@ -54,7 +54,7 @@ export default function GoodsVehiclePostList() {
                         onClick={() => {
                             setModal(true);
                             setSinglePost(row);
-                            navigate(`/tractor/edit-post/${row.id}`);
+                            navigate(`/goods-vehicle/edit-post/${row.id}`);
                             sessionStorage.setItem("post-data", JSON.stringify(row));
                         }}
                     >

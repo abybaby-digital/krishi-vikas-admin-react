@@ -81,7 +81,7 @@ export default function ComboBannerList() {
 
     // Define table columns
     const columns = [
-        
+
         {
             name: "Actions",
             cell: (row) => (
@@ -94,30 +94,43 @@ export default function ComboBannerList() {
                     >
                         <BsEyeFill />
                     </button>
-                    {/* <Link
+                    <Link
                         className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        to={`/combo-plan/edit/${row.id}`}
+                        to={`/combo-plan/edit-combo-banner/${row.id}`}
                     >
                         <AiFillEdit />
-                    </Link> */}
+                    </Link>
                 </div>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
+
         {
             name: "Banner Id",
-            width: "250px",
             selector: (row) => row.id,
             sortable: true,
+        },
+        {
+            name: "Banner Status",
+            width: "200px",
+            cell: (row) => (
+
+                
+                    <span className={`text-sm font-medium px-2 py-1 text-white rounded-xl ${row.status === "1" ? "bg-green-600" : "bg-red-600"}`}>
+                        {row.status === "1" ? "Active" : "Inactive"}
+                    </span>
+                
+
+            ),
         },
         {
             name: "Banner",
             width: "150px",
             cell: (row) => (
 
-                <a href={row?.campaign_banner} data-fancybox data-caption="Banner Image">
+                <a href={row?.campaign_banner} data-fancybox={row.id} data-caption="Banner Image">
                     <img src={row?.campaign_banner} alt="image" className="h-12 w-auto rounded my-2" />
                 </a>
             ),
@@ -161,13 +174,13 @@ export default function ComboBannerList() {
         {
             name: "Start Date",
             width: "250px",
-            selector: (row) => new Date(row.banner_start_date).toLocaleDateString(),
+            selector: (row) => row.banner_start_date,
             sortable: true,
         },
         {
             name: "End Date",
             width: "250px",
-            selector: (row) => new Date(row.banner_end_date).toLocaleDateString(),
+            selector: (row) => row.banner_end_date,
             sortable: true,
         },
 
@@ -210,7 +223,7 @@ export default function ComboBannerList() {
         const searchText = search.toLowerCase();
         return (
             item.campaign_name?.toLowerCase().includes(searchText) ||
-            item.id?.toString().includes(searchText)||
+            item.id?.toString().includes(searchText) ||
             item.user_name?.toLowerCase().includes(searchText) ||
             item.combo_plan_name?.toLowerCase().includes(searchText) ||
             item.campaign_category_name?.toLowerCase().includes(searchText) ||

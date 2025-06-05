@@ -188,26 +188,28 @@ export const addModel = async (
 
 export const editModel = async (
   token,
-  brand_id,
+  model_id,
   category_id,
-  name,
-  brand_logo
+  brand_id,
+  model_name,
+  model_logo
 ) => {
   try {
     const formData = new FormData();
 
     // Append all fields
-    formData.append("brand_id", brand_id);
+    formData.append("model_id", model_id);
     formData.append("category_id", category_id);
-    formData.append("name", name);
+    formData.append("brand_id", brand_id);
+    formData.append("model_name", model_name);
 
     // Append icon (image)
-    if (brand_logo && brand_logo[0]) {
-      formData.append("brand_logo", brand_logo[0]); // Assuming 'noti_icon' is a file (image)
+    if (model_logo && model_logo[0]) {
+      formData.append("model_logo", model_logo[0]); // Assuming 'noti_icon' is a file (image)
     }
 
     // Send POST request
-    const response = await api.post(`${baseURL}/edit-brand`, formData, {
+    const response = await api.post(`${baseURL}/edit-model`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
@@ -217,7 +219,7 @@ export const editModel = async (
     // Return API result
     return response.data.result;
   } catch (error) {
-    console.error("Failed to edit brand data:", error);
+    console.error("Failed to edit model data:", error);
     throw error;
   }
 };
@@ -364,6 +366,82 @@ export const addComboBanner = async (
     return response.data.result;
   } catch (error) {
     console.error("Failed to add combo banner:", error);
+    throw error;
+  }
+};
+
+// EDIT COMBO BANNER
+
+export const editComboBanner = async (
+  token,
+  banner_id,
+  user_id,
+  combo_plan_id,
+  campaign_name,
+  campaign_banner,
+  campaign_state,
+  campaign_district,
+  campaign_category,
+  subscription_details_id,
+  seller_language_id
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("banner_id", banner_id);
+    formData.append("user_id", user_id);
+    formData.append("combo_plan_id", combo_plan_id);
+    formData.append("campaign_name", campaign_name);
+    // formData.append("campaign_banner", campaign_banner);
+    formData.append("campaign_state", campaign_state);
+    formData.append("campaign_district", campaign_district);
+    formData.append("campaign_category", campaign_category);
+    formData.append("subscription_details_id", subscription_details_id);
+    formData.append("seller_language_id", seller_language_id);
+
+    // Append icon (image)
+    if (campaign_banner && campaign_banner[0]) {
+      formData.append("campaign_banner", campaign_banner[0]); // Assuming 'noti_icon' is a file (image)
+    }
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/edit-combo-banner`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add combo banner:", error);
+    throw error;
+  }
+};
+
+// COMBO BANNER DETAILS BY ID
+
+export const fetchComboBannerDetailsById = async (token, banner_id) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/banner-view-by-id`,
+      {
+        banner_id: banner_id,
+      }, // Empty object as the request body if not required
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch banner features:", error);
     throw error;
   }
 };
@@ -1287,6 +1365,196 @@ export const editTractorPost = async (
     throw error;
   }
 };
+// EDIT GOODS VEHICLE POST
+
+export const editGoodsVehiclePost = async (
+  token,
+  post_id,
+  category_id,
+  product_type,
+  brand_id,
+  model_id,
+  title,
+  year_of_purchase,
+  rc_available,
+  noc_available,
+  registration_no,
+  description,
+  price,
+  rent_type,
+  is_negotiable,
+  left_image,
+  right_image,
+  front_image,
+  back_image,
+  meter_image,
+  tyre_image,
+  seller_state_id,
+  seller_district_id,
+  phone_no
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append text fields
+    formData.append("post_id", post_id);
+    formData.append("category_id", category_id);
+    formData.append("product_type", product_type);
+    formData.append("brand_id", brand_id);
+    formData.append("model_id", model_id);
+    formData.append("title", title);
+    formData.append("year_of_purchase", year_of_purchase);
+    formData.append("rc_available", rc_available);
+    formData.append("noc_available", noc_available);
+    formData.append("registration_no", registration_no);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("rent_type", rent_type);
+    formData.append("is_negotiable", is_negotiable);
+    formData.append("seller_state_id", seller_state_id);
+    formData.append("seller_district_id", seller_district_id);
+    formData.append("phone_no", phone_no);
+
+    // Append image files only if they are valid File instances
+    if (left_image && left_image[0]) {
+      formData.append("left_image", left_image[0]);
+    }
+    if (right_image && right_image[0]) {
+      formData.append("right_image", right_image[0]);
+    }
+    if (front_image && front_image[0]) {
+      formData.append("front_image", front_image[0]);
+    }
+    if (back_image && back_image[0]) {
+      formData.append("back_image", back_image[0]);
+    }
+    if (meter_image && meter_image[0]) {
+      formData.append("left_image", left_image[0]);
+    }
+    if (tyre_image && tyre_image[0]) {
+      formData.append("tyre_image", tyre_image[0]);
+    }
+    // if (left_image[0] instanceof File) formData.append("left_image", left_image[0]);
+    // if (right_image[0] instanceof File)
+    //   formData.append("right_image", right_image);
+    // if (front_image[0] instanceof File)
+    //   formData.append("front_image", front_image);
+    // if (back_image[0] instanceof File) formData.append("back_image", back_image);
+    // if (meter_image instanceof File)
+    //   formData.append("meter_image", meter_image);
+    // if (tyre_image[0] instanceof File) formData.append("tyre_image", tyre_image);
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/edit-goods-vehicle`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add tractor post:", error);
+    throw error;
+  }
+};
+
+
+// EDIT HARVESTER POST
+
+export const editHarvesterPost = async (
+  token,
+  post_id,
+  category_id,
+  product_type,
+  brand_id,
+  model_id,
+  title,
+  year_of_purchase,
+  rc_available,
+  noc_available,
+  registration_no,
+  description,
+  price,
+  rent_type,
+  is_negotiable,
+  left_image,
+  right_image,
+  front_image,
+  back_image,
+  meter_image,
+  tyre_image,
+  seller_state_id,
+  seller_district_id,
+  phone_no
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append text fields
+    formData.append("post_id", post_id);
+    formData.append("category_id", category_id);
+    formData.append("product_type", product_type);
+    formData.append("brand_id", brand_id);
+    formData.append("model_id", model_id);
+    formData.append("title", title);
+    formData.append("year_of_purchase", year_of_purchase);
+    formData.append("rc_available", rc_available);
+    formData.append("noc_available", noc_available);
+    formData.append("registration_no", registration_no);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("rent_type", rent_type);
+    formData.append("is_negotiable", is_negotiable);
+    formData.append("seller_state_id", seller_state_id);
+    formData.append("seller_district_id", seller_district_id);
+    formData.append("phone_no", phone_no);
+
+    // Append image files only if they are valid File instances
+    if (left_image && left_image[0]) {
+      formData.append("left_image", left_image[0]);
+    }
+    if (right_image && right_image[0]) {
+      formData.append("right_image", right_image[0]);
+    }
+    if (front_image && front_image[0]) {
+      formData.append("front_image", front_image[0]);
+    }
+    if (back_image && back_image[0]) {
+      formData.append("back_image", back_image[0]);
+    }
+    if (meter_image && meter_image[0]) {
+      formData.append("left_image", left_image[0]);
+    }
+    if (tyre_image && tyre_image[0]) {
+      formData.append("tyre_image", tyre_image[0]);
+    }
+    // if (left_image[0] instanceof File) formData.append("left_image", left_image[0]);
+    // if (right_image[0] instanceof File)
+    //   formData.append("right_image", right_image);
+    // if (front_image[0] instanceof File)
+    //   formData.append("front_image", front_image);
+    // if (back_image[0] instanceof File) formData.append("back_image", back_image);
+    // if (meter_image instanceof File)
+    //   formData.append("meter_image", meter_image);
+    // if (tyre_image[0] instanceof File) formData.append("tyre_image", tyre_image);
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/edit-harvester`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add tractor post:", error);
+    throw error;
+  }
+};
 
 // CATGORY WISE POST LIST
 
@@ -1596,6 +1864,62 @@ export const updateMetas = async (
   } catch (error) {
     // Log and throw the error in case of failure
     console.error("Failed to update metas:", error);
+    throw error;
+  }
+};
+
+
+// SPECIFICATIONS LIST ALL
+
+export const fetchSpecListAll = async (
+  token,
+  model_id,
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/update-category-meta`,
+      {
+        model_id: model_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch spect list", error);
+    throw error;
+  }
+};
+
+
+export const addSpecification = async (
+  token,
+  model_id,
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/update-category-meta`,
+      {
+        model_id: model_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch spect list", error);
     throw error;
   }
 };

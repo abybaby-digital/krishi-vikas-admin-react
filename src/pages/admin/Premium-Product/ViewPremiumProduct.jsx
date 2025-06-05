@@ -54,7 +54,7 @@ const ViewPremiumProduct = ({ modal, setModal, singlePostData }) => {
                         </div>
                         <div className="data-group border-b pb-5">
                             <p className='font-semibold text-darkGreen text-lg'>Category</p>
-                            <p>{singlePostData?.category_id}</p>
+                            <p>{singlePostData?.category_name}</p>
                         </div>
                         <div className="data-group border-b pb-5">
                             <p className='font-semibold text-darkGreen text-lg'>User ID</p>

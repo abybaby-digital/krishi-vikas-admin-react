@@ -54,7 +54,7 @@ export default function SeedPostList() {
                         onClick={() => {
                             setModal(true);
                             setSinglePost(row);
-                            navigate(`/tractor/edit-post/${row.id}`);
+                            navigate(`/seeds/edit-post/${row.id}`);
                             sessionStorage.setItem("post-data", JSON.stringify(row));
                         }}
                     >

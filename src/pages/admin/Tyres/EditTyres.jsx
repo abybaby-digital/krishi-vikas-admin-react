@@ -286,7 +286,7 @@ export default function EditTractor() {
                                 className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-4 lg:grid-cols-3 grid-cols-1"
                             >
                                 <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 xl:col-span-4 lg:col-span-3 col-span-1">
-                                    <h2 className="text-2xl font-bold text-center font-dmsans">Edit Tractor Post</h2>
+                                    <h2 className="text-2xl font-bold text-center font-dmsans">Edit Tyres Post</h2>
                                 </div>
 
                                 {/* Category */}
@@ -446,7 +446,7 @@ export default function EditTractor() {
                                         id="registration_no"
                                         placeholder="Enter Year of Purchase"
                                         className="w-full border px-3 py-2 rounded"
-                                        {...register("registration_no", { required: "Enter Title" })}
+                                        {...register("registration_no")}
                                     />
                                     {errors.registration_no && (
                                         <p className="text-red-500 mt-1"><TiWarning className="inline me-1" />{errors.registration_no.message}</p>

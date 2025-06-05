@@ -14,7 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { TiWarning } from "react-icons/ti";
 import Select from "react-select";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { addComboPlan, categoryWiseProductViewById, editTractorPost, fetchBannerFeatureList, fetchBoostFeatureList, fetchBrandsList, fetchCategoryList, fetchDistrictListByState, fetchModelsList, fetchPromotionTagList, fetchStateList } from "../../../services/api";
+import { addComboPlan, categoryWiseProductViewById, editGoodsVehiclePost, editTractorPost, fetchBannerFeatureList, fetchBoostFeatureList, fetchBrandsList, fetchCategoryList, fetchDistrictListByState, fetchModelsList, fetchPromotionTagList, fetchStateList } from "../../../services/api";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DataLoader from "../../../components/DataLoader";
 
-export default function EditTractor() {
+export default function EditGoodsVehicle() {
 
     const token = useSelector((state) => state.auth.token);
     const navigate = useNavigate();
@@ -211,7 +211,7 @@ export default function EditTractor() {
 
     const editTractorPostMutation = useMutation({
         mutationFn: async (data) => {
-            return await editTractorPost(
+            return await editGoodsVehiclePost(
                 token,
                 singlePostData?.id,
                 data.category_id?.value,
@@ -244,7 +244,7 @@ export default function EditTractor() {
             if (response.success === 1) {
                 toast.success(response.message);
                 reset();
-                navigate("/tractor/post-list");
+                navigate("/goods-vehicle/post-list");
             } else {
                 toast.error(response.message || "Something went wrong");
             }
@@ -278,7 +278,7 @@ export default function EditTractor() {
                         <div className="my-10">
                             <p className="text-center mb-5">Preparing For Edit ...</p>
                             <DataLoader />
-                        </div>
+                        </div>  
                         :
                         <div className="form-wrapper bg-white p-5">
                             <form
@@ -286,7 +286,7 @@ export default function EditTractor() {
                                 className="bg-white 2xl:w-[75%] mx-auto shadow rounded-2xl p-5 border grid gap-3 xl:grid-cols-4 lg:grid-cols-3 grid-cols-1"
                             >
                                 <div className="form-heading bg-whitesmoke rounded-2xl mb-5 p-5 xl:col-span-4 lg:col-span-3 col-span-1">
-                                    <h2 className="text-2xl font-bold text-center font-dmsans">Edit Tractor Post</h2>
+                                    <h2 className="text-2xl font-bold text-center font-dmsans">Edit Goods Vehicle Post</h2>
                                 </div>
 
                                 {/* Category */}

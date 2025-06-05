@@ -21,10 +21,11 @@ import { useQuery } from "@tanstack/react-query"
 import { addBrand, fetchBrandAll } from "../../services/api"
 import { useSelector } from "react-redux"
 import DataTable from "react-data-table-component"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import DataLoader from "../../components/DataLoader"
 import { MdEditDocument } from "react-icons/md"
 import EditBrandModal from "./EditBrandModal"
+import AdminHeader from "../../components/admin/AdminHeader"
 
 export default function BrandsPage() {
 
@@ -32,6 +33,7 @@ export default function BrandsPage() {
     const [refetchList, setRefetchList] = useState(false);
     const [brandId, setBrandId] = useState(null);
     const [modal, setModal] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
     // console.log(category);
     const token = useSelector((state) => state.auth.token);
 
@@ -52,6 +54,8 @@ export default function BrandsPage() {
         }
     }
 
+
+
     const { data: allBrandList, isLoading: allBrandsLoading } = useQuery({
         queryKey: ["brandListAll", category, refetchList],
         queryFn: async () => {
@@ -60,6 +64,14 @@ export default function BrandsPage() {
     })
 
     // console.log(data);
+
+    // ✅ Filtered list based on search
+    const filteredData = useMemo(() => {
+        if (!allBrandList?.response) return [];
+        return allBrandList.response.filter(brand =>
+            brand.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [allBrandList, searchTerm]);
 
     const columns = [
         {
@@ -144,38 +156,33 @@ export default function BrandsPage() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <header className="flex h-16 shadow shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-                    <div className="flex items-center gap-2 px-4">
-                        {/* <SidebarTrigger className="-ml-1" /> */}
-                        <Separator orientation="vertical" className="mr-2 h-4" />
-                        <Breadcrumb>
-                            <BreadcrumbList>
-                                <BreadcrumbItem className="hidden md:block text-xl">
-                                    <BreadcrumbLink href="#">
-                                        Brands
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                                {/* <BreadcrumbSeparator className="hidden md:block" /> */}
-                                {/* <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem> */}
-                            </BreadcrumbList>
-                        </Breadcrumb>
-                    </div>
-                </header>
+                <AdminHeader head_text="Brands" />
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-5  bg-whitesmoke">
                     <div className="grid auto-rows-min gap-4 lg:grid-cols-[400px,1fr] grid-cols-1  rounded-2xl p-5 bg-white shadow">
                         <BrandsCreate category={category} refetchList={refetchList} setRefetchList={setRefetchList} />
 
                         <div className="bg-white rounded-2xl shadow overflow-hidden p-2 text-xl">
-                            <p className="my-3 uppercase text-center font-bold text-darkGreen">{`${category === "goods-vehicle" ? "goods vehicle" : category} Brands`}</p>
+                            <div className="flex justify-between px-5 items-center">
+                                <p className="my-3 uppercase text-center font-bold text-darkGreen">{`${category === "goods-vehicle" ? "goods vehicle" : category} Brands`}</p>
+                                {/* ✅ Search Field */}
+                                <div className="mb-3">
+                                    <input
+                                        type="text"
+                                        placeholder="Search brand..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        className="w-full p-2 border rounded-md shadow-sm outline-darkGreen focus:ring-1 focus:ring-darkGreen"
+                                    />
+                                </div>
+                            </div>
+
                             {
                                 allBrandsLoading ?
                                     <DataLoader />
                                     :
                                     <DataTable
                                         columns={columns}
-                                        data={allBrandList?.response}
+                                        data={filteredData}
                                         pagination
                                         striped
                                         highlightOnHover

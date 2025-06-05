@@ -55,7 +55,7 @@ export default function ImplementsPostList() {
                         onClick={() => {
                             setModal(true);
                             setSinglePost(row);
-                            navigate(`/tractor/edit-post/${row.id}`);
+                            navigate(`/implements/edit-post/${row.id}`);
                             sessionStorage.setItem("post-data", JSON.stringify(row));
                         }}
                     >

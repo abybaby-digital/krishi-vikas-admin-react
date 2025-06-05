@@ -3,10 +3,10 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import DataTable from "react-data-table-component";
 import { useQuery } from "@tanstack/react-query";
-import { categoryWiseProductList, fetchPremiumProductList } from "../../../services/api";
+import { categoryWiseProductList, fetchCategoryList, fetchPremiumProductList } from "../../../services/api";
 import { useSelector } from "react-redux";
 import Loader from "../../../components/Loader";
-import { BsEyeFill } from "react-icons/bs";
+import { BsEyeFill, BsFilterSquareFill } from "react-icons/bs";
 import { MdEditDocument } from "react-icons/md";
 import { useState } from "react";
 import ViewPremiumProduct from "./ViewPremiumProduct";
@@ -16,7 +16,7 @@ export default function PremiumProductList() {
     const navigate = useNavigate();
     const token = useSelector((state) => state.auth.token);
     const [modal, setModal] = useState(false);
-    const [categoryId, setCategoryId] = useState(false);
+    const [categoryId, setCategoryId] = useState(null);
     const [status, setStatus] = useState(false);
     const [singlePostData, setSinglePost] = useState({});
     const [search, setSearch] = useState("");
@@ -29,8 +29,18 @@ export default function PremiumProductList() {
         isError,
         error,
     } = useQuery({
-        queryKey: ["premium-product-list", modal],
-        queryFn: () => fetchPremiumProductList(token, skip, take, take),
+        queryKey: ["premium-product-list", modal , categoryId],
+        queryFn: () => fetchPremiumProductList(token, skip, take, categoryId),
+    });
+
+    // CATEGORY LIST
+    const {
+        data: categoryList,
+        isLoading: categoryLoading,
+        error: categoryError,
+    } = useQuery({
+        queryKey: ["categoryList"],
+        queryFn: () => fetchCategoryList(token),
     });
 
     const columns = [
@@ -38,25 +48,25 @@ export default function PremiumProductList() {
             name: "Actions",
             cell: (row) => (
                 <>
-                <button
-                    className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                    onClick={() => {
-                        setModal(true);
-                        setSinglePost(row);
-                    }}
-                >
-                    <BsEyeFill />
-                </button>
-                <button
-                    className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                    onClick={() => {
-                        setModal(true);
-                        setSinglePost(row);
-                        navigate(`/premium-product/edit/${row.id}`)
-                    }}
-                >
-                    <MdEditDocument />
-                </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                        }}
+                    >
+                        <BsEyeFill />
+                    </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                            navigate(`/premium-product/edit/${row.id}`)
+                        }}
+                    >
+                        <MdEditDocument />
+                    </button>
                 </>
             ),
             ignoreRowClick: true,
@@ -86,13 +96,18 @@ export default function PremiumProductList() {
             sortable: true,
         },
         {
-            name: "Brand ID",
-            selector: (row) => row.brand_id,
+            name: "Category",
+            selector: (row) => row.category_name,
             sortable: true,
         },
         {
-            name: "Model ID",
-            selector: (row) => row.model_id,
+            name: "Brand",
+            selector: (row) => row.brand_name,
+            sortable: true,
+        },
+        {
+            name: "Model",
+            selector: (row) => row.model_name,
             sortable: true,
         },
         {
@@ -183,6 +198,45 @@ export default function PremiumProductList() {
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
+                    <div className="flex justify-end gap-2 form-heading bg-whitesmoke rounded-2xl mb-3 p-3">
+
+
+                        {/* Category Filter */}
+                        <div className="flex items-center">
+                            <BsFilterSquareFill className="inline me-1 mb-1" />
+                            <select
+                                name="category"
+                                id="category"
+                                className="px-3 py-2 rounded-xl shadow w-full"
+                                value={categoryId || ""}
+                                onChange={(e) => setCategoryId(e.target.value || null)}
+                            >
+                                <option value="" disabled>Choose Category</option>
+                                {
+                                    categoryList?.response.map((item, idx) => (
+                                        <option key={idx} value={item.value}>{item.label}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+
+                        {
+                            (categoryId) &&
+                            <div className="flex justify-end col-span-full">
+                                <button
+                                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+                                    onClick={() => {
+                                        setCategoryId(null);
+                                        setStatus(null);
+                                    }}
+                                >
+                                    Reset Filters
+                                </button>
+                            </div>
+                        }
+
+
+                    </div>
                     {isLoading ? (
                         <Loader />
                     ) : isError ? (
@@ -193,7 +247,7 @@ export default function PremiumProductList() {
                         <div className="table-wrapper bg-white shadow rounded-2xl overflow-hidden">
                             <DataTable
                                 columns={columns}
-                                data={filteredData}
+                                data={filteredData || []}
                                 pagination
                                 highlightOnHover
                                 responsive

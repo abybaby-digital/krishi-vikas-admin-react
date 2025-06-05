@@ -9,6 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { DialogClose } from '@radix-ui/react-dialog';
 import { CiSquareRemove } from "react-icons/ci";
+import { MdPending } from 'react-icons/md';
+import { SiTicktick } from 'react-icons/si';
+import { ImCancelCircle } from 'react-icons/im';
 
 const ViewComboBanner = ({ modal, setModal, singleComboData }) => {
     return (
@@ -25,10 +28,21 @@ const ViewComboBanner = ({ modal, setModal, singleComboData }) => {
 
                     <div className="data-group col-span-full border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Banner Image</p>
-                        
+
                         <a href={singleComboData?.campaign_banner} data-fancybox={singleComboData?.campaign_banner} data-caption="Banner Image">
                             <img src={singleComboData?.campaign_banner} alt="image" className='object-cover h-[250px] max-w-md rounded-xl my-2 mx-auto' />
                         </a>
+                        {
+                            <div className="text-center my-5">
+                                {singleComboData?.status === "1" ?
+
+                                    <span className='bg-green-500  text-white rounded-full inline-block pe-5'><SiTicktick className='inline p-2 text-3xl' />Active</span> :
+
+                                    <span className='bg-red-500  text-white rounded-full inline-block pe-5'><ImCancelCircle className='inline p-2 text-3xl' />Inactive</span>}
+                            </div>
+
+
+                        }
                     </div>
 
                     <div className="data-group border-b pb-5">
@@ -67,12 +81,12 @@ const ViewComboBanner = ({ modal, setModal, singleComboData }) => {
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Start Date</p>
-                        <p>{singleComboData?.banner_start_date?.slice(0,11)}</p>
+                        <p>{singleComboData?.banner_start_date?.slice(0, 11)}</p>
                     </div>
 
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>End Date</p>
-                        <p>{singleComboData?.banner_end_date?.slice(0,11)}</p>
+                        <p>{singleComboData?.banner_end_date?.slice(0, 11)}</p>
                     </div>
 
 

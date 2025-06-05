@@ -7,12 +7,13 @@ import Select from "react-select";
 
 
 import toast from 'react-hot-toast';
-import { useQuery } from '@tanstack/react-query';
-import { fetchBrandsList } from '../../../services/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { addModel, fetchBrandsList } from '../../../services/api';
 import { useSelector } from 'react-redux';
+import Loader from '../../Loader';
 
 
-const ModelsCreate = ({ category }) => {
+const ModelsCreate = ({ category ,refetchList, setRefetchList }) => {
     const token = useSelector((state) => state.auth.token);
 
     const [imagePreview, setImagePreview] = React.useState(null);
@@ -55,18 +56,47 @@ const ModelsCreate = ({ category }) => {
         setValue,
         formState: { errors },
     } = useForm();
-    // console.log(errors);
-    const onSubmit = async (data) => {
-        console.log(data);
-        toast.success("Model Created Successfully 😃")
-    }
 
-    const { data: brandList } = useQuery({
+    // console.log(errors);
+
+    const { data: brandList, isLoading: brandLoading } = useQuery({
         queryKey: ["brand-list", category],
         queryFn: async () => {
             return await fetchBrandsList(token, getCategoryId(category))
         }
     })
+
+
+    const addModelMutattion = useMutation({
+        mutationFn: async (data) => {
+            return await addModel(
+                token,
+                getCategoryId(category),
+                data.brand_id?.value,
+                data.model_name,
+                data.model_logo
+            )
+        },
+        onSuccess: (response) => {
+            if (response.success === 1) {
+                toast.success(response.message);
+                reset(); // reset the form fields
+                setImagePreview(null); // reset the image preview
+                setRefetchList(!refetchList);
+            }
+            else {
+                toast.error(response.message);
+            }
+        }
+
+    })
+
+    const onSubmit = async (data) => {
+        addModelMutattion.mutate(data);
+        console.log(data);
+    }
+
+
 
     return (
         <div className='w-full bg-white shadow p-5 rounded-2xl'>
@@ -80,6 +110,7 @@ const ModelsCreate = ({ category }) => {
                         // rules={{ required: "Select state(s)" }}
                         render={({ field }) => (
                             <Select
+                                isDisabled={brandLoading}
                                 {...field}
                                 className='shadow border-none outline-none'
                                 options={brandList?.response}
@@ -131,6 +162,12 @@ const ModelsCreate = ({ category }) => {
                     Submit
                 </button>
             </form>
+            {
+                addModelMutattion.isPending ?
+                    <Loader task="Adding Model ..." />
+                    :
+                    null
+            }
         </div>
     )
 }
