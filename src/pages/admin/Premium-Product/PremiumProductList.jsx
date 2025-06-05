@@ -11,6 +11,7 @@ import { MdEditDocument } from "react-icons/md";
 import { useState } from "react";
 import ViewPremiumProduct from "./ViewPremiumProduct";
 import { useNavigate } from "react-router-dom";
+import { MdOutlinePlaylistAdd } from "react-icons/md";
 
 export default function PremiumProductList() {
     const navigate = useNavigate();
@@ -46,6 +47,7 @@ export default function PremiumProductList() {
     const columns = [
         {
             name: "Actions",
+            width: "200px",
             cell: (row) => (
                 <>
                     <button
@@ -58,7 +60,7 @@ export default function PremiumProductList() {
                         <BsEyeFill />
                     </button>
                     <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
                         onClick={() => {
                             setModal(true);
                             setSinglePost(row);
@@ -66,6 +68,16 @@ export default function PremiumProductList() {
                         }}
                     >
                         <MdEditDocument />
+                    </button>
+                    <button
+                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                        onClick={() => {
+                            setModal(true);
+                            setSinglePost(row);
+                            navigate(`/spec/add-spec/${row.model_id}`)
+                        }}
+                    >
+                        <MdOutlinePlaylistAdd />
                     </button>
                 </>
             ),
@@ -174,6 +186,8 @@ export default function PremiumProductList() {
         return (
             item.title?.toLowerCase().includes(searchText) ||
             item.id.toString().includes(searchText) ||
+            item.brand_name.toLowerCase().includes(searchText) ||
+            item.model_name.toLowerCase().includes(searchText) ||
             item.description?.toLowerCase().includes(searchText) ||
             item.type_new_or_old?.toLowerCase().includes(searchText) ||
             item.set_sell_or_rent?.toLowerCase().includes(searchText) ||

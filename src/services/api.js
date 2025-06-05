@@ -1877,7 +1877,7 @@ export const fetchSpecListAll = async (
 ) => {
   try {
     const response = await api.post(
-      `${baseURL}/update-category-meta`,
+      `${baseURL}/specification-list-all`,
       {
         model_id: model_id,
       },
@@ -1898,15 +1898,83 @@ export const fetchSpecListAll = async (
 };
 
 
-export const addSpecification = async (
+export const addSpec = async (
   token,
   model_id,
+  spec_name,
+  spec_value,
+  spec_logo,
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("model_id", model_id);
+    formData.append("spec_name", spec_name);
+    formData.append("spec_value", spec_value);
+    // Append icon (image)
+    if (spec_logo && spec_logo[0]) {
+      formData.append("spec_logo", spec_logo[0]); // Assuming 'noti_icon' is a file (image)
+    }
+    // Send POST request
+    const response = await api.post(`${baseURL}/add-specification`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to add spec:", error);
+    throw error;
+  }
+};
+
+export const editSpec = async (
+  token,
+  spec_id,
+  spec_name,
+  spec_value,
+  spec_logo,
+) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("spec_id", spec_id);
+    formData.append("spec_name", spec_name);
+    formData.append("spec_value", spec_value);
+    // Append icon (image)
+    if (spec_logo && spec_logo[0]) {
+      formData.append("spec_logo", spec_logo[0]); // Assuming 'noti_icon' is a file (image)
+    }
+    // Send POST request
+    const response = await api.post(`${baseURL}/edit-specification`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to edit spec:", error);
+    throw error;
+  }
+};
+
+export const fetchSpecById = async (
+  token,
+  spec_id,
 ) => {
   try {
     const response = await api.post(
-      `${baseURL}/update-category-meta`,
+      `${baseURL}/specification-view-by-id`,
       {
-        model_id: model_id,
+        spec_id: spec_id,
       },
       {
         headers: {

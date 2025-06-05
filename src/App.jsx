@@ -49,6 +49,7 @@ const PesticidesPostList = React.lazy(() => import("./pages/admin/Pesticides/Pes
 const PremiumProductList = React.lazy(() => import("./pages/admin/Premium-Product/PremiumProductList"));
 const AddPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/AddPremiumProduct"));
 const EditPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/EditPremiumProduct"));
+const AddSpec = React.lazy(() => import("./pages/admin/Specifications/AddSpec"));
 
 
 const ScrollToTop = () => {
@@ -137,6 +138,7 @@ const App = () => {
             <Route path="/premium-product/add" element={<AddPremiumProduct />} />
             <Route path="/premium-product/product-list" element={<PremiumProductList />} />
             <Route path="/premium-product/edit/:id" element={<EditPremiumProduct />} />
+            <Route path="/spec/add-spec/:id" element={<AddSpec />} />
           </Route>
 
         </Routes>
