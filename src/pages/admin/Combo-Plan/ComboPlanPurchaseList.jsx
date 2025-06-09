@@ -80,6 +80,11 @@ export default function ComboPlanList() {
             ),
         },
         {
+            name: "User ID",
+            selector: (row) => row.user_id,
+            sortable: true,
+        },
+        {
             name: "User Name",
             selector: (row) => row.user_name,
             sortable: true,
@@ -153,6 +158,7 @@ export default function ComboPlanList() {
     const filteredData = data?.response?.filter((item) => {
         const searchText = search.toLowerCase();
         return (
+            item.user_id?.toString().includes(searchText) ||
             item.user_name?.toLowerCase().includes(searchText) ||
             item.company_name?.toLowerCase().includes(searchText) ||
             item.phone_no?.toLowerCase().includes(searchText) ||
