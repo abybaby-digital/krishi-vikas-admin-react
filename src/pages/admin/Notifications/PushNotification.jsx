@@ -43,17 +43,27 @@ export default function PushNotification() {
         queryFn: () => fetchStateList(token),
     });
 
-    useEffect(() => {
-        if (selectedStates.length) {
-            const stateIds = selectedStates.map((s) => s.value).join(",");
-            // console.log(stateIds);
-            fetchDistrictListByState(token, stateIds).then((res) => {
-                setDistrictOptions(res.response); // Expected format: [{label, value}]
-            });
-        } else {
-            setDistrictOptions([]);
-        }
-    }, [selectedStates]);
+    // useEffect(() => {
+    //     if (selectedStates.length) {
+    //         // const stateIds = selectedStates.map((s) => s.value).join(",");
+    //         // console.log(stateIds);
+    //         fetchDistrictListByState(token, watch("states").join(",")).then((res) => {
+    //             setDistrictOptions(res.response); // Expected format: [{label, value}]
+    //         });
+    //     } else {
+    //         setDistrictOptions([]);
+    //     }
+    // }, [selectedStates , watch("states")]);
+
+    // DISTRICT LIST
+    const {
+        data: districtList,
+        isLoading: districtLoading,
+        error: districtError,
+    } = useQuery({
+        queryKey: ["district-list", watch("states")],
+        queryFn: () => fetchDistrictListByState(token, watch("states").map((s) => s.value).join(",")),
+    });
 
     const { data: categoryList } = useQuery({
         queryKey: ["category-list"],
@@ -62,7 +72,9 @@ export default function PushNotification() {
         }
     })
 
-    console.log(categoryList);
+    // console.log(categoryList);
+
+
 
 
 
@@ -112,9 +124,15 @@ export default function PushNotification() {
     };
 
     const handleSelectAllDistricts = () => {
-        setValue("districts", districtOptions); // sets form field
+        setValue("districts", districtList?.response);
     };
 
+    const handleSelectAllStates = () => {
+        setValue("states", stateList?.response);
+    }
+
+    console.log(districtList?.response);
+    
     return (
         <SidebarProvider>
             <AppSidebar />
@@ -174,8 +192,20 @@ export default function PushNotification() {
                         </div>
 
                         {/* States */}
-                        <div className="lg:col-span-2 col-span-1">
-                            <label className="block font-semibold mb-1">States</label>
+                        <div className="col-span-full">
+                            <div className="flex justify-between items-center">
+                                <label className="block font-semibold mb-1">States</label>
+                                {stateList?.response.length > 0 && (
+                                    <button
+                                        type="button"
+                                        className="text-sm text-black hover:underline"
+                                        onClick={handleSelectAllStates}
+                                    >
+                                        Select All States
+                                    </button>
+                                )}
+                            </div>
+
                             <Controller
                                 control={control}
                                 name="states"
@@ -195,10 +225,10 @@ export default function PushNotification() {
                         </div>
 
                         {/* Districts */}
-                        <div className="lg:col-span-2 col-span-1">
+                        <div className="col-span-full">
                             <div className="flex justify-between items-center">
                                 <label className="block font-semibold mb-1">Districts</label>
-                                {districtOptions.length > 0 && (
+                                {districtList?.response?.length > 0 && (
                                     <button
                                         type="button"
                                         className="text-sm text-black hover:underline"
@@ -215,8 +245,9 @@ export default function PushNotification() {
                                     <Select
                                         {...field}
                                         isMulti
-                                        options={districtOptions}
+                                        options={districtList?.response}
                                         placeholder="Select districts"
+                                        classNamePrefix="react-select"
                                     />
                                 )}
                             />
@@ -255,7 +286,7 @@ export default function PushNotification() {
                                     {/* <input type="text" {...register("category_id")} className="w-full border rounded px-3 py-2" /> */}
                                     <select name="" id="category_id" className="w-full p-3 border rounded px-3 py-2"
                                         {...register("category_id")}>
-                                            <option value="#" selected disabled>Select Category</option>
+                                        <option value="#" selected disabled>Select Category</option>
                                         {
                                             categoryList?.response?.map((item, idx) => (
                                                 <option key={idx} value={item.value}>{item.label}</option>

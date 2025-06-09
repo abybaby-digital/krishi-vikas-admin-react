@@ -23,7 +23,7 @@ const ViewNotification = ({ modal, setModal, singleNotification }) => {
                     <DialogDescription></DialogDescription>
                 </DialogHeader>
 
-                <div className="content-dialog grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-5">
+                <div className="content-dialog grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 gap-5 h-[80vh] overflow-auto">
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Title</p>
                         <p>{singleNotification?.title}</p>
@@ -71,12 +71,12 @@ const ViewNotification = ({ modal, setModal, singleNotification }) => {
                         <p>{singleNotification?.language_name}</p>
                     </div>
 
-                    <div className="data-group border-b pb-5">
+                    <div className="data-group border-b pb-5 col-span-full">
                         <p className='font-semibold text-darkGreen text-lg'>States</p>
                         <p>{singleNotification?.state_name}</p>
                     </div>
 
-                    <div className="data-group border-b pb-5">
+                    <div className="data-group border-b pb-5 col-span-full">
                         <p className='font-semibold text-darkGreen text-lg'>Districts</p>
                         <p>{singleNotification?.district_name}</p>
                     </div>

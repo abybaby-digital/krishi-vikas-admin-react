@@ -46,6 +46,20 @@ export default function EditPushNotification() {
         queryFn: () => fetchStateList(token),
     });
 
+    // DISTRICT LIST
+    const {
+        data: districtList,
+        isLoading: districtLoading,
+        error: districtError,
+    } = useQuery({
+        queryKey: ["district-list", watch("states")],
+        queryFn: () => fetchDistrictListByState(token, watch("states").map((s) => s.value).join(",")),
+    });
+
+    const handleSelectAllStates = () => {
+        setValue("states", stateList?.response);
+    }
+
     const {
         data: existingNotification,
         isLoading: notificationLoading,
@@ -63,20 +77,18 @@ export default function EditPushNotification() {
     useEffect(() => {
         const notif = existingNotification?.response;
         if (notif) {
-            reset({
-                title: notif.title,
-                description: notif.description,
-                redirection_type: notif.redirection_type,
-                language: String(notif.language_id),
-                datepick: notif.notification_date,
-                timepick: notif.notification_time,
-                banner_id: notif.banner_id,
-                category_id: notif.category_id,
-                post_id: notif.post_id,
-                redirection_url: notif.redirection_url,
-            });
+            setValue("title", notif.title);
+            setValue("description", notif.description);
+            setValue("redirection_type", notif.redirection_type);
+            setValue("language", String(notif.language_id));
+            setValue("datepick", notif.notification_date);
+            setValue("timepick", notif.notification_time);
+            setValue("banner_id", notif.banner_id);
+            setValue("category_id", notif.category_id);
+            setValue("post_id", notif.post_id);
+            setValue("redirection_url", notif.redirection_url);
         }
-    }, [existingNotification]);
+    }, [existingNotification, setValue]);
 
     // Step 2: Populate selectedStates based on notification and state list
     useEffect(() => {
@@ -90,12 +102,15 @@ export default function EditPushNotification() {
         }
     }, [existingNotification, stateList]);
 
-    // Step 3: Fetch districts after states are set, and then populate them
+    const watchedStates = watch("states");
+
     useEffect(() => {
-        if (selectedStates.length > 0) {
-            const stateIds = selectedStates.map((s) => s.value).join(",");
-            fetchDistrictListByState(token, stateIds).then((res) => {
+        const fetchDistricts = async () => {
+            if (watchedStates && watchedStates.length > 0) {
+                const stateIds = watchedStates.map((s) => s.value).join(",");
+                const res = await fetchDistrictListByState(token, stateIds);
                 const districts = res.response;
+
                 setDistrictOptions(districts);
 
                 const notif = existingNotification?.response;
@@ -103,27 +118,52 @@ export default function EditPushNotification() {
                     const selectedDistricts = districts.filter((d) =>
                         notif.dist_ids.split(',').includes(String(d.value))
                     );
-                    setValue("districts", selectedDistricts); // ✅ populate district field
+                    setValue("districts", selectedDistricts); // ✅ Update district field
                 }
-            });
-        } else {
-            setDistrictOptions([]);
-            setValue("districts", []);
-        }
-    }, [selectedStates]);
+            } else {
+                setDistrictOptions([]);
+                setValue("districts", []);
+            }
+        };
+
+        fetchDistricts();
+    }, [watchedStates, token, existingNotification, setValue]);
+
+
+    // // Step 3: Fetch districts after states are set, and then populate them
+    // useEffect(() => {
+    //     if (selectedStates.length > 0) {
+    //         const stateIds = selectedStates.map((s) => s.value).join(",");
+    //         fetchDistrictListByState(token, stateIds).then((res) => {
+    //             const districts = res.response;
+    //             setDistrictOptions(districts);
+
+    //             const notif = existingNotification?.response;
+    //             if (notif?.dist_ids) {
+    //                 const selectedDistricts = districts.filter((d) =>
+    //                     notif.dist_ids.split(',').includes(String(d.value))
+    //                 );
+    //                 setValue("districts", selectedDistricts); // ✅ populate district field
+    //             }
+    //         });
+    //     } else {
+    //         setDistrictOptions([]);
+    //         setValue("districts", []);
+    //     }
+    // }, [selectedStates]);
 
 
 
-    useEffect(() => {
-        if (selectedStates.length) {
-            const stateIds = selectedStates?.map((s) => s.value).join(",");
-            fetchDistrictListByState(token, stateIds).then((res) => {
-                setDistrictOptions(res.response);
-            });
-        } else {
-            setDistrictOptions([]);
-        }
-    }, [selectedStates]);
+    // useEffect(() => {
+    //     if (selectedStates.length) {
+    //         const stateIds = selectedStates?.map((s) => s.value).join(",");
+    //         fetchDistrictListByState(token, stateIds).then((res) => {
+    //             setDistrictOptions(res.response);
+    //         });
+    //     } else {
+    //         setDistrictOptions([]);
+    //     }
+    // }, [selectedStates]);
 
     console.log("type", typeof (+id));
 
@@ -239,8 +279,19 @@ export default function EditPushNotification() {
                             </div>
 
                             {/* States */}
-                            <div className="lg:col-span-2 col-span-1">
-                                <label className="block font-semibold mb-1">States</label>
+                            <div className="col-span-full">
+                                <div className="flex justify-between items-center">
+                                    <label className="block font-semibold mb-1">States</label>
+                                    {stateList?.response.length > 0 && (
+                                        <button
+                                            type="button"
+                                            className="text-sm text-black hover:underline"
+                                            onClick={handleSelectAllStates}
+                                        >
+                                            Select All States
+                                        </button>
+                                    )}
+                                </div>
                                 <Controller
                                     control={control}
                                     name="states"
@@ -250,17 +301,14 @@ export default function EditPushNotification() {
                                             {...field}
                                             isMulti
                                             options={stateList?.response}
-                                            onChange={(value) => {
-                                                field.onChange(value);
-                                                setSelectedStates(value);
-                                            }}
+                                            onChange={(value) => setValue("states", value)}
                                         />
                                     )}
                                 />
                             </div>
 
                             {/* Districts */}
-                            <div className="lg:col-span-2 col-span-1">
+                            <div className="col-span-full">
                                 <div className="flex justify-between items-center">
                                     <label className="block font-semibold mb-1">Districts</label>
                                     {districtOptions.length > 0 && (
@@ -354,7 +402,7 @@ export default function EditPushNotification() {
                             </div>
 
                             {/* Submit Button */}
-                            <div className="form-submit-btn mt-5 xl:col-span-4 lg:col-span-3 col-span-1 rounded-2xl p-5 text-center bg-whitesmoke">
+                            <div className="form-submit-btn mt-5 col-span-full rounded-2xl p-5 text-center bg-whitesmoke">
                                 <button
                                     type="submit"
                                     className="bg-gradient-green text-white px-4 py-2 rounded hover:bg-[#000]"

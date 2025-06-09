@@ -30,7 +30,7 @@ export default function PremiumProductList() {
         isError,
         error,
     } = useQuery({
-        queryKey: ["premium-product-list", modal , categoryId],
+        queryKey: ["premium-product-list", modal, categoryId],
         queryFn: () => fetchPremiumProductList(token, skip, take, categoryId),
     });
 
@@ -100,6 +100,11 @@ export default function PremiumProductList() {
         {
             name: "Post ID",
             selector: (row) => row.id,
+            sortable: true,
+        },
+        {
+            name: "User ID",
+            selector: (row) => row.user_id,
             sortable: true,
         },
         {
@@ -186,6 +191,7 @@ export default function PremiumProductList() {
         return (
             item.title?.toLowerCase().includes(searchText) ||
             item.id.toString().includes(searchText) ||
+            item.user_id.toString().includes(searchText) ||
             item.brand_name.toLowerCase().includes(searchText) ||
             item.model_name.toLowerCase().includes(searchText) ||
             item.description?.toLowerCase().includes(searchText) ||
