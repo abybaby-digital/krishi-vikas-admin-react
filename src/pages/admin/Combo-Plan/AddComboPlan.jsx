@@ -182,7 +182,7 @@ export default function AddComboPlan() {
 
                         {/* Plan Price */}
                         <div>
-                            <label htmlFor="plan_price" className="block font-bold text-sm mb-1">Plan Price</label>
+                            <label htmlFor="plan_price" className="block font-bold text-sm mb-1">Plan Price ( without GST )</label>
                             <input
                                 type="number"
                                 id="plan_price"

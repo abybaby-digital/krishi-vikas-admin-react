@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// const baseURL = "https://krishivikas.com/api/v2";
 // const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
 const baseURL = "https://krishivikas.com/api/admin";
 // const baseURL = "http://192.168.0.204:8080/api/admin";
@@ -1171,7 +1170,11 @@ export const editNotificationSchedule = async (
 export const fetchNotificationScheduleList = async (
   token,
   language_id,
-  created_at
+  created_at,
+  state_id,
+  district_id,
+  skip,
+  take
 ) => {
   try {
     const response = await api.post(
@@ -1179,6 +1182,10 @@ export const fetchNotificationScheduleList = async (
       {
         language_id: language_id,
         created_at: created_at,
+        state_id: state_id,
+        district_id: district_id,
+        skip: skip,
+        take: take,
       }, // Empty object as the request body if not required
       {
         headers: {
@@ -1459,7 +1466,6 @@ export const editGoodsVehiclePost = async (
     throw error;
   }
 };
-
 
 // EDIT HARVESTER POST
 
@@ -1868,13 +1874,9 @@ export const updateMetas = async (
   }
 };
 
-
 // SPECIFICATIONS LIST ALL
 
-export const fetchSpecListAll = async (
-  token,
-  model_id,
-) => {
+export const fetchSpecListAll = async (token, model_id) => {
   try {
     const response = await api.post(
       `${baseURL}/specification-list-all`,
@@ -1897,13 +1899,12 @@ export const fetchSpecListAll = async (
   }
 };
 
-
 export const addSpec = async (
   token,
   model_id,
   spec_name,
   spec_value,
-  spec_logo,
+  spec_logo
 ) => {
   try {
     const formData = new FormData();
@@ -1937,7 +1938,7 @@ export const editSpec = async (
   spec_id,
   spec_name,
   spec_value,
-  spec_logo,
+  spec_logo
 ) => {
   try {
     const formData = new FormData();
@@ -1966,10 +1967,7 @@ export const editSpec = async (
   }
 };
 
-export const fetchSpecById = async (
-  token,
-  spec_id,
-) => {
+export const fetchSpecById = async (token, spec_id) => {
   try {
     const response = await api.post(
       `${baseURL}/specification-view-by-id`,

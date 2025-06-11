@@ -68,7 +68,6 @@ export default function ComboBannerList() {
         queryFn: () => fetchCategoryList(token),
     });
 
-
     // LANGUAGE LIST
     const {
         data: languageList,
