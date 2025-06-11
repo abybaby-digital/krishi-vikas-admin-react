@@ -1107,7 +1107,7 @@ export const addNotificationSchedule = async (
 
 export const editNotificationSchedule = async (
   token,
-  notification_id, // NEW: ID of the notification to edit
+  notification_id,
   title,
   description,
   redirection_type,
@@ -1125,7 +1125,7 @@ export const editNotificationSchedule = async (
   try {
     const formData = new FormData();
 
-    // Append all necessary fields
+    // Append all fields
     formData.append("notification_id", notification_id);
     formData.append("title", title);
     formData.append("description", description);
@@ -1140,16 +1140,16 @@ export const editNotificationSchedule = async (
     formData.append("post_id", post_id);
     formData.append("redirection_url", redirection_url);
 
-    // Append image only if a new one is provided
+    // Append image file
     if (notification_img instanceof File) {
       formData.append("notification_img", notification_img);
     } else if (Array.isArray(notification_img) && notification_img[0]) {
-      formData.append("notification_img", notification_img[0]);
+      formData.append("notification_img", notification_img[0]); // assuming it's a FileList or array
     }
 
-    // Send POST or PUT request to edit notification
+    // Send POST request
     const response = await api.post(
-      `${baseURL}/edit-notification-schedule`,
+      `${baseURL}/edit-schedule-notification`,
       formData,
       {
         headers: {
@@ -1159,6 +1159,7 @@ export const editNotificationSchedule = async (
       }
     );
 
+    // Return API result
     return response.data.result;
   } catch (error) {
     console.error("Failed to edit notification schedule:", error);
