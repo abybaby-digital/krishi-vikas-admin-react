@@ -1,4 +1,4 @@
-main{
+main {
   overflow-x: hidden;
 }
 
@@ -10,11 +10,12 @@ main{
   position: relative;
 }
 
-.loader-data::before , .loader-data::after {
+.loader-data::before,
+.loader-data::after {
   content: '';
   position: absolute;
   left: 50%;
-  transform: translate(-50% , 10%);
+  transform: translate(-50%, 10%);
   top: 0;
   background: #13693a;
   width: 16px;
@@ -27,24 +28,36 @@ main{
   background: #0000;
   color: #8cbf44;
   top: 100%;
-  box-shadow: 32px -20px , -32px -20px;
+  box-shadow: 32px -20px, -32px -20px;
   animation: split 0.5s ease-out infinite alternate;
 }
 
 @keyframes split {
-  0% { box-shadow: 8px -20px, -8px -20px}
-  100% { box-shadow: 32px -20px , -32px -20px}
+  0% {
+    box-shadow: 8px -20px, -8px -20px
+  }
+
+  100% {
+    box-shadow: 32px -20px, -32px -20px
+  }
 }
+
 @keyframes jump {
- 0% { transform: translate(-50% , -150%)}
- 100% { transform: translate(-50% , 10%)}
+  0% {
+    transform: translate(-50%, -150%)
+  }
+
+  100% {
+    transform: translate(-50%, 10%)
+  }
 }
 
 /* ////// */
 
-.preloader{
+.preloader {
   z-index: 99;
 }
+
 /* PRELOADER CSS */
 .kv_loader {
   box-sizing: border-box;
@@ -82,7 +95,7 @@ main{
   height: 8px;
   border-radius: 50%;
   display: block;
-  margin:15px auto;
+  margin: 15px auto;
   position: relative;
   color: #FFF;
   box-sizing: border-box;
@@ -91,19 +104,23 @@ main{
 
 @keyframes animloader {
   0% {
-    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
   }
+
   25% {
-    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 2px;
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
   }
+
   50% {
-    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 2px,  -38px 0 0 -2px;
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
   }
+
   75% {
-    box-shadow: 14px 0 0 2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
   }
+
   100% {
-    box-shadow: 14px 0 0 -2px,  38px 0 0 2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
   }
 }
 
@@ -122,6 +139,10 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
   background: linear-gradient(33deg, #13693a, #8cbf44);
   color: white;
   box-shadow: 0 0 5px #8cbf44;
+}
+
+.admin-panel-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar_menu:hover {
@@ -174,22 +195,25 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
   display: block;
 }
 
+.sidebar_menu:has(.submenu a.active)>.arrow_down {
+  rotate: 180deg;
+}
+
 .sidebar_menu a:hover::before {
   left: 0;
 }
 
-.sidebar_menu.has_submenu:hover .arrow_down {
+/* .sidebar_menu.has_submenu:hover .arrow_down {
   rotate: 180deg;
-}
-
+} */
 
 .submenu {
   display: none;
 }
 
-.sidebar_menu.has_submenu:hover .submenu {
+/* .sidebar_menu.has_submenu:hover .submenu {
   display: block;
-}
+} */
 
 .submenu a {
   border: 1px dashed #e5e5e5;
@@ -201,6 +225,10 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
 
 .submenu a:hover {
   scale: 0.95;
+}
+
+.active_submenu {
+  display: block;
 }
 
 .loader {
@@ -244,10 +272,10 @@ li[data-sidebar="menu-item"]:has(.admin-navlink.active)>button {
   }
 }
 
-.profile-dropdown{
+.profile-dropdown {
   display: none;
 }
 
-.profile:hover .profile-dropdown{
+.profile:hover .profile-dropdown {
   display: block;
 }
