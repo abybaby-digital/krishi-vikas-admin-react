@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ViewNotification from "./ViewNotification";
 import { fetchDistrictListByState, fetchLanguageList, fetchStateList } from "../../../services/api";
+import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
 export default function NotificationScheduleList() {
 
@@ -99,22 +100,27 @@ export default function NotificationScheduleList() {
         {
             name: "Actions",
             cell: (row) => (
+                
                 <div className="flex gap-2">
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        onClick={() => {
-                            setModal(true);
-                            setSingleNotification(row);
-                        }}
-                    >
-                        <BsEyeFill />
-                    </button>
-                    <Link
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        to={`/notification/notification-schedule/edit/${row.id}`}
-                    >
-                        <AiFillEdit />
-                    </Link>
+                    <ToolTipGlobal toolText="View Notification">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true);
+                                setSingleNotification(row);
+                            }}
+                        >
+                            <BsEyeFill />
+                        </button>
+                    </ToolTipGlobal>
+                    <ToolTipGlobal toolText="Edit Notification Schedule">
+                        <Link
+                            className="bg-white inline-block mt-1.5 shadow rounded-lg p-2 hover:scale-90"
+                            to={`/notification/notification-schedule/edit/${row.id}`}
+                        >
+                            <AiFillEdit />
+                        </Link>
+                    </ToolTipGlobal>
                 </div>
             ),
             ignoreRowClick: true,

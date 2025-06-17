@@ -17,6 +17,7 @@ import { useState } from "react";
 import ViewComboPlanPurchase from "./ViewComboPlanPurchase";
 import { FaDownload } from "react-icons/fa6";
 import { MdOutlinePostAdd } from "react-icons/md";
+import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
 
 export default function ComboPlanList() {
@@ -36,7 +37,7 @@ export default function ComboPlanList() {
     });
 
     const storeDataToSession = (data) => {
-        sessionStorage.setItem("combo-user",JSON.stringify(data));
+        sessionStorage.setItem("combo-user", JSON.stringify(data));
     }
 
     const columns = [
@@ -44,22 +45,29 @@ export default function ComboPlanList() {
             name: "Actions",
             cell: (row) => (
                 <div className="flex gap-2">
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        onClick={() => {
-                            setModal(true);
-                            setSingleCombo(row);
-                        }}
-                    >
-                        <BsEyeFill />
-                    </button>
-                    <Link
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        to={`/combo-plan/add-combo-banner`}
-                        onClick={() => { storeDataToSession(row); }}
-                    >
-                        <MdOutlinePostAdd />
-                    </Link>
+
+                    <ToolTipGlobal toolText="View Subscriber">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true);
+                                setSingleCombo(row);
+                            }}
+                        >
+                            <BsEyeFill />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Add Combo Banner">
+                        <Link
+                            className="bg-white inline-block mt-2 shadow rounded-lg p-2 hover:scale-90"
+                            to={`/combo-plan/add-combo-banner`}
+                            onClick={() => { storeDataToSession(row); }}
+                        >
+                            <MdOutlinePostAdd />
+                        </Link>
+                    </ToolTipGlobal>
+
                 </div>
             ),
             ignoreRowClick: true,

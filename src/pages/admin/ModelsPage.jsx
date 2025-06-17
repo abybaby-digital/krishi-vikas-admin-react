@@ -18,16 +18,17 @@ import BrandsTable from "../../components/admin/brands/BrandsTable"
 import BrandsCreate from "../../components/admin/brands/BrandsCreate"
 import ModelsCreate from "../../components/admin/models/ModelsCreate"
 import ModelsTable from "../../components/admin/models/ModelsTable"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { fetchBrandsList, fetchModelAll } from "../../services/api"
 import DataLoader from "../../components/DataLoader"
 import DataTable from "react-data-table-component"
 import { useSelector } from "react-redux"
-import { MdEditDocument } from "react-icons/md"
+import { MdEditDocument, MdOutlinePlaylistAdd } from "react-icons/md"
 import EditModelModal from "./EditModelModal"
 import AdminHeader from "../../components/admin/AdminHeader"
+import ToolTipGlobal from "../../components/ToolTipGlobal"
 
 export default function BrandsPage() {
 
@@ -39,6 +40,8 @@ export default function BrandsPage() {
     const [brandSelected, setBrand] = useState(null); // initially null
     const [searchText, setSearchText] = useState("");
     const token = useSelector((state) => state.auth.token);
+
+    const navigate = useNavigate();
 
     const getCategoryId = (category_name) => {
         switch (category_name) {
@@ -90,16 +93,32 @@ export default function BrandsPage() {
             width: "200px",
             cell: (row) => (
                 <>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                        onClick={() => {
-                            setModal(true);
-                            setModelId(row.id);
-                            setBrandId(row.brand_id);
-                        }}
-                    >
-                        <MdEditDocument />
-                    </button>
+                    <ToolTipGlobal toolText="Edit Model">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                            onClick={() => {
+                                setModal(true);
+                                setModelId(row.id);
+                                setBrandId(row.brand_id);
+                            }}
+                        >
+                            <MdEditDocument />
+                        </button>
+                    </ToolTipGlobal>
+                    
+                    <ToolTipGlobal toolText="Add Specifications (Work in progress..)">
+                        <button
+                            disabled
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true);
+                                navigate(`/spec/add-spec/${row.model_id}`)
+                            }}
+                        >
+                            <MdOutlinePlaylistAdd />
+                        </button>
+                    </ToolTipGlobal>
+
                 </>
             ),
             ignoreRowClick: true,

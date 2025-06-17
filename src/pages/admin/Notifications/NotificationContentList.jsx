@@ -14,6 +14,7 @@ import { AiFillEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import ViewNotificationContent from "./ViewNotificationContent";
+import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
 
 export default function NotificationContentList() {
@@ -44,21 +45,28 @@ export default function NotificationContentList() {
             name: "Actions",
             cell: (row) => (
                 <div className="flex gap-2">
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        onClick={() => {
-                            setModal(true); setSingleCombo(row);
-                        }}
-                    >
-                        <BsEyeFill />
-                    </button>
-                    <Link
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        to={`/notification/edit/${row.id}`}
-                        onClick={() => { saveSingleData(row) }}
-                    >
-                        <AiFillEdit />
-                    </Link>
+
+                    <ToolTipGlobal toolText="View Notification Content">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true); setSingleCombo(row);
+                            }}
+                        >
+                            <BsEyeFill />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Edit Notification Content">
+                        <Link
+                            className="bg-white inline-block mt-1.5 shadow rounded-lg p-2 hover:scale-90"
+                            to={`/notification/edit/${row.id}`}
+                            onClick={() => { saveSingleData(row) }}
+                        >
+                            <AiFillEdit />
+                        </Link>
+                    </ToolTipGlobal>
+
                 </div>
             ),
             ignoreRowClick: true,

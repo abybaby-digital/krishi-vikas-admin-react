@@ -12,6 +12,7 @@ import ViewGoodsVehiclePost from "./ViewGoodsVehiclePost";
 import { MdEditDocument } from "react-icons/md";
 import { TbWorldSearch } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
 export default function GoodsVehiclePostList() {
     const token = useSelector((state) => state.auth.token);
@@ -40,36 +41,45 @@ export default function GoodsVehiclePostList() {
             width: "200px",
             cell: (row) => (
                 <>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 me-2 hover:scale-90"
-                        onClick={() => {
-                            setModal(true);
-                            setSinglePost(row);
-                        }}
-                    >
-                        <BsEyeFill />
-                    </button>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                        onClick={() => {
-                            setModal(true);
-                            setSinglePost(row);
-                            navigate(`/goods-vehicle/edit-post/${row.id}`);
-                            sessionStorage.setItem("post-data", JSON.stringify(row));
-                        }}
-                    >
-                        <MdEditDocument />
-                    </button>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                        onClick={() => {
-                            setModal(true);
-                            setSeoModal(true);
-                            setSinglePost(row);
-                        }}
-                    >
-                        <TbWorldSearch />
-                    </button>
+                    <ToolTipGlobal toolText="View Post">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 me-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true);
+                                setSinglePost(row);
+                            }}
+                        >
+                            <BsEyeFill />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Edit Post">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                            onClick={() => {
+                                setModal(true);
+                                setSinglePost(row);
+                                navigate(`/goods-vehicle/edit-post/${row.id}`);
+                                sessionStorage.setItem("post-data", JSON.stringify(row));
+                            }}
+                        >
+                            <MdEditDocument />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Update Meta title and description">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                            onClick={() => {
+                                setModal(true);
+                                setSeoModal(true);
+                                setSinglePost(row);
+                            }}
+                        >
+                            <TbWorldSearch />
+                        </button>
+                    </ToolTipGlobal>
+
                 </>
 
             ),

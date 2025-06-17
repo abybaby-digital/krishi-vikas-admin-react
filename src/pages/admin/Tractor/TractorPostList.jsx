@@ -12,6 +12,7 @@ import { TbWorldSearch } from "react-icons/tb";
 import { useState } from "react";
 import ViewTractorPost from "./ViewTractorPost";
 import { useNavigate } from "react-router-dom";
+import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
 export default function TractorPostList() {
     const token = useSelector((state) => state.auth.token);
@@ -21,7 +22,7 @@ export default function TractorPostList() {
     const [skip, setSkip] = useState(null);
     const [take, setTake] = useState(null);
 
-    
+
 
     const [seoModal, setSeoModal] = useState(false);
 
@@ -43,43 +44,54 @@ export default function TractorPostList() {
             width: "200px",
             cell: (row) => (
                 <>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 me-2 hover:scale-90"
-                        onClick={() => {
-                            setModal(true);
-                            setSinglePost(row);
-                        }}
-                    >
-                        <BsEyeFill />
-                    </button>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                        onClick={() => {
-                            setModal(true);
-                            setSinglePost(row);
-                            navigate(`/tractor/edit-post/${row.id}`);
-                            sessionStorage.setItem("post-data", JSON.stringify(row));
-                        }}
-                    >
-                        <MdEditDocument />
-                    </button>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                        onClick={() => {
-                            setModal(true);
-                            setSeoModal(true);
-                            setSinglePost(row);
-                        }}
-                    >
-                        <TbWorldSearch />
-                    </button>
+
+                    <ToolTipGlobal toolText="View Post">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 me-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true);
+                                setSinglePost(row);
+                            }}
+                        >
+                            <BsEyeFill />
+                        </button>
+                    </ToolTipGlobal>
+
+
+                    <ToolTipGlobal toolText="Edit Post">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                            onClick={() => {
+                                setModal(true);
+                                setSinglePost(row);
+                                navigate(`/tractor/edit-post/${row.id}`);
+                                sessionStorage.setItem("post-data", JSON.stringify(row));
+                            }}
+                        >
+                            <MdEditDocument />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Update Meta title and description">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                            onClick={() => {
+                                setModal(true);
+                                setSeoModal(true);
+                                setSinglePost(row);
+                            }}
+                        >
+                            <TbWorldSearch />
+                        </button>
+                    </ToolTipGlobal>
+
                 </>
             ),
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
         },
-        
+
         {
             name: "Post Id",
             selector: (row) => row.id,
@@ -242,10 +254,10 @@ export default function TractorPostList() {
                     )}
                 </div>
 
-                
-                <ViewTractorPost modal={modal} setModal={setModal} singlePostData={singlePostData} seoModal={seoModal} setSeoModal = {setSeoModal} />
-            
-            
+
+                <ViewTractorPost modal={modal} setModal={setModal} singlePostData={singlePostData} seoModal={seoModal} setSeoModal={setSeoModal} />
+
+
             </SidebarInset>
         </SidebarProvider>
     );

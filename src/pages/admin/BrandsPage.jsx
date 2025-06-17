@@ -26,6 +26,7 @@ import DataLoader from "../../components/DataLoader"
 import { MdEditDocument } from "react-icons/md"
 import EditBrandModal from "./EditBrandModal"
 import AdminHeader from "../../components/admin/AdminHeader"
+import ToolTipGlobal from "../../components/ToolTipGlobal"
 
 export default function BrandsPage() {
 
@@ -84,15 +85,18 @@ export default function BrandsPage() {
             width: "200px",
             cell: (row) => (
                 <>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                        onClick={() => {
-                            setModal(true);
-                            setBrandId(row.id);
-                        }}
-                    >
-                        <MdEditDocument />
-                    </button>
+                    <ToolTipGlobal toolText="Edit Brand">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                            onClick={() => {
+                                setModal(true);
+                                setBrandId(row.id);
+                            }}
+                        >
+                            <MdEditDocument />
+                        </button>
+                    </ToolTipGlobal>
+
                 </>
             ),
             ignoreRowClick: true,

@@ -14,6 +14,7 @@ import { AiFillEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import ViewComboPlan from "./ViewComboPlan";
 import { useState } from "react";
+import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
 
 export default function ComboPlanList() {
@@ -40,20 +41,26 @@ export default function ComboPlanList() {
             name: "Actions",
             cell: (row) => (
                 <div className="flex gap-2">
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        onClick={() => {
-                            setModal(true); setSingleCombo(row);
-                        }}
-                    >
-                        <BsEyeFill />
-                    </button>
-                    <Link
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        to={`/combo-plan/edit/${row.id}`}
-                    >
-                        <AiFillEdit />
-                    </Link>
+                    <ToolTipGlobal toolText="View Combo Plan">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true); setSingleCombo(row);
+                            }}
+                        >
+                            <BsEyeFill />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Edit Combo Plan">
+                        <Link
+                            className="bg-white inline-block shadow rounded-lg p-2 hover:scale-90 mt-2"
+                            to={`/combo-plan/edit/${row.id}`}
+                        >
+                            <AiFillEdit />
+                        </Link>
+                    </ToolTipGlobal>
+
                 </div>
             ),
             ignoreRowClick: true,
@@ -214,7 +221,7 @@ export default function ComboPlanList() {
                                 />
                             </div>
                         )}
-                        
+
                     </div>
                     <ViewComboPlan modal={modal} setModal={setModal} singleComboData={singleComboData} />
                 </SidebarInset>

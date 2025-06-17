@@ -16,6 +16,7 @@ import ViewComboPlan from "./ViewComboPlan";
 import { useState } from "react";
 import { BsFilterSquareFill } from "react-icons/bs";
 import ViewComboBanner from "./ViewComboBanner";
+import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
 
 export default function ComboBannerList() {
@@ -85,20 +86,28 @@ export default function ComboBannerList() {
             name: "Actions",
             cell: (row) => (
                 <div className="flex gap-2">
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        onClick={() => {
-                            setModal(true); setSingleCombo(row);
-                        }}
-                    >
-                        <BsEyeFill />
-                    </button>
-                    <Link
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        to={`/combo-plan/edit-combo-banner/${row.id}`}
-                    >
-                        <AiFillEdit />
-                    </Link>
+
+                    <ToolTipGlobal toolText="View Banner">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true); setSingleCombo(row);
+                            }}
+                        >
+                            <BsEyeFill />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Edit Banner">
+                        <Link
+                            className="bg-white inline-block mt-1 shadow rounded-lg p-2 hover:scale-90"
+                            to={`/combo-plan/edit-combo-banner/${row.id}`}
+                        >
+                            <AiFillEdit />
+                        </Link>
+
+                    </ToolTipGlobal>
+
                 </div>
             ),
             ignoreRowClick: true,
@@ -126,11 +135,11 @@ export default function ComboBannerList() {
             width: "200px",
             cell: (row) => (
 
-                
-                    <span className={`text-sm font-medium px-2 py-1 text-white rounded-xl ${row.status === "1" ? "bg-green-600" : "bg-red-600"}`}>
-                        {row.status === "1" ? "Active" : "Inactive"}
-                    </span>
-                
+
+                <span className={`text-sm font-medium px-2 py-1 text-white rounded-xl ${row.status === "1" ? "bg-green-600" : "bg-red-600"}`}>
+                    {row.status === "1" ? "Active" : "Inactive"}
+                </span>
+
 
             ),
         },

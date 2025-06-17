@@ -12,6 +12,7 @@ import { useState } from "react";
 import ViewPremiumProduct from "./ViewPremiumProduct";
 import { useNavigate } from "react-router-dom";
 import { MdOutlinePlaylistAdd } from "react-icons/md";
+import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
 export default function PremiumProductList() {
     const navigate = useNavigate();
@@ -50,35 +51,44 @@ export default function PremiumProductList() {
             width: "200px",
             cell: (row) => (
                 <>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                        onClick={() => {
-                            setModal(true);
-                            setSinglePost(row);
-                        }}
-                    >
-                        <BsEyeFill />
-                    </button>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
-                        onClick={() => {
-                            setModal(true);
-                            setSinglePost(row);
-                            navigate(`/premium-product/edit/${row.id}`)
-                        }}
-                    >
-                        <MdEditDocument />
-                    </button>
-                    <button
-                        className="bg-white shadow rounded-lg p-2 hover:scale-90"
-                        onClick={() => {
-                            setModal(true);
-                            setSinglePost(row);
-                            navigate(`/spec/add-spec/${row.model_id}`)
-                        }}
-                    >
-                        <MdOutlinePlaylistAdd />
-                    </button>
+                    <ToolTipGlobal toolText="View Premium Product">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                            onClick={() => {
+                                setModal(true);
+                                setSinglePost(row);
+                            }}
+                        >
+                            <BsEyeFill />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Edit Premium Product">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90 me-2"
+                            onClick={() => {
+                                setModal(true);
+                                setSinglePost(row);
+                                navigate(`/premium-product/edit/${row.id}`)
+                            }}
+                        >
+                            <MdEditDocument />
+                        </button>
+                    </ToolTipGlobal>
+
+                    <ToolTipGlobal toolText="Specifications">
+                        <button
+                            className="bg-white shadow rounded-lg p-2 hover:scale-90"
+                            onClick={() => {
+                                setModal(true);
+                                setSinglePost(row);
+                                navigate(`/spec/add-spec/${row.model_id}`)
+                            }}
+                        >
+                            <MdOutlinePlaylistAdd />
+                        </button>
+                    </ToolTipGlobal>
+
                 </>
             ),
             ignoreRowClick: true,
