@@ -76,18 +76,19 @@ export default function PremiumProductList() {
                         </button>
                     </ToolTipGlobal>
 
-                    <ToolTipGlobal toolText="Specifications">
+                    {/* <ToolTipGlobal toolText="Specifications">
                         <button
                             className="bg-white shadow rounded-lg p-2 hover:scale-90"
                             onClick={() => {
                                 setModal(true);
                                 setSinglePost(row);
-                                navigate(`/spec/add-spec/${row.model_id}`)
+                                navigate(`/spec/add-spec/${row.model_id}`);
+                                sessionStorage.setItem("model_details", JSON.stringify(row));
                             }}
                         >
                             <MdOutlinePlaylistAdd />
                         </button>
-                    </ToolTipGlobal>
+                    </ToolTipGlobal> */}
 
                 </>
             ),

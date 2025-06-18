@@ -66,51 +66,61 @@ export default function ComboPlanList() {
             ignoreRowClick: true,
             allowOverflow: true,
             button: true,
+            width: "150px"
         },
         {
             name: "Plan Name",
             selector: (row) => row.name,
             sortable: true,
+            width: "200px"
         },
         {
             name: "Plan Price",
             selector: (row) => row.price,
             sortable: true,
+            width: "150px"
         },
         {
             name: "Plan Duration (days)",
             selector: (row) => row.duration,
             sortable: true,
+            width: "200px"
         },
         {
             name: "Banner Feature",
             selector: (row) => row.banner_feature_name,
             sortable: true,
+            width: "200px"
         },
         {
             name: "Boost Feature",
             selector: (row) => row.boost_feature_name,
             sortable: true,
+            width: "200px"
         },
         {
             name: "Number of Boosts",
             selector: (row) => row.no_of_boost,
             sortable: true,
+            width: "200px"
         },
         {
             name: "Number of Products",
             selector: (row) => row.no_of_product,
             sortable: true,
+            width: "200px"
         },
         {
             name: "Categories",
             selector: (row) => row.category_names,
             sortable: true,
+            width: "200px"
         },
         {
             name: "States",
             selector: (row) => row.state_names,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Promotion Tag",
@@ -121,10 +131,12 @@ export default function ComboPlanList() {
                 </>
             ),
             sortable: true,
+            width: "250px"
         },
         {
             name: "Package Description",
             selector: (row) => row.package_description,
+            width: "250px"
         },
 
     ];

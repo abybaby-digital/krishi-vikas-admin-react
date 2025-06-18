@@ -77,126 +77,151 @@ export default function NotificationContentList() {
             name: "Notification Type",
             selector: (row) => row.notification_type_name,
             sortable: true,
+            width: "250px"
         },
         {
             name: "English Title",
             selector: (row) => row.ln_en_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "English Description",
             selector: (row) => row.ln_en_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Bengali Title",
             selector: (row) => row.ln_bn_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Bengali Description",
             selector: (row) => row.ln_bn_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Hindi Title",
             selector: (row) => row.ln_hn_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Hindi Description",
             selector: (row) => row.ln_hn_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Assamese Title",
             selector: (row) => row.ln_as_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Assamese Description",
             selector: (row) => row.ln_as_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Gujarati Title",
             selector: (row) => row.ln_gu_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Gujarati Description",
             selector: (row) => row.ln_gu_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Kannada Title",
             selector: (row) => row.ln_kn_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Kannada Description",
             selector: (row) => row.ln_kn_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Malayalam Title",
             selector: (row) => row.ln_ml_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Malayalam Description",
             selector: (row) => row.ln_ml_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Marathi Title",
             selector: (row) => row.ln_mr_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Marathi Description",
             selector: (row) => row.ln_mr_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Odia Title",
             selector: (row) => row.ln_or_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Odia Description",
             selector: (row) => row.ln_or_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Tamil Title",
             selector: (row) => row.ln_ta_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Tamil Description",
             selector: (row) => row.ln_ta_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Telugu Title",
             selector: (row) => row.ln_te_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Telugu Description",
             selector: (row) => row.ln_te_des,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Punjabi Title",
             selector: (row) => row.ln_pa_title,
             sortable: true,
+            width: "250px"
         },
         {
             name: "Punjabi Description",
             selector: (row) => row.ln_pa_des,
             sortable: true,
+            width: "250px"
         },
     ];
 

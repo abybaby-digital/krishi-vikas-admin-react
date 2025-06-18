@@ -43,6 +43,11 @@ export default function AddSpec() {
     const [modal, setModal] = useState(false);
     const [specId, setSpecId] = useState(null);
 
+    const model_details = JSON.parse(sessionStorage.getItem("model_details"));
+    console.log(model_details);
+
+
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -186,7 +191,13 @@ export default function AddSpec() {
                         </div>
                         <div className="bg-white rounded-2xl shadow overflow-hidden p-2 ">
                             <div className="px-5">
-                                <p className="my-3 text-xl uppercase text-center font-bold text-darkGreen">Specifications List</p>
+                                <div className="flex items-center justify-between mb-5">
+                                    <p className="my-3 text-xl uppercase text-center font-bold text-darkGreen">Specifications List</p>
+                                    <div className="relative shadow rounded-xl">
+                                        <img src={model_details?.icon} alt="model" className="w-20 animate__animated animate__zoomIn " />
+                                        <p className="font-semibold absolute text-sm text-nowrap right-5 -bottom-2 animate__animated animate__backInLeft bg-white px-2 rounded shadow">{`${model_details?.brand_name} ${model_details?.model_name}`}</p>
+                                    </div>
+                                </div>
                                 <table className="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg overflow-hidden text-sm">
                                     <thead className="bg-gray-100">
                                         <tr>
@@ -195,7 +206,6 @@ export default function AddSpec() {
                                             <th className="px-4 py-2 text-left font-medium text-gray-700">Spec Name</th>
                                             <th className="px-4 py-2 text-left font-medium text-gray-700">Value</th>
                                             <th className="px-4 py-2 text-left font-medium text-gray-700">Logo</th>
-
                                         </tr>
                                     </thead>
                                     {

@@ -106,13 +106,14 @@ export default function BrandsPage() {
                         </button>
                     </ToolTipGlobal>
                     
-                    <ToolTipGlobal toolText="Add Specifications (Work in progress..)">
+                    <ToolTipGlobal toolText="Add Specifications">
                         <button
-                            disabled
+                            // disabled
                             className="bg-white shadow rounded-lg p-2 hover:scale-90"
                             onClick={() => {
                                 setModal(true);
-                                navigate(`/spec/add-spec/${row.model_id}`)
+                                navigate(`/spec/add-spec/${row.model_id}`);
+                                sessionStorage.setItem("model_details", JSON.stringify(row));
                             }}
                         >
                             <MdOutlinePlaylistAdd />
