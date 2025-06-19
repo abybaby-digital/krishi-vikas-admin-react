@@ -25,6 +25,7 @@ import { MdNotificationsActive } from "react-icons/md";
 import { TbLayoutDashboardFilled } from "react-icons/tb";
 import { IoNewspaper } from "react-icons/io5";
 import { MdWorkspacePremium } from "react-icons/md";
+import { FaUsers } from "react-icons/fa6";
 
 
 import { NavMain } from "@/components/nav-main"
@@ -48,23 +49,6 @@ const data = {
     email: "m@example.com",
     avatar: "",
   },
-  // teams: [
-  //   {
-  //     name: "Acme Inc",
-  //     logo: GalleryVerticalEnd,
-  //     plan: "Enterprise",
-  //   },
-  //   {
-  //     name: "Acme Corp.",
-  //     logo: AudioWaveform,
-  //     plan: "Startup",
-  //   },
-  //   {
-  //     name: "Evil Corp.",
-  //     logo: Command,
-  //     plan: "Free",
-  //   },
-  // ],
   navMain: [
     {
       title: "Dashboard",
@@ -72,6 +56,18 @@ const data = {
       url: "/",
       icon: TbLayoutDashboardFilled,
     },
+    // {
+    //   title: "User Profiles",
+    //   hasSubMenu: true,
+    //   url: "#",
+    //   icon: FaUsers,
+    //   items: [
+    //     {
+    //       title: "User Lists",
+    //       url: "/user/user-list",
+    //     },
+    //   ],
+    // },
     {
       title: "Tractor",
       hasSubMenu: true,

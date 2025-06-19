@@ -68,9 +68,9 @@ export default {
   				'sans-serif'
   			],
   			dmsans: [
-  				"DM Serif Text", "serif"
-  			],
-
+  				'DM Serif Text',
+  				'serif'
+  			]
   		},
   		container: {
   			center: true

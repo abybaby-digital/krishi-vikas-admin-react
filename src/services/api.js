@@ -1990,3 +1990,70 @@ export const fetchSpecById = async (token, spec_id) => {
     throw error;
   }
 };
+
+// FETCH USER LIST
+
+export const fetchUserList = async (
+  token,
+  mobile,
+  state_id,
+  district_id,
+  language_id,
+  created_at,
+  user_type,
+  skip,
+  take
+) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/user-list`,
+      {
+        skip: skip,
+        take: take,
+        mobile: mobile,
+        state_id: state_id,
+        district_id: district_id,
+        language_id: language_id,
+        created_at: created_at,
+        user_type: user_type,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch spect list", error);
+    throw error;
+  }
+};
+
+// Fetch User By Id
+
+export const fetchUserById = async (token, user_id) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/user-view-by-id`,
+      {
+        user_id: user_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch User Id", error);
+    throw error;
+  }
+};

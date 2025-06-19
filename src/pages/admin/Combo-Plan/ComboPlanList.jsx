@@ -16,7 +16,6 @@ import ViewComboPlan from "./ViewComboPlan";
 import { useState } from "react";
 import ToolTipGlobal from "../../../components/ToolTipGlobal";
 
-
 export default function ComboPlanList() {
 
     const token = useSelector((state) => state.auth.token);

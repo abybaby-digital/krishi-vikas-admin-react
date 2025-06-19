@@ -50,6 +50,8 @@ const PremiumProductList = React.lazy(() => import("./pages/admin/Premium-Produc
 const AddPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/AddPremiumProduct"));
 const EditPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/EditPremiumProduct"));
 const AddSpec = React.lazy(() => import("./pages/admin/Specifications/AddSpec"));
+const UserList = React.lazy(() => import("./pages/admin/user/UserList"));
+const UserViewById = React.lazy(() => import("./pages/admin/user/UserViewById"));
 
 
 const ScrollToTop = () => {
@@ -139,6 +141,8 @@ const App = () => {
             <Route path="/premium-product/product-list" element={<PremiumProductList />} />
             <Route path="/premium-product/edit/:id" element={<EditPremiumProduct />} />
             <Route path="/spec/add-spec/:id" element={<AddSpec />} />
+            <Route path="/user/user-list" element={<UserList />} />
+            <Route path="/user/user-details/:id" element={<UserViewById />} />
           </Route>
 
         </Routes>
