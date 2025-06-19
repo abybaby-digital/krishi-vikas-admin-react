@@ -143,8 +143,19 @@ export default function UserViewById() {
                                                     userDetails?.response?.user_post?.goodsvehicle?.length !== 0 &&
                                                     <AccordionItem value="item-2" className="my-3 border-none">
                                                         <AccordionTrigger className="bg-whitesmoke rounded-xl px-5 text-xl hover:no-underline font-dmsans">Goods Vehicle</AccordionTrigger>
-                                                        <AccordionContent className="flex flex-col gap-4 text-balance p-5">
-                                                            context
+                                                        <AccordionContent className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-1 gap-3 p-5">
+                                                            {
+                                                                userDetails?.response?.user_post?.goodsvehicle.map((item) => (
+                                                                    <div className="product-card border border-dashed rounded-xl p-1 shadow" key={item.id}>
+                                                                        <img src={item.front_image} alt="image" className="h-[150px] block object-cover w-full rounded-xl" />
+                                                                        <div className="description text-center">
+                                                                            <p className="bg-whitesmoke mt-2 text-center p-2">{item.title}</p>
+                                                                            <p className="text-center p-2 inline-flex items-center mx-auto"><TbCoinRupee /> {item.price}{item.rent_type ? item.rent_type : null}</p>
+                                                                        </div>
+                                                                        {/* <p><BiLocationPlus />{item.district_name}</p> */}
+                                                                    </div>
+                                                                ))
+                                                            }
                                                         </AccordionContent>
                                                     </AccordionItem>
                                                 }
@@ -152,8 +163,19 @@ export default function UserViewById() {
                                                     userDetails?.response?.user_post?.harvester?.length !== 0 &&
                                                     <AccordionItem value="item-3" className="my-3 border-none">
                                                         <AccordionTrigger className="bg-whitesmoke rounded-xl px-5 text-xl hover:no-underline font-dmsans">Harvester</AccordionTrigger>
-                                                        <AccordionContent className="flex flex-col gap-4 text-balance p-5">
-                                                            context
+                                                        <AccordionContent className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-1 gap-3 p-5">
+                                                            {
+                                                                userDetails?.response?.user_post?.harvester.map((item) => (
+                                                                    <div className="product-card border border-dashed rounded-xl p-1 shadow" key={item.id}>
+                                                                        <img src={item.front_image} alt="image" className="h-[150px] block object-cover w-full rounded-xl" />
+                                                                        <div className="description text-center">
+                                                                            <p className="bg-whitesmoke mt-2 text-center p-2">{item.title}</p>
+                                                                            <p className="text-center p-2 inline-flex items-center mx-auto"><TbCoinRupee /> {item.price}{item.rent_type ? item.rent_type : null}</p>
+                                                                        </div>
+                                                                        {/* <p><BiLocationPlus />{item.district_name}</p> */}
+                                                                    </div>
+                                                                ))
+                                                            }
                                                         </AccordionContent>
                                                     </AccordionItem>
                                                 }
@@ -161,8 +183,19 @@ export default function UserViewById() {
                                                     userDetails?.response?.user_post?.implement?.length !== 0 &&
                                                     <AccordionItem value="item-4" className="my-3 border-none">
                                                         <AccordionTrigger className="bg-whitesmoke rounded-xl px-5 text-xl hover:no-underline font-dmsans">Implements</AccordionTrigger>
-                                                        <AccordionContent className="flex flex-col gap-4 text-balance p-5">
-                                                            context
+                                                        <AccordionContent className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-1 gap-3 p-5">
+                                                            {
+                                                                userDetails?.response?.user_post?.implement.map((item) => (
+                                                                    <div className="product-card border border-dashed rounded-xl p-1 shadow" key={item.id}>
+                                                                        <img src={item.front_image} alt="image" className="h-[150px] block object-cover w-full rounded-xl" />
+                                                                        <div className="description text-center">
+                                                                            <p className="bg-whitesmoke mt-2 text-center p-2">{item.title}</p>
+                                                                            <p className="text-center p-2 inline-flex items-center mx-auto"><TbCoinRupee /> {item.price}{item.rent_type ? item.rent_type : null}</p>
+                                                                        </div>
+                                                                        {/* <p><BiLocationPlus />{item.district_name}</p> */}
+                                                                    </div>
+                                                                ))
+                                                            }
                                                         </AccordionContent>
                                                     </AccordionItem>
                                                 }
@@ -171,8 +204,19 @@ export default function UserViewById() {
                                                     userDetails?.response?.user_post?.tyre?.length !== 0 &&
                                                     <AccordionItem value="item-5" className="my-3 border-none">
                                                         <AccordionTrigger className="bg-whitesmoke rounded-xl px-5 text-xl hover:no-underline font-dmsans">Tyre</AccordionTrigger>
-                                                        <AccordionContent className="flex flex-col gap-4 text-balance p-5">
-                                                            context
+                                                        <AccordionContent className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-1 gap-3 p-5">
+                                                            {
+                                                                userDetails?.response?.user_post?.tyre.map((item) => (
+                                                                    <div className="product-card border border-dashed rounded-xl p-1 shadow" key={item.id}>
+                                                                        <img src={item.image1} alt="image" className="h-[150px] block object-cover w-full rounded-xl" />
+                                                                        <div className="description text-center">
+                                                                            <p className="bg-whitesmoke mt-2 text-center p-2">{item.title}</p>
+                                                                            <p className="text-center p-2 inline-flex items-center mx-auto"><TbCoinRupee /> {item.price}{item.rent_type ? item.rent_type : null}</p>
+                                                                        </div>
+                                                                        {/* <p><BiLocationPlus />{item.district_name}</p> */}
+                                                                    </div>
+                                                                ))
+                                                            }
                                                         </AccordionContent>
                                                     </AccordionItem>
                                                 }
@@ -180,8 +224,19 @@ export default function UserViewById() {
                                                     userDetails?.response?.user_post?.seed?.length !== 0 &&
                                                     <AccordionItem value="item-6" className="my-3 border-none">
                                                         <AccordionTrigger className="bg-whitesmoke rounded-xl px-5 text-xl hover:no-underline font-dmsans">Seeds</AccordionTrigger>
-                                                        <AccordionContent className="flex flex-col gap-4 text-balance p-5">
-                                                            context
+                                                        <AccordionContent className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-1 gap-3 p-5">
+                                                            {
+                                                                userDetails?.response?.user_post?.seed.map((item) => (
+                                                                    <div className="product-card border border-dashed rounded-xl p-1 shadow" key={item.id}>
+                                                                        <img src={item.image1} alt="image" className="h-[150px] block object-cover w-full rounded-xl" />
+                                                                        <div className="description text-center">
+                                                                            <p className="bg-whitesmoke mt-2 text-center p-2">{item.title}</p>
+                                                                            <p className="text-center p-2 inline-flex items-center mx-auto"><TbCoinRupee /> {item.price}{item.rent_type ? item.rent_type : null}</p>
+                                                                        </div>
+                                                                        {/* <p><BiLocationPlus />{item.district_name}</p> */}
+                                                                    </div>
+                                                                ))
+                                                            }
                                                         </AccordionContent>
                                                     </AccordionItem>
                                                 }
@@ -189,8 +244,19 @@ export default function UserViewById() {
                                                     userDetails?.response?.user_post?.pesticides?.length !== 0 &&
                                                     <AccordionItem value="item-7" className="my-3 border-none">
                                                         <AccordionTrigger className="bg-whitesmoke rounded-xl px-5 text-xl hover:no-underline font-dmsans">Pesticides</AccordionTrigger>
-                                                        <AccordionContent className="flex flex-col gap-4 text-balance p-5">
-                                                            context
+                                                        <AccordionContent className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-1 gap-3 p-5">
+                                                            {
+                                                                userDetails?.response?.user_post?.pesticides.map((item) => (
+                                                                    <div className="product-card border border-dashed rounded-xl p-1 shadow" key={item.id}>
+                                                                        <img src={item.image1} alt="image" className="h-[150px] block object-cover w-full rounded-xl" />
+                                                                        <div className="description text-center">
+                                                                            <p className="bg-whitesmoke mt-2 text-center p-2">{item.title}</p>
+                                                                            <p className="text-center p-2 inline-flex items-center mx-auto"><TbCoinRupee /> {item.price}{item.rent_type ? item.rent_type : null}</p>
+                                                                        </div>
+                                                                        {/* <p><BiLocationPlus />{item.district_name}</p> */}
+                                                                    </div>
+                                                                ))
+                                                            }
                                                         </AccordionContent>
                                                     </AccordionItem>
                                                 }
@@ -198,8 +264,19 @@ export default function UserViewById() {
                                                     userDetails?.response?.user_post?.fertilizers?.length !== 0 &&
                                                     <AccordionItem value="item-8" className="my-3 border-none">
                                                         <AccordionTrigger className="bg-whitesmoke rounded-xl px-5 text-xl hover:no-underline font-dmsans">Fertilizers</AccordionTrigger>
-                                                        <AccordionContent className="flex flex-col gap-4 text-balance p-5">
-                                                            context
+                                                        <AccordionContent className="grid xl:grid-cols-5 md:grid-cols-4 grid-cols-1 gap-3 p-5">
+                                                            {
+                                                                userDetails?.response?.user_post?.fertilizers.map((item) => (
+                                                                    <div className="product-card border border-dashed rounded-xl p-1 shadow" key={item.id}>
+                                                                        <img src={item.image1} alt="image" className="h-[150px] block object-cover w-full rounded-xl" />
+                                                                        <div className="description text-center">
+                                                                            <p className="bg-whitesmoke mt-2 text-center p-2">{item.title}</p>
+                                                                            <p className="text-center p-2 inline-flex items-center mx-auto"><TbCoinRupee /> {item.price}{item.rent_type ? item.rent_type : null}</p>
+                                                                        </div>
+                                                                        {/* <p><BiLocationPlus />{item.district_name}</p> */}
+                                                                    </div>
+                                                                ))
+                                                            }
                                                         </AccordionContent>
                                                     </AccordionItem>
                                                 }
@@ -210,6 +287,93 @@ export default function UserViewById() {
 
                                         </div>
                                     )
+                            }
+                        </div>
+                    </div>
+
+                    <div className="user-subscription shadow rounded-xl p-2 my-3">
+                        <h2 className="text-center text-2xl font-dmsans bg-whitesmoke rounded-xl p-3">User Subscription</h2>
+                        <div className="px-3 py-5">
+                            {
+                                <div className="post-container overflow-x-auto">
+
+                                    <table border="1" cellpadding="8" cellspacing="0">
+                                        <thead className="bg-whitesmoke">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>User ID</th>
+                                                <th>Plan ID</th>
+                                                <th>Plan Start Date</th>
+                                                <th>Plan End Date</th>
+                                                <th>Plan Name</th>
+                                                <th>Duration</th>
+                                                <th>Price</th>
+                                        
+                                                <th>No. of Boosts</th>
+                                                <th>No. of Products</th>
+                                                <th>Package Description</th>
+                                                <th>Min Lead</th>
+                                                <th>Max Lead</th>
+                                                <th>Invoice Type</th>
+                                                <th>Invoice No.</th>
+                                                <th>Paid Amount</th>
+                                                <th>Net Amount</th>
+                                                <th>Discount Amount</th>
+                                                <th>Discount %</th>
+                                                <th>Tax Category</th>
+                                                <th>Mode of Transaction</th>
+                                                <th>Transaction Type</th>
+                                                <th>Invoice File</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                userDetails?.response?.user_subscription?.map((item) => (
+                                                    <tr key={item.id}>
+                                                        <td>{item.id}</td>
+                                                        <td>{item.user_id}</td>
+                                                        <td>{item.plan_id}</td>
+                                                        <td>{item.plan_start_date}</td>
+                                                        <td>{item.plan_end_date}</td>
+                                                        <td>{item.name}</td>
+                                                        <td>{item.duration} {item.duration_type}</td>
+                                                        <td> {item.price}</td>
+                                                        <td>{item.no_of_boost}</td>
+                                                        <td>{item.no_of_product}</td>
+                                                        <td>{item.package_description}</td>
+                                                        <td>{item.min_lead}</td>
+                                                        <td>{item.max_lead}</td>
+                                                        <td>{item.invoice_type}</td>
+                                                        <td>{item.invoice_no}</td>
+                                                        <td> {item.paid_amount}</td>
+                                                        <td> {item.net_amount}</td>
+                                                        <td> {item.discount_amount}</td>
+                                                        <td>{item.discount_percentage} %</td>
+                                                        <td>{item.tax_category}</td>
+                                                        <td>{item.mode_of_transaction}</td>
+                                                        <td>{item.transaction_type}</td>
+
+                                                        {
+                                                            item.invoice_file_path ?
+                                                                (
+                                                                    <td className="text-center">
+                                                                        <a href={item.invoice_file_path} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">View Invoice</a>
+                                                                    </td>
+                                                                ) :
+                                                                (
+                                                                    <div className="text-center text-red-500">No Invoice</div>
+                                                                )
+                                                        }
+                                                    </tr>
+                                                ))
+                                            }
+                                        </tbody>
+                                    </table>
+
+
+
+                                </div>
+
                             }
                         </div>
                     </div>

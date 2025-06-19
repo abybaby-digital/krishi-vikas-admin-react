@@ -2023,7 +2023,6 @@ export const fetchUserList = async (
         },
       }
     );
-
     // Return the result from the response
     return response.data.result;
   } catch (error) {

@@ -56,18 +56,18 @@ const data = {
       url: "/",
       icon: TbLayoutDashboardFilled,
     },
-    // {
-    //   title: "User Profiles",
-    //   hasSubMenu: true,
-    //   url: "#",
-    //   icon: FaUsers,
-    //   items: [
-    //     {
-    //       title: "User Lists",
-    //       url: "/user/user-list",
-    //     },
-    //   ],
-    // },
+    {
+      title: "User Profiles",
+      hasSubMenu: true,
+      url: "#",
+      icon: FaUsers,
+      items: [
+        {
+          title: "User Lists",
+          url: "/user/user-list",
+        },
+      ],
+    },
     {
       title: "Tractor",
       hasSubMenu: true,
