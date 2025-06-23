@@ -118,6 +118,15 @@ const ViewGoodsVehiclePost = ({ modal, setModal, singlePostData, seoModal, setSe
 
                                     <div className="left-post-data rounded-2xl overflow-hidden shadow">
                                         <table className='w-full border border-collapse text-center'>
+                                            {postViewById?.response.user_name && <tr className='border'>
+                                                <td className='border bg-lightdark p-2 text-white'>UserName</td>
+                                                <td className='border p-2 font-bold'>{postViewById?.response.user_name}</td>
+                                            </tr>}
+
+                                            {postViewById?.response.phone_no && <tr className='border'>
+                                                <td className='border bg-lightdark p-2 text-white'>Phone Number</td>
+                                                <td className='border p-2 font-bold'>{postViewById?.response.phone_no}</td>
+                                            </tr>}
                                             {postViewById?.response.title && <tr className='border'>
                                                 <td className='border bg-lightdark p-2 text-white'>Title</td>
                                                 <td className='border p-2 font-bold'>{postViewById?.response.title}</td>
