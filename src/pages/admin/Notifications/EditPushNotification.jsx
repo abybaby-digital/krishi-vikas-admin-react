@@ -375,7 +375,7 @@ export default function EditPushNotification() {
                             {watch("redirection_type") === "others" && (
                                 <div>
                                     <label className="block font-semibold mb-1">Redirection URL</label>
-                                    <input type="url" {...register("redirection_url")} className="w-full border rounded px-3 py-2" />
+                                    <input type="text" {...register("redirection_url")} className="w-full border rounded px-3 py-2" />
                                 </div>
                             )}
 
