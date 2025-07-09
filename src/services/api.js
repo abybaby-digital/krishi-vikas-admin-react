@@ -2056,3 +2056,63 @@ export const fetchUserById = async (token, user_id) => {
     throw error;
   }
 };
+
+// IMPORT OFFLINE LEAD
+
+export const uploadOfflineLead = async (token, category_id, post_id, user_id, product_type,import_data) => {
+  try {
+    const formData = new FormData();
+
+    // Append all fields
+    formData.append("category_id", category_id);
+    formData.append("post_id", post_id);
+    formData.append("user_id", user_id);
+    formData.append("product_type", product_type);
+
+    // Append icon (image)
+    if (import_data && import_data[0]) {
+      formData.append("import_data", import_data[0]);
+    }
+
+    // Send POST request
+    const response = await api.post(`${baseURL}/import-offline-lead`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    // Return API result
+    return response.data.result;
+  } catch (error) {
+    console.error("Failed to import xlsx:", error);
+    throw error;
+  }
+};
+
+// OFFLINE LEAD LIST
+
+export const fetchOfflineLed = async (token, user_id,skip,take) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/offline-lead-list`,
+      {
+        user_id: user_id,
+        skip: skip,
+        take: take,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch offline lead", error);
+    throw error;
+  }
+};

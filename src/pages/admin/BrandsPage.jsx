@@ -64,8 +64,6 @@ export default function BrandsPage() {
         }
     })
 
-    // console.log(data);
-
     // ✅ Filtered list based on search
     const filteredData = useMemo(() => {
         if (!allBrandList?.response) return [];
@@ -117,15 +115,6 @@ export default function BrandsPage() {
             name: 'Popular',
             selector: row => (row.popular ? 'Yes' : 'No'),
         },
-        // {
-        //     name: 'Status',
-        //     selector: row => (row.status === '1' ? 'Active' : 'Inactive'),
-        //     cell: row => (
-        //         <span className={`badge ${row.status === '1' ? 'bg-success' : 'bg-danger'}`}>
-        //             {row.status === '1' ? 'Active' : 'Inactive'}
-        //         </span>
-        //     ),
-        // },
         {
             name: 'Logo',
             selector: row => row.logo,

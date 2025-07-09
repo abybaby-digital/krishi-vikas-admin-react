@@ -10,7 +10,7 @@ import {
 import { DialogClose } from '@radix-ui/react-dialog';
 import { CiSquareRemove } from "react-icons/ci";
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { categoryWiseProductViewById, postApprovalChange } from '../../../services/api';
+import { categoryWiseProductViewById, fetchOfflineLed, postApprovalChange, uploadOfflineLead } from '../../../services/api';
 import { useSelector } from 'react-redux';
 import { LuIndianRupee } from "react-icons/lu";
 import { SiTicktick } from "react-icons/si";
@@ -22,6 +22,8 @@ import Loader from '../../../components/Loader';
 import DataLoader from '../../../components/DataLoader';
 import { Skeleton } from "@/components/ui/skeleton"
 import MetaUpdate from '../../../components/MetaUpdate';
+import { useForm } from 'react-hook-form';
+import DataTable from 'react-data-table-component';
 
 
 const ViewGoodsVehiclePost = ({ modal, setModal, singlePostData, seoModal, setSeoModal }) => {
@@ -31,6 +33,42 @@ const ViewGoodsVehiclePost = ({ modal, setModal, singlePostData, seoModal, setSe
     const [status, setStatus] = useState();
     const [refetch, setRefetch] = useState(false);
     const token = useSelector((state) => state.auth.token);
+
+    const { register, handleSubmit, reset } = useForm();
+
+    const uploadmutation = useMutation({
+        mutationFn: async (data) => {
+            return await uploadOfflineLead(
+                token,
+                singlePostData?.category_id,
+                singlePostData?.id,
+                singlePostData?.user_id,
+                "normal_product",
+                data.import_data
+            )
+        },
+        onSuccess: (response) => {
+            if (response.success === 1) {
+                toast.success(response.message);
+                reset(); // reset the form fields
+            }
+        }
+    })
+
+    const onSubmit = async (data) => {
+        console.log(data);
+        uploadmutation.mutate(data);
+    }
+
+    const { data: offlineLeadList } = useQuery({
+        queryKey: ["offline-lead-list", singlePostData?.user_id],
+        queryFn: async () => {
+            return await fetchOfflineLed(token, singlePostData?.user_id, null, null);
+        },
+        enabled: modal
+    })
+
+    console.log(offlineLeadList);
 
     const { data: postViewById, isLoading: postByIdLoading } = useQuery({
         queryKey: ["post-view-by-id", categoryId, postId, refetch, modal],
@@ -55,6 +93,43 @@ const ViewGoodsVehiclePost = ({ modal, setModal, singlePostData, seoModal, setSe
             toast.error("Error while updating approval status.");
         }
     });
+
+    const columns = [
+        {
+            name: '#',
+            selector: (row, index) => index + 1,
+            width: '60px',
+        },
+        {
+            name: 'Name',
+            selector: row => row.username,
+            sortable: true,
+        },
+        {
+            name: 'Phone No',
+            selector: row => row.mobile,
+            sortable: true,
+        },
+        {
+            name: 'Pincode',
+            selector: row => (row.zipcode),
+        },
+
+    ];
+
+    const customStyles = {
+        headCells: {
+            style: {
+                fontWeight: 'bold',
+                backgroundColor: '#f4f5f7',
+                color: '#333',
+                fontSize: '14px',
+                paddingTop: '12px',
+                paddingBottom: '12px',
+                textTransform: 'uppercase',
+            },
+        },
+    };
 
     return (
         <Dialog open={modal}>
@@ -271,6 +346,44 @@ const ViewGoodsVehiclePost = ({ modal, setModal, singlePostData, seoModal, setSe
                                                         <SiTicktick className='bg-green-500 p-2 text-3xl text-white rounded-full' /> : <ImCancelCircle className='bg-red-500 p-2 text-3xl text-white rounded-full' />
                                                 }
                                             </div>
+                                        </div>
+
+                                        <div className="import-offline-lead rounded-2xl overflow-hidden shadow m-2">
+                                            <div className="flex flex-col space-y-2">
+                                                <form
+                                                    onSubmit={handleSubmit(onSubmit)}
+                                                    className="p-4 rounded max-w-md mx-auto bg-white"
+                                                >
+                                                    <label className="font-medium block mb-2">Upload Excel File</label>
+                                                    <input
+                                                        type="file"
+                                                        accept=".xlsx,.xls"
+                                                        {...register('import_data', { required: true })}
+                                                        className="border p-2 rounded w-full"
+                                                    />
+                                                    <button
+                                                        type="submit"
+                                                        disabled={uploadmutation.isPending}
+                                                        className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                                    >
+                                                        {uploadmutation.isPending ? 'Uploading...' : 'Upload'}
+                                                    </button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+
+                                        <div className="offline-lead-list rounded-2xl overflow-hidden shadow m-2">
+                                            <h2 className='font-dmsans text-xl font-bold my-2 bg-gray-200 p-2 text-center'>Offline Lead List</h2>
+                                            <DataTable
+                                                columns={columns}
+                                                data={offlineLeadList?.response || []}
+                                                pagination
+                                                striped
+                                                highlightOnHover
+                                                responsive
+                                                customStyles={customStyles}
+                                            />
                                         </div>
                                     </div>
                                 </div>
