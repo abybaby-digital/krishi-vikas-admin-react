@@ -2059,7 +2059,7 @@ export const fetchUserById = async (token, user_id) => {
 
 // IMPORT OFFLINE LEAD
 
-export const uploadOfflineLead = async (token, category_id, post_id, user_id, product_type,import_data) => {
+export const uploadOfflineLead = async (token, category_id, post_id, user_id, product_type, import_data) => {
   try {
     const formData = new FormData();
 
@@ -2092,7 +2092,7 @@ export const uploadOfflineLead = async (token, category_id, post_id, user_id, pr
 
 // OFFLINE LEAD LIST
 
-export const fetchOfflineLed = async (token, user_id,skip,take) => {
+export const fetchOfflineLed = async (token, user_id, skip, take) => {
   try {
     const response = await api.post(
       `${baseURL}/offline-lead-list`,
