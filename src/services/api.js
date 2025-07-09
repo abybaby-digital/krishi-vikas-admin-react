@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
-// const baseURL = "https://krishivikas.com/api/admin";
+// const baseURL = "https://d32neyt9p9wyaf.cloudfront.net/api/admin";
+const baseURL = "https://krishivikas.com/api/admin";
 // const baseURL = "http://192.168.0.204:8080/api/admin";
 
 const api = axios.create({
