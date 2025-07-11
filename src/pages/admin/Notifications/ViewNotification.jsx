@@ -100,7 +100,7 @@ const ViewNotification = ({ modal, setModal, singleNotification }) => {
                         <p className='font-semibold text-darkGreen text-lg'>Notification Image</p>
                         {singleNotification?.notification_img ? (
                             <img
-                                src={`/uploads/notifications/${singleNotification.notification_img}`}
+                                src={singleNotification.notification_img}
                                 alt="Notification"
                                 className="rounded shadow w-full max-w-[200px]"
                             />
