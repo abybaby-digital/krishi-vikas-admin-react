@@ -81,6 +81,7 @@ export default function ComboPlanList() {
                     href={row.invoice_path}
                     target="_blank"
                     rel="noopener noreferrer"
+                    download
                     className="text-darkGreen border border-darkGreen hover:bg-lightdark hover:text-white px-2 py-1 inline-flex text-nowrap"
                 >
                     <FaDownload className="inline me-1 mb-1" />Download

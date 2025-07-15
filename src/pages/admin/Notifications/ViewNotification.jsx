@@ -99,11 +99,13 @@ const ViewNotification = ({ modal, setModal, singleNotification }) => {
                     <div className="data-group border-b pb-5">
                         <p className='font-semibold text-darkGreen text-lg'>Notification Image</p>
                         {singleNotification?.notification_img ? (
-                            <img
-                                src={singleNotification.notification_img}
-                                alt="Notification"
-                                className="rounded shadow w-full max-w-[200px]"
-                            />
+                            <a href={singleNotification.notification_img} className="" data-fancybox={singleNotification.id}>
+                                <img
+                                    src={singleNotification.notification_img}
+                                    alt="Notification"
+                                    className="rounded shadow w-full max-w-[200px]"
+                                />
+                            </a>
                         ) : (
                             <p>No image available</p>
                         )}

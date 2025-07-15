@@ -380,6 +380,28 @@ export default function EditPushNotification() {
                             )}
 
                             {/* Image Upload */}
+                            {/* <div className="col-span-full">
+                                <label className="block font-semibold mb-1">Add Image</label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    {...register("image")}
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onloadend = () => setImagePreview(reader.result);
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }}
+                                    className="block w-full"
+                                />
+                                {imagePreview && (
+                                    <img src={imagePreview} alt="Preview" className="mt-3 w-40 h-auto border" />
+                                )}
+                            </div> */}
+
+                            {/* Image Upload */}
                             <div className="col-span-full">
                                 <label className="block font-semibold mb-1">Add Image</label>
                                 <input
@@ -389,6 +411,14 @@ export default function EditPushNotification() {
                                     onChange={(e) => {
                                         const file = e.target.files[0];
                                         if (file) {
+                                            // Validate file size (300KB = 300 * 1024)
+                                            if (file.size > 300 * 1024) {
+                                                alert("Image must be less than 300KB");
+                                                e.target.value = null; // Reset the input
+                                                setImagePreview(null); // Remove previous preview if any
+                                                return;
+                                            }
+
                                             const reader = new FileReader();
                                             reader.onloadend = () => setImagePreview(reader.result);
                                             reader.readAsDataURL(file);
