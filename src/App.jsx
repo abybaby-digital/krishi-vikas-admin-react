@@ -47,6 +47,8 @@ const SeedPostList = React.lazy(() => import("./pages/admin/Seeds/SeedPostList")
 const FertilizersPostList = React.lazy(() => import("./pages/admin/Fertilizers/FertilizersPostList"));
 const PesticidesPostList = React.lazy(() => import("./pages/admin/Pesticides/PesticidesPostList"));
 const PremiumProductList = React.lazy(() => import("./pages/admin/Premium-Product/PremiumProductList"));
+const EnquiryListWeb = React.lazy(() => import("./pages/admin/Premium-Product/EnquiryListWeb"));
+const EnquiryListApp = React.lazy(() => import("./pages/admin/Premium-Product/EnquiryListApp"));
 const AddPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/AddPremiumProduct"));
 const EditPremiumProduct = React.lazy(() => import("./pages/admin/Premium-Product/EditPremiumProduct"));
 const AddSpec = React.lazy(() => import("./pages/admin/Specifications/AddSpec"));
@@ -139,6 +141,8 @@ const App = () => {
             <Route path="/tyres/post-list" element={<TyresPostList />} />
             <Route path="/premium-product/add" element={<AddPremiumProduct />} />
             <Route path="/premium-product/product-list" element={<PremiumProductList />} />
+            <Route path="/premium-product/enquiries-web" element={<EnquiryListWeb />} />
+            <Route path="/premium-product/enquiries-app" element={<EnquiryListApp />} />
             <Route path="/premium-product/edit/:id" element={<EditPremiumProduct />} />
             <Route path="/spec/add-spec/:id" element={<AddSpec />} />
             <Route path="/user/user-list" element={<UserList />} />

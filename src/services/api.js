@@ -1765,6 +1765,8 @@ export const fetchPremiumProductList = async (
   }
 };
 
+
+
 // PREMIUM PRODUCT VIEW BY ID
 
 export const fetchPremiumProductById = async (token, premium_product_id) => {
@@ -1789,6 +1791,62 @@ export const fetchPremiumProductById = async (token, premium_product_id) => {
     throw error;
   }
 };
+
+
+
+// WEB ENQUIRY LIST
+
+export const fetchWebEnquiryList = async (token, skip, take) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/premium-product-answer-list-web`,
+      {
+        skip: skip,
+        take: take
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch enquiries:", error);
+    throw error;
+  }
+};
+
+
+// APP ENQUIRY LIST
+
+export const fetchAppEnquiryList = async (token, skip, take) => {
+  try {
+    const response = await api.post(
+      `${baseURL}/premium-product-answer-list-app`,
+      {
+        skip: skip,
+        take: take
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Authorization header
+        },
+      }
+    );
+
+    // Return the result from the response
+    return response.data.result;
+  } catch (error) {
+    // Log and throw the error in case of failure
+    console.error("Failed to fetch enquiries:", error);
+    throw error;
+  }
+};
+
 
 // BRANDS LIST
 

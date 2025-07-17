@@ -282,6 +282,14 @@ const data = {
           title: "Premium Product List",
           url: "/premium-product/product-list",
         },
+        {
+          title: "Enquiries (Web)",
+          url: "/premium-product/enquiries-web",
+        },
+        {
+          title: "Enquiries (App)",
+          url: "/premium-product/enquiries-app",
+        },
       ],
     },
     {
